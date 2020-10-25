@@ -2,36 +2,36 @@ package edu.byu.cs.tweeter.shared.service.response;
 
 import java.util.Objects;
 
-import edu.byu.cs.tweeter.shared.domain.AuthToken;
+import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.domain.User;
 
-/**
- * A response for a {@link edu.byu.cs.tweeter.shared.service.request.LoginRequest}.
- */
-public class LoginResponse extends Response {
 
+/**
+ * A response for a {@link edu.byu.cs.tweeter.shared.service.request.SubmitTweetRequest}.
+ */
+public class SubmitTweetResponse extends Response {
     private User user;
-    private AuthToken authToken;
+    private Status status;
 
     /**
      * Creates a response indicating that the corresponding request was unsuccessful.
      *
      * @param message a message describing why the request was unsuccessful.
      */
-    public LoginResponse(String message) {
+    public SubmitTweetResponse(String message) {
         super(false, message);
     }
 
     /**
      * Creates a response indicating that the corresponding request was successful.
      *
-     * @param user the now logged in user.
-     * @param authToken the auth token representing this user's session with the server.
+     * @param user the user who created the status.
+     * @param status the status created by the tweet
      */
-    public LoginResponse(User user, AuthToken authToken) {
+    public SubmitTweetResponse(User user, Status status) {
         super(true, null);
         this.user = user;
-        this.authToken = authToken;
+        this.status = status;
     }
 
     /**
@@ -44,35 +44,33 @@ public class LoginResponse extends Response {
     }
 
     /**
-     * Returns the auth token.
+     * Returns the status.
      *
-     * @return the auth token.
+     * @return the status.
      */
-    public AuthToken getAuthToken() {
-        return authToken;
+    public Status getStatus() {
+        return status;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        LoginResponse that = (LoginResponse) o;
+        SubmitTweetResponse that = (SubmitTweetResponse) o;
         return Objects.equals(user, that.user) &&
-                Objects.equals(authToken, that.authToken) &&
-                Objects.equals(this.getMessage(), that.getMessage()) &&
-                this.isSuccess() == that.isSuccess();
+                Objects.equals(status, that.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, authToken);
+        return Objects.hash(user, status);
     }
 
     @Override
     public String toString() {
-        return "LoginResponse{" +
+        return "SubmitTweetResponse{" +
                 "user=" + user +
-                ", authToken=" + authToken +
+                ", status=" + status +
                 '}';
     }
 }

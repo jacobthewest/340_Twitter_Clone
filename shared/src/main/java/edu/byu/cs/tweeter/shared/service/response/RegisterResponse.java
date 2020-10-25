@@ -1,14 +1,12 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.Objects;
-
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.User;
 
 /**
- * A response for a {@link edu.byu.cs.tweeter.shared.service.request.LoginRequest}.
+ * A response for a {@link edu.byu.cs.tweeter.shared.service.request.RegisterRequest}.
  */
-public class LoginResponse extends Response {
+public class RegisterResponse extends Response {
 
     private User user;
     private AuthToken authToken;
@@ -18,7 +16,7 @@ public class LoginResponse extends Response {
      *
      * @param message a message describing why the request was unsuccessful.
      */
-    public LoginResponse(String message) {
+    public RegisterResponse(String message) {
         super(false, message);
     }
 
@@ -28,7 +26,7 @@ public class LoginResponse extends Response {
      * @param user the now logged in user.
      * @param authToken the auth token representing this user's session with the server.
      */
-    public LoginResponse(User user, AuthToken authToken) {
+    public RegisterResponse(User user, AuthToken authToken) {
         super(true, null);
         this.user = user;
         this.authToken = authToken;
@@ -51,28 +49,5 @@ public class LoginResponse extends Response {
     public AuthToken getAuthToken() {
         return authToken;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LoginResponse that = (LoginResponse) o;
-        return Objects.equals(user, that.user) &&
-                Objects.equals(authToken, that.authToken) &&
-                Objects.equals(this.getMessage(), that.getMessage()) &&
-                this.isSuccess() == that.isSuccess();
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(user, authToken);
-    }
-
-    @Override
-    public String toString() {
-        return "LoginResponse{" +
-                "user=" + user +
-                ", authToken=" + authToken +
-                '}';
-    }
 }
+
