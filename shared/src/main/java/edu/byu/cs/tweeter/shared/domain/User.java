@@ -8,42 +8,44 @@ import java.util.Objects;
  */
 public class User implements Comparable<User>, Serializable {
 
-    private String firstName;
-    private String lastName;
-    private String alias;
-    private String imageUrl;
+    private final String firstName;
+    private final String lastName;
+    private final String alias;
+    private final String imageUrl;
+    private final String password;
     private byte [] imageBytes;
 
-    /**
-     * Allows construction of the object from Json. Private so it won't be called by other code.
-     */
-    private User() {}
-
-    public User(String firstName, String lastName, String imageURL) {
-        this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL);
+    public User(String firstName, String lastName, String imageURL, String password) {
+        this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL, password);
     }
 
-    public User(String firstName, String lastName, String alias, String imageURL) {
+    public User(String firstName, String lastName, String imageURL, byte[] imageBytes, String password) {
+        this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL, imageBytes, password);
+    }
+
+    public User(String firstName, String lastName, String alias, String imageURL, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.alias = alias;
         this.imageUrl = imageURL;
+        this.password = password;
+    }
+
+    public User(String firstName, String lastName, String alias, String imageURL, byte[] imageBytes, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.alias = alias;
+        this.imageUrl = imageURL;
+        this.imageBytes = imageBytes;
+        this.password = password;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getName() {
@@ -54,16 +56,12 @@ public class User implements Comparable<User>, Serializable {
         return alias;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public String getPassword() {
+        return password;
     }
 
     public byte [] getImageBytes() {
@@ -75,16 +73,8 @@ public class User implements Comparable<User>, Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return alias.equals(user.alias);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(alias);
+    public int compareTo(User user) {
+        return this.getAlias().compareTo(user.getAlias());
     }
 
     @Override
@@ -94,11 +84,26 @@ public class User implements Comparable<User>, Serializable {
                 ", lastName='" + lastName + '\'' +
                 ", alias='" + alias + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", password='" + password +
                 '}';
     }
 
     @Override
-    public int compareTo(User user) {
-        return this.getAlias().compareTo(user.getAlias());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(alias, user.alias) &&
+                Objects.equals(imageUrl, user.imageUrl) &&
+                Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(firstName, lastName, alias, imageUrl, password);
+        result = 31 * result;
+        return result;
     }
 }
