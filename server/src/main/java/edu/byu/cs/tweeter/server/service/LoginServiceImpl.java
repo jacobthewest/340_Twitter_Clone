@@ -13,7 +13,7 @@ public class LoginServiceImpl implements LoginService {
 
         // TODO: Generates dummy data. Replace with a real implementation.
         User user = new User("Test", "User",
-                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
-        return new LoginResponse(user, new AuthToken());
+                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png","");
+        return new LoginResponse(user, new AuthToken(user.getAlias()));
     }
 }
