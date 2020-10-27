@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * Represents a Status in the system
  */
-public abstract class Status implements Comparable<Status>, Serializable {
+public class Status implements Comparable<Status>, Serializable {
 
     private final User user;
     private final String tweetText;
