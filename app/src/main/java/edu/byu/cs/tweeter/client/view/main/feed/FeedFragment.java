@@ -196,7 +196,7 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
 
         private final List<Status> feed = new ArrayList<>();
 
-        private edu.byu.cs.tweeter.model.domain.Status lastStatus;
+        private Status lastStatus;
 
         private boolean hasMorePages;
         private boolean isLoading = false;

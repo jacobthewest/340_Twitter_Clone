@@ -200,7 +200,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
 
         private final List<Status> story = new ArrayList<>();
 
-        private edu.byu.cs.tweeter.model.domain.Status lastStatus;
+        private Status lastStatus;
 
         private boolean hasMorePages;
         private boolean isLoading = false;
