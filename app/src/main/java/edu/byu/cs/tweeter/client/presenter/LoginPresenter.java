@@ -8,6 +8,7 @@ import edu.byu.cs.tweeter.shared.service.request.LoginRequest;
 import edu.byu.cs.tweeter.shared.service.response.LoginResponse;
 import edu.byu.cs.tweeter.shared.service.LoginService;
 
+
 /**
  * The presenter for the login functionality of the application.
  */
@@ -40,4 +41,6 @@ public class LoginPresenter {
         LoginService loginService = new LoginServiceProxy();
         return loginService.login(loginRequest);
     }
+
+    public LoginService getLoginService() {return new LoginServiceProxy();}
 }
