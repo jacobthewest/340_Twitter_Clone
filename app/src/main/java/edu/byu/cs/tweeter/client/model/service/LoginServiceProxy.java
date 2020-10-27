@@ -17,6 +17,7 @@ public class LoginServiceProxy implements LoginService {
 
     private static final String URL_PATH = "/login";
 
+    @Override
     public LoginResponse login(LoginRequest request) throws IOException, TweeterRemoteException {
         ServerFacade serverFacade = getServerFacade();
         LoginResponse loginResponse = serverFacade.login(request, URL_PATH);

@@ -4,20 +4,23 @@ import java.io.IOException;
 
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
-import edu.byu.cs.tweeter.shared.service.CountService;
-import edu.byu.cs.tweeter.shared.service.request.CountRequest;
-import edu.byu.cs.tweeter.shared.service.response.CountResponse;
+import edu.byu.cs.tweeter.shared.service.LogoutService;
+import edu.byu.cs.tweeter.shared.service.request.LogoutRequest;
+import edu.byu.cs.tweeter.shared.service.response.LogoutResponse;
 
-public class CountServiceProxy implements CountService {
+/**
+ * Contains the business logic to support the logout operation.
+ */
+public class LogoutServiceProxy implements LogoutService {
 
-    static final String URL_PATH = "/getcount";
+    private static final String URL_PATH = "/logout";
 
     @Override
-    public CountResponse getCount(CountRequest request) throws IOException, TweeterRemoteException {
+    public LogoutResponse logout(LogoutRequest request) throws IOException, TweeterRemoteException {
         ServerFacade serverFacade = getServerFacade();
-        CountResponse countResponse = serverFacade.getCount(request, URL_PATH);
+        LogoutResponse logoutResponse = serverFacade.logout(request, URL_PATH);
 
-        return countResponse;
+        return logoutResponse;
     }
 
     /**

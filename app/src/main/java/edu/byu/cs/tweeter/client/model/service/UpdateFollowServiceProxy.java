@@ -4,20 +4,20 @@ import java.io.IOException;
 
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
 import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
-import edu.byu.cs.tweeter.shared.service.CountService;
-import edu.byu.cs.tweeter.shared.service.request.CountRequest;
-import edu.byu.cs.tweeter.shared.service.response.CountResponse;
+import edu.byu.cs.tweeter.shared.service.UpdateFollowService;
+import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
+import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
 
-public class CountServiceProxy implements CountService {
+public class UpdateFollowServiceProxy implements UpdateFollowService {
 
-    static final String URL_PATH = "/getcount";
+    private static final String URL_PATH = "/updatefollow";
 
     @Override
-    public CountResponse getCount(CountRequest request) throws IOException, TweeterRemoteException {
+    public UpdateFollowResponse updateFollow(UpdateFollowRequest request) throws IOException, TweeterRemoteException {
         ServerFacade serverFacade = getServerFacade();
-        CountResponse countResponse = serverFacade.getCount(request, URL_PATH);
+        UpdateFollowResponse updateFollowResponse = serverFacade.updateFollow(request, URL_PATH);
 
-        return countResponse;
+        return updateFollowResponse;
     }
 
     /**

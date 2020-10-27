@@ -2,20 +2,20 @@ package edu.byu.cs.tweeter.client.model.service;
 
 import java.io.IOException;
 
-import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
-import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
-import edu.byu.cs.tweeter.shared.service.FeedService;
-import edu.byu.cs.tweeter.shared.service.request.FeedRequest;
-import edu.byu.cs.tweeter.shared.service.response.FeedResponse;
 import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
+import edu.byu.cs.tweeter.shared.domain.Status;
+import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
+import edu.byu.cs.tweeter.shared.service.StoryService;
+import edu.byu.cs.tweeter.shared.service.request.StoryRequest;
+import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 
 /**
- * Contains the business logic for getting the feed of the logged in user.
+ * Contains the business logic for getting the statuses of the logged in user.
  */
-public class FeedServiceProxy implements FeedService {
+public class StoryServiceProxy implements StoryService {
 
-    static final String URL_PATH = "/getfeed";
+    private static final String URL_PATH = "/getstory";
 
     /**
      * Returns the statuses of the specified user in the request. Uses information in
@@ -27,8 +27,8 @@ public class FeedServiceProxy implements FeedService {
      * @return the statuses.
      */
     @Override
-    public FeedResponse getFeed(FeedRequest request) throws IOException, TweeterRemoteException {
-        FeedResponse response = getServerFacade().getFeed(request, URL_PATH);
+    public StoryResponse getStory(StoryRequest request) throws IOException, TweeterRemoteException {
+        StoryResponse response = getServerFacade().getStory(request, URL_PATH);
 
         if(response.isSuccess()) {
             loadImages(response);
@@ -38,12 +38,12 @@ public class FeedServiceProxy implements FeedService {
     }
 
     /**
-     * Loads the profile image of the user for each status in the FeedResponse.
+     * Loads the profile image of the user for each status in the StoryResponse.
      *
-     * @param response the response from the feed request.
+     * @param response the response from the story request.
      */
-    private void loadImages(FeedResponse response) throws IOException {
-        for(Status status : response.getFeed()) {
+    private void loadImages(StoryResponse response) throws IOException {
+        for(Status status : response.getStory()) {
             byte [] bytes = ByteArrayUtils.bytesFromUrl(status.getUser().getImageUrl());
             status.getUser().setImageBytes(bytes);
         }
@@ -56,7 +56,7 @@ public class FeedServiceProxy implements FeedService {
      *
      * @return the instance.
      */
-    public ServerFacade getServerFacade() {
+    ServerFacade getServerFacade() {
         return new ServerFacade();
     }
 }
