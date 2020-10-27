@@ -5,7 +5,7 @@ import edu.byu.cs.tweeter.shared.service.UpdateFollowService;
 import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
 import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
 
-public class UpdateFollowImpl implements UpdateFollowService {
+public class UpdateFollowServiceImpl implements UpdateFollowService {
 
     @Override
     public UpdateFollowResponse updateFollow(UpdateFollowRequest request) {
