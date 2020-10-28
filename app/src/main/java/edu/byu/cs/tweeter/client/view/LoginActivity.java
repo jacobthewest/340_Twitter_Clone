@@ -12,11 +12,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.model.service.request.LoginRequest;
-import edu.byu.cs.tweeter.model.service.response.LoginResponse;
-import edu.byu.cs.tweeter.presenter.LoginPresenter;
-import edu.byu.cs.tweeter.view.asyncTasks.LoginTask;
-import edu.byu.cs.tweeter.view.main.MainActivity;
+import edu.byu.cs.tweeter.shared.service.request.LoginRequest;
+import edu.byu.cs.tweeter.shared.service.response.LoginResponse;
+import edu.byu.cs.tweeter.client.presenter.LoginPresenter;
+import edu.byu.cs.tweeter.client.view.asyncTasks.LoginTask;
+import edu.byu.cs.tweeter.client.view.main.MainActivity;
 
 /**
  * Contains the minimum UI required to allow the user to login with a hard-coded user. Most or all
@@ -58,14 +58,14 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenter.V
                 String toastText = "";
                 loginInToast = null;
                 if(isEmpty(userNameLogin) || isEmpty(passwordLogin)) {
-                    loginInToast = Toast.makeText(edu.byu.cs.tweeter.view.LoginActivity.this, "Username and password must be filled in" , Toast.LENGTH_LONG);
+                    loginInToast = Toast.makeText(LoginActivity.this, "Username and password must be filled in" , Toast.LENGTH_LONG);
                     loginInToast.show();
                 } else {
-                    loginInToast = Toast.makeText(edu.byu.cs.tweeter.view.LoginActivity.this, "Logging In", Toast.LENGTH_LONG);
+                    loginInToast = Toast.makeText(LoginActivity.this, "Logging In", Toast.LENGTH_LONG);
                     loginInToast.show();
                     // It doesn't matter what values we put here. We will be logged in with a hard-coded dummy user.
                     LoginRequest loginRequest = new LoginRequest("dummyUserName", "dummyPassword");
-                    LoginTask loginTask = new LoginTask(presenter, edu.byu.cs.tweeter.view.LoginActivity.this);
+                    LoginTask loginTask = new LoginTask(presenter, LoginActivity.this);
                     loginTask.execute(loginRequest);
                 }
             }

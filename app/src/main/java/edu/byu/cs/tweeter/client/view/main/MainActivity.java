@@ -21,27 +21,27 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.model.domain.AuthToken;
-import edu.byu.cs.tweeter.model.domain.User;
-import edu.byu.cs.tweeter.model.service.request.CountRequest;
-import edu.byu.cs.tweeter.model.service.request.FollowingRequest;
-import edu.byu.cs.tweeter.model.service.request.LogoutRequest;
-import edu.byu.cs.tweeter.model.service.request.UpdateFollowRequest;
-import edu.byu.cs.tweeter.model.service.response.CountResponse;
-import edu.byu.cs.tweeter.model.service.response.FollowingResponse;
-import edu.byu.cs.tweeter.model.service.response.LogoutResponse;
-import edu.byu.cs.tweeter.model.service.response.UpdateFollowResponse;
-import edu.byu.cs.tweeter.presenter.CountPresenter;
-import edu.byu.cs.tweeter.presenter.FollowingPresenter;
-import edu.byu.cs.tweeter.presenter.LogoutPresenter;
-import edu.byu.cs.tweeter.presenter.UpdateFollowPresenter;
-import edu.byu.cs.tweeter.view.HomeActivity;
-import edu.byu.cs.tweeter.view.asyncTasks.CountTask;
-import edu.byu.cs.tweeter.view.asyncTasks.GetFollowingTask;
-import edu.byu.cs.tweeter.view.asyncTasks.LogoutTask;
-import edu.byu.cs.tweeter.view.asyncTasks.UpdateFollowTask;
-import edu.byu.cs.tweeter.view.main.tweet.TweetFragment;
-import edu.byu.cs.tweeter.view.util.ImageUtils;
+import edu.byu.cs.tweeter.shared.domain.AuthToken;
+import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.shared.service.request.CountRequest;
+import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
+import edu.byu.cs.tweeter.shared.service.request.LogoutRequest;
+import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
+import edu.byu.cs.tweeter.shared.service.response.CountResponse;
+import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
+import edu.byu.cs.tweeter.shared.service.response.LogoutResponse;
+import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
+import edu.byu.cs.tweeter.client.presenter.CountPresenter;
+import edu.byu.cs.tweeter.client.presenter.FollowingPresenter;
+import edu.byu.cs.tweeter.client.presenter.LogoutPresenter;
+import edu.byu.cs.tweeter.client.presenter.UpdateFollowPresenter;
+import edu.byu.cs.tweeter.client.view.HomeActivity;
+import edu.byu.cs.tweeter.client.view.asyncTasks.CountTask;
+import edu.byu.cs.tweeter.client.view.asyncTasks.GetFollowingTask;
+import edu.byu.cs.tweeter.client.view.asyncTasks.LogoutTask;
+import edu.byu.cs.tweeter.client.view.asyncTasks.UpdateFollowTask;
+import edu.byu.cs.tweeter.client.view.main.tweet.TweetFragment;
+import edu.byu.cs.tweeter.client.view.util.ImageUtils;
 
 /**
  * The main activity for the application. Contains tabs for feed, story, following, and followers.
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
         }
 
         authToken = (AuthToken) getIntent().getSerializableExtra(AUTH_TOKEN_KEY);
-        edu.byu.cs.tweeter.view.main.MainSectionsPagerAdapter mainSectionsPagerAdapter = new edu.byu.cs.tweeter.view.main.MainSectionsPagerAdapter(this, getSupportFragmentManager(), user, followUser, authToken);
+        MainSectionsPagerAdapter mainSectionsPagerAdapter = new MainSectionsPagerAdapter(this, getSupportFragmentManager(), user, followUser, authToken);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(mainSectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
@@ -240,7 +240,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
 
     @Override
     public void logoutSuccessful(LogoutResponse logoutResponse) {
-        Intent intent = new Intent(edu.byu.cs.tweeter.view.main.MainActivity.this, HomeActivity.class);
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
         startActivity(intent);
         finish(); // Makes it so this Activity ends after we get the new HomeActivity going.
     }
