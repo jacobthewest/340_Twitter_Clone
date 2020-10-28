@@ -9,6 +9,8 @@
     <string name="cancelTweet">Cancel</string>
     <string name="postTweet">Post</string>
     <string name="uploadImage">Upload Your Profile Picture</string>
+    <string name="logoutMenuTitle">Upload Your Profile Picture</string>
+
 
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_home">HomeActivity</string>

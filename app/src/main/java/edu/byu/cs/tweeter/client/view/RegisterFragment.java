@@ -19,13 +19,13 @@ import androidx.fragment.app.Fragment;
 import java.io.InputStream;
 
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.model.service.request.RegisterRequest;
-import edu.byu.cs.tweeter.model.service.response.RegisterResponse;
-import edu.byu.cs.tweeter.presenter.RegisterPresenter;
-import edu.byu.cs.tweeter.view.asyncTasks.RegisterTask;
-import edu.byu.cs.tweeter.view.main.MainActivity;
-import edu.byu.cs.tweeter.view.util.AliasChecker;
-import edu.byu.cs.tweeter.view.util.ImageUtils;
+import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
+import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
+import edu.byu.cs.tweeter.client.presenter.RegisterPresenter;
+import edu.byu.cs.tweeter.client.view.asyncTasks.RegisterTask;
+import edu.byu.cs.tweeter.client.view.main.MainActivity;
+import edu.byu.cs.tweeter.client.view.util.AliasChecker;
+import edu.byu.cs.tweeter.client.view.util.ImageUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -51,8 +51,8 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
      *
      * @return the fragment.
      */
-    public static edu.byu.cs.tweeter.view.RegisterFragment newInstance() {
-        edu.byu.cs.tweeter.view.RegisterFragment fragment = new edu.byu.cs.tweeter.view.RegisterFragment();
+    public static RegisterFragment newInstance() {
+        RegisterFragment fragment = new RegisterFragment();
 
         Bundle args = new Bundle(0);
 
