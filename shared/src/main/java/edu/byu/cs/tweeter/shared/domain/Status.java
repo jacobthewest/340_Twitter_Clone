@@ -18,7 +18,6 @@ public class Status implements Comparable<Status>, Serializable {
     private final List<String> mentions;
     private byte [] imageBytes;
 
-
     public Status(User user, String postText, List<String> urls, Calendar timePosted, List<String> mentions) {
         this.user = user;
         this.tweetText = postText;

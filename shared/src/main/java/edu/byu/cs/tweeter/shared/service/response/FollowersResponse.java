@@ -12,6 +12,10 @@ public class FollowersResponse extends PagedResponse {
 
     private List<User> followers;
 
+    public FollowersResponse() {
+        super();
+    }
+
     /**
      * Creates a response indicating that the corresponding request was unsuccessful. Sets the
      * success and more pages indicators to false.
@@ -40,6 +44,10 @@ public class FollowersResponse extends PagedResponse {
      */
     public List<User> getFollowers() {
         return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
     }
 
     @Override

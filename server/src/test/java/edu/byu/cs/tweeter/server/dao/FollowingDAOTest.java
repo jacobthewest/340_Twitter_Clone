@@ -15,14 +15,14 @@ import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
 
 class FollowingDAOTest {
 
-    private final User user1 = new User("Daffy", "Duck", "");
-    private final User user2 = new User("Fred", "Flintstone", "");
-    private final User user3 = new User("Barney", "Rubble", "");
-    private final User user4 = new User("Wilma", "Rubble", "");
-    private final User user5 = new User("Clint", "Eastwood", "");
-    private final User user6 = new User("Mother", "Teresa", "");
-    private final User user7 = new User("Harriett", "Hansen", "");
-    private final User user8 = new User("Zoe", "Zabriski", "");
+    private final User user1 = new User("Daffy", "Duck", "", "");
+    private final User user2 = new User("Fred", "Flintstone", "", "");
+    private final User user3 = new User("Barney", "Rubble", "", "");
+    private final User user4 = new User("Wilma", "Rubble", "", "");
+    private final User user5 = new User("Clint", "Eastwood", "", "");
+    private final User user6 = new User("Mother", "Teresa", "", "");
+    private final User user7 = new User("Harriett", "Hansen", "", "");
+    private final User user8 = new User("Zoe", "Zabriski", "", "");
 
     private FollowingDAO followingDAOSpy;
 

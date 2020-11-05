@@ -1,5 +1,10 @@
 package edu.byu.cs.tweeter.client.presenter;
 
+import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
+import edu.byu.cs.tweeter.shared.service.FollowingService;
+import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
+import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,12 +12,6 @@ import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.util.Arrays;
-
-import edu.byu.cs.tweeter.shared.domain.User;
-import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
-import edu.byu.cs.tweeter.shared.service.FollowingService;
-import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
-import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
 
 public class FollowingPresenterTest {
 
@@ -23,14 +22,14 @@ public class FollowingPresenterTest {
 
     @BeforeEach
     public void setup() throws IOException, TweeterRemoteException {
-        User currentUser = new User("FirstName", "LastName", null);
+        User currentUser = new User("FirstName", "LastName", null, "");
 
         User resultUser1 = new User("FirstName1", "LastName1",
-                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png");
+                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png", "");
         User resultUser2 = new User("FirstName2", "LastName2",
-                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png");
+                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png", "");
         User resultUser3 = new User("FirstName3", "LastName3",
-                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png");
+                "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png", "");
 
         request = new FollowingRequest(currentUser, 3, null);
         response = new FollowingResponse(Arrays.asList(resultUser1, resultUser2, resultUser3), false);

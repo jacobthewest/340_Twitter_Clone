@@ -4,7 +4,9 @@ import edu.byu.cs.tweeter.shared.domain.User;
 
 public class CountRequest {
 
-    private final User user;
+    private User user;
+
+    public CountRequest() {}
 
     public CountRequest(User user) {
         this.user = user;
@@ -12,5 +14,9 @@ public class CountRequest {
 
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

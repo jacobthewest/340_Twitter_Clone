@@ -5,8 +5,10 @@ import edu.byu.cs.tweeter.shared.domain.User;
 
 public class LogoutRequest {
 
-    private final User user;
+    private User user;
     private AuthToken authToken;
+
+    public LogoutRequest() {}
 
     /**
      * Creates an instance.
@@ -34,5 +36,13 @@ public class LogoutRequest {
      */
     public AuthToken getAuthToken() {
         return authToken;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setAuthToken(AuthToken authToken) {
+        this.authToken = authToken;
     }
 }

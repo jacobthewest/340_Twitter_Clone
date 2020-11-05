@@ -11,6 +11,10 @@ public class RegisterResponse extends Response {
     private User user;
     private AuthToken authToken;
 
+    public RegisterResponse() {
+        super(true, null);
+    }
+
     /**
      * Creates a response indicating that the corresponding request was unsuccessful.
      *
@@ -48,6 +52,14 @@ public class RegisterResponse extends Response {
      */
     public AuthToken getAuthToken() {
         return authToken;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setAuthToken(AuthToken authToken) {
+        this.authToken = authToken;
     }
 }
 

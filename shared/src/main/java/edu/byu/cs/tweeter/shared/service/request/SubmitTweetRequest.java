@@ -11,6 +11,8 @@ public class SubmitTweetRequest {
     private User user;
     private Status status;
 
+    public SubmitTweetRequest() {}
+
     /**
      * Creates an instance.
      *
@@ -38,5 +40,13 @@ public class SubmitTweetRequest {
      */
     public Status getStatus() {
         return status;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

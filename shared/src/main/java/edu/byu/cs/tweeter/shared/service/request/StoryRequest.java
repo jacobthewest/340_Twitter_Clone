@@ -9,9 +9,11 @@ import edu.byu.cs.tweeter.shared.domain.User;
  */
 public class StoryRequest {
 
-    private final User user;
-    private final int limit;
-    private final Status lastStatus;
+    private User user;
+    private int limit;
+    private Status lastStatus;
+
+    public StoryRequest() {}
 
     /**
      * Creates an instance.
@@ -54,5 +56,17 @@ public class StoryRequest {
      */
     public Status getLastStatus() {
         return lastStatus;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public void setLastStatus(Status lastStatus) {
+        this.lastStatus = lastStatus;
     }
 }

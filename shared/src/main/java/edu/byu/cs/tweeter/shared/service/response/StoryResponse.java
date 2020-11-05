@@ -9,6 +9,10 @@ public class StoryResponse extends PagedResponse {
 
     private List<Status> statuses;
 
+    public StoryResponse() {
+        super();
+    }
+
     /**
      * Creates a response indicating that the corresponding request was unsuccessful. Sets the
      * success and more pages indicators to false.
@@ -37,6 +41,10 @@ public class StoryResponse extends PagedResponse {
      */
     public List<Status> getStory() {
         return statuses;
+    }
+
+    public void setStatuses(List<Status> statuses) {
+        this.statuses = statuses;
     }
 
     @Override

@@ -5,7 +5,9 @@ package edu.byu.cs.tweeter.shared.service.request;
  */
 public class RetrieveUserRequest {
 
-    private final String username;
+    private String username;
+
+    public RetrieveUserRequest() {}
 
     /**
      * Creates an instance.
@@ -23,5 +25,9 @@ public class RetrieveUserRequest {
      */
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

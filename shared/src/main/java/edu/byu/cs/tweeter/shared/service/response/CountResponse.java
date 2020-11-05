@@ -10,6 +10,10 @@ public class CountResponse extends Response {
     private int followingCount;
     private int followersCount;
 
+    public CountResponse() {
+        super(true, null);
+    }
+
     /**
      * Creates a response indicating that the corresponding request was unsuccessful.
      *
@@ -51,5 +55,17 @@ public class CountResponse extends Response {
     @Override
     public int hashCode() {
         return Objects.hash(user, followingCount, followersCount);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setFollowingCount(int followingCount) {
+        this.followingCount = followingCount;
+    }
+
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
     }
 }

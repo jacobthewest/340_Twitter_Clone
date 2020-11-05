@@ -11,6 +11,10 @@ public class UpdateFollowResponse extends Response {
     private User followUser;
     private List<User> following;
 
+    public UpdateFollowResponse() {
+        super(true, null);
+    }
+
     /**
      * Creates a response indicating that the corresponding request was unsuccessful.
      *
@@ -37,6 +41,18 @@ public class UpdateFollowResponse extends Response {
 
     public List<User> getFollowing() {
         return this.following;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setFollowUser(User followUser) {
+        this.followUser = followUser;
+    }
+
+    public void setFollowing(List<User> following) {
+        this.following = following;
     }
 
     @Override

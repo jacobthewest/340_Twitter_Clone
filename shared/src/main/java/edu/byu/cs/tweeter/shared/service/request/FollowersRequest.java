@@ -8,9 +8,11 @@ import edu.byu.cs.tweeter.shared.domain.User;
  */
 public class FollowersRequest {
 
-    private final User user;
-    private final int limit;
-    private final User lastFollower;
+    private User user;
+    private int limit;
+    private User lastFollower;
+
+    public FollowersRequest() {}
 
     /**
      * Creates an instance.
@@ -53,5 +55,17 @@ public class FollowersRequest {
      */
     public User getLastFollower() {
         return lastFollower;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
+    public void setLastFollower(User lastFollower) {
+        this.lastFollower = lastFollower;
     }
 }

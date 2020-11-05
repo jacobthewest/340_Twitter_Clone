@@ -10,8 +10,13 @@ import edu.byu.cs.tweeter.shared.domain.User;
  * A response for a {@link edu.byu.cs.tweeter.shared.service.request.SubmitTweetRequest}.
  */
 public class SubmitTweetResponse extends Response {
+
     private User user;
     private Status status;
+
+    public SubmitTweetResponse() {
+        super(true, null);
+    }
 
     /**
      * Creates a response indicating that the corresponding request was unsuccessful.
@@ -50,6 +55,14 @@ public class SubmitTweetResponse extends Response {
      */
     public Status getStatus() {
         return status;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override

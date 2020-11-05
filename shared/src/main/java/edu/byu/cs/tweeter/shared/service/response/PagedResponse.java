@@ -5,7 +5,11 @@ package edu.byu.cs.tweeter.shared.service.response;
  */
 public class PagedResponse extends Response {
 
-    private final boolean hasMorePages;
+    private boolean hasMorePages;
+
+    public PagedResponse() {
+        super(true, null);
+    }
 
     PagedResponse(boolean success, boolean hasMorePages) {
         super(success);
@@ -26,5 +30,9 @@ public class PagedResponse extends Response {
      */
     public boolean getHasMorePages() {
         return hasMorePages;
+    }
+
+    public void setHasMorePages(boolean hasMorePages) {
+        this.hasMorePages = hasMorePages;
     }
 }

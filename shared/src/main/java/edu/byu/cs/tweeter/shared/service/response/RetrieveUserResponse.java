@@ -11,6 +11,10 @@ public class RetrieveUserResponse extends Response {
 
     private User user;
 
+    public RetrieveUserResponse() {
+        super(true, null);
+    }
+
     /**
      * Creates a response indicating that the corresponding request was unsuccessful.
      *
@@ -37,6 +41,10 @@ public class RetrieveUserResponse extends Response {
      */
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

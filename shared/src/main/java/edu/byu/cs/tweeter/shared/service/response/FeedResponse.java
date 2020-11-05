@@ -9,6 +9,10 @@ public class FeedResponse extends PagedResponse {
 
     private List<Status> statuses;
 
+    public FeedResponse() {
+        super();
+    }
+
     /**
      * Creates a response indicating that the corresponding request was unsuccessful. Sets the
      * success and more pages indicators to false.
@@ -27,6 +31,10 @@ public class FeedResponse extends PagedResponse {
      */
     public FeedResponse(List<Status> statuses, boolean hasMorePages) {
         super(true, hasMorePages);
+        this.statuses = statuses;
+    }
+
+    public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }
 
