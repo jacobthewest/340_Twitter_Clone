@@ -60,7 +60,9 @@ public class UpdateFollowDAO {
         } else { // Unfollow the followUser
             dummyFollowees.remove(request.getFollowUser());
         }
-        return new UpdateFollowResponse(request.getUser(), request.getFollowUser(), dummyFollowees);
+
+        User[] arrDummyFollowees = (User[]) dummyFollowees.toArray();
+        return new UpdateFollowResponse(request.getUser(), request.getFollowUser(), arrDummyFollowees);
     }
 
     public List<User> getDummyFollowees() {

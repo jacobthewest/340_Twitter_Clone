@@ -96,7 +96,8 @@ public class FollowingDAO {
             }
         }
 
-        return new FollowingResponse(responseFollowees, hasMorePages);
+        User[] arrResponseFollowees = (User[]) responseFollowees.toArray();
+        return new FollowingResponse(arrResponseFollowees, hasMorePages);
     }
 
     /**

@@ -30,11 +30,12 @@ public class FeedDAO {
 
         List<Status> allStatuses = feedStatusesByUser.get(request.getUser().getAlias());
         List<Status> responseStatuses = new ArrayList<>(request.getLimit());
+        Status[] arrResponseStatuses = (Status[]) responseStatuses.toArray();
 
         boolean hasMorePages = false;
 
         if (allStatuses == null) {
-            return new FeedResponse(responseStatuses, hasMorePages);
+            return new FeedResponse(arrResponseStatuses, hasMorePages);
         }
 
         if(request.getLimit() > 0) {
@@ -49,7 +50,8 @@ public class FeedDAO {
             }
         }
 
-        return new FeedResponse(responseStatuses, hasMorePages);
+        arrResponseStatuses = (Status[]) responseStatuses.toArray();
+        return new FeedResponse(arrResponseStatuses, hasMorePages);
     }
 
     /**
