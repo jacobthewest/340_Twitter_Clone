@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
@@ -271,7 +272,8 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
          */
         @Override
         public void followersRetrieved(FollowersResponse followersResponse) {
-            List<User> followers = followersResponse.getFollowers();
+            User[] arrFollowers = followersResponse.getFollowers();
+            List<User> followers = Arrays.asList(arrFollowers);
 
             lastFollower = (followers.size() > 0) ? followers.get(followers.size() -1) : null;
             hasMorePages = followersResponse.getHasMorePages();

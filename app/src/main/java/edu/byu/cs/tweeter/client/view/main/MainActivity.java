@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.Arrays;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
@@ -268,7 +269,10 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
 
     @Override
     public void updateFollowSuccessful(UpdateFollowResponse updateFollowResponse) {
-        List<User> responseFollowing = updateFollowResponse.getFollowing();
+        User[] arrResponseFollowing = updateFollowResponse.getFollowing();
+        List<User> responseFollowing = Arrays.asList(arrResponseFollowing);
+
+
         this.following = responseFollowing;
         User followUserFromResponse = updateFollowResponse.getFollowUser();
         followButtonHelper(responseFollowing, followUserFromResponse);
@@ -292,7 +296,8 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
 
     @Override
     public void followeesRetrieved(FollowingResponse followingResponse) {
-        this.following = followingResponse.getFollowees();
+        User[] arrFollowing = followingResponse.getFollowees();
+        this.following = Arrays.asList(arrFollowing);
         followButtonHelper(this.following, this.followUser);
         // TODO: What do we do with the followees retrieved?
     }

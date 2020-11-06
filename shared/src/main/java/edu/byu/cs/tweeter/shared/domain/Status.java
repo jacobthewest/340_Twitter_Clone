@@ -2,8 +2,6 @@ package edu.byu.cs.tweeter.shared.domain;
 
 
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -13,12 +11,13 @@ public class Status implements Comparable<Status>, Serializable {
 
     private final User user;
     private final String tweetText;
-    private final List<String> urls;
-    private final Calendar timePosted;
-    private final List<String> mentions;
+    private final String urls;
+    private final String timePosted;
+    private final String mentions;
     private byte [] imageBytes;
 
-    public Status(User user, String postText, List<String> urls, Calendar timePosted, List<String> mentions) {
+
+    public Status(User user, String postText, String urls, String timePosted, String mentions) {
         this.user = user;
         this.tweetText = postText;
         this.urls = urls;
@@ -34,15 +33,13 @@ public class Status implements Comparable<Status>, Serializable {
         return tweetText;
     }
 
-    public List<String> getUrls() {
+    public String getUrls() {
         return urls;
     }
 
-    public Calendar getTimePosted() {
-        return timePosted;
-    }
+    public String getTimePosted() { return timePosted; }
 
-    public List<String> getMentions() {
+    public String getMentions() {
         return mentions;
     }
 

@@ -1,7 +1,6 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Arrays;
 
 import edu.byu.cs.tweeter.shared.domain.User;
 
@@ -10,7 +9,7 @@ import edu.byu.cs.tweeter.shared.domain.User;
  */
 public class FollowersResponse extends PagedResponse {
 
-    private List<User> followers;
+    private User[] followers;
 
     public FollowersResponse() {
         super();
@@ -32,7 +31,7 @@ public class FollowersResponse extends PagedResponse {
      * @param followers the followers to be included in the result.
      * @param hasMorePages an indicator of whether more data is available for the request.
      */
-    public FollowersResponse(List<User> followers, boolean hasMorePages) {
+    public FollowersResponse(User[] followers, boolean hasMorePages) {
         super(true, hasMorePages);
         this.followers = followers;
     }
@@ -42,33 +41,24 @@ public class FollowersResponse extends PagedResponse {
      *
      * @return the followers.
      */
-    public List<User> getFollowers() {
+    public User[] getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<User> followers) {
+    public void setFollowers(User[] followers) {
         this.followers = followers;
     }
 
     @Override
-    public boolean equals(Object param) {
-        if (this == param) {
-            return true;
-        }
-
-        if (param == null || getClass() != param.getClass()) {
-            return false;
-        }
-
-        FollowersResponse that = (FollowersResponse) param;
-
-        return (Objects.equals(followers, that.followers) &&
-                Objects.equals(this.getMessage(), that.getMessage()) &&
-                this.isSuccess() == that.isSuccess());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FollowersResponse that = (FollowersResponse) o;
+        return Arrays.equals(followers, that.followers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(followers);
+        return Arrays.hashCode(followers);
     }
 }

@@ -1,13 +1,12 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Arrays;
 
 import edu.byu.cs.tweeter.shared.domain.Status;
 
 public class FeedResponse extends PagedResponse {
 
-    private List<Status> statuses;
+    private Status[] statuses;
 
     public FeedResponse() {
         super();
@@ -29,12 +28,12 @@ public class FeedResponse extends PagedResponse {
      * @param statuses the statuses to be included in the result.
      * @param hasMorePages an indicator of whether more data is available for the request.
      */
-    public FeedResponse(List<Status> statuses, boolean hasMorePages) {
+    public FeedResponse(Status[] statuses, boolean hasMorePages) {
         super(true, hasMorePages);
         this.statuses = statuses;
     }
 
-    public void setStatuses(List<Status> statuses) {
+    public void setStatuses(Status[] statuses) {
         this.statuses = statuses;
     }
 
@@ -43,29 +42,20 @@ public class FeedResponse extends PagedResponse {
      *
      * @return the feed.
      */
-    public List<Status> getFeed() {
+    public Status[] getFeed() {
         return statuses;
     }
 
     @Override
-    public boolean equals(Object param) {
-        if (this == param) {
-            return true;
-        }
-
-        if (param == null || getClass() != param.getClass()) {
-            return false;
-        }
-
-        FeedResponse that = (FeedResponse) param;
-
-        return (Objects.equals(statuses, that.statuses) &&
-                Objects.equals(this.getMessage(), that.getMessage()) &&
-                this.isSuccess() == that.isSuccess());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FeedResponse that = (FeedResponse) o;
+        return Arrays.equals(statuses, that.statuses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(statuses);
+        return Arrays.hashCode(statuses);
     }
 }

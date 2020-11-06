@@ -1,13 +1,12 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.Arrays;
 
 import edu.byu.cs.tweeter.shared.domain.Status;
 
 public class StoryResponse extends PagedResponse {
 
-    private List<Status> statuses;
+    private Status[] statuses;
 
     public StoryResponse() {
         super();
@@ -29,7 +28,7 @@ public class StoryResponse extends PagedResponse {
      * @param statuses the statuses to be included in the result.
      * @param hasMorePages an indicator of whether more data is available for the request.
      */
-    public StoryResponse(List<Status> statuses, boolean hasMorePages) {
+    public StoryResponse(Status[] statuses, boolean hasMorePages) {
         super(true, hasMorePages);
         this.statuses = statuses;
     }
@@ -39,33 +38,24 @@ public class StoryResponse extends PagedResponse {
      *
      * @return the story.
      */
-    public List<Status> getStory() {
+    public Status[] getStory() {
         return statuses;
     }
 
-    public void setStatuses(List<Status> statuses) {
+    public void setStatuses(Status[] statuses) {
         this.statuses = statuses;
     }
 
     @Override
-    public boolean equals(Object param) {
-        if (this == param) {
-            return true;
-        }
-
-        if (param == null || getClass() != param.getClass()) {
-            return false;
-        }
-
-        StoryResponse that = (StoryResponse) param;
-
-        return (Objects.equals(statuses, that.statuses) &&
-                Objects.equals(this.getMessage(), that.getMessage()) &&
-                this.isSuccess() == that.isSuccess());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StoryResponse that = (StoryResponse) o;
+        return Arrays.equals(statuses, that.statuses);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(statuses);
+        return Arrays.hashCode(statuses);
     }
 }
