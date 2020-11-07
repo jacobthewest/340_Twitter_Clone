@@ -29,13 +29,12 @@ public class FeedDAO {
         Map<String, List<Status>> feedStatusesByUser = tool.initializeFeed();
 
         List<Status> allStatuses = feedStatusesByUser.get(request.getUser().getAlias());
-        List<Status> responseStatuses = new ArrayList<>(request.getLimit());
-        Status[] arrResponseStatuses = (Status[]) responseStatuses.toArray();
+        List<Status> responseStatuses = new ArrayList<>(request.getLimit());;
 
         boolean hasMorePages = false;
 
         if (allStatuses == null) {
-            return new FeedResponse(arrResponseStatuses, hasMorePages);
+            return new FeedResponse(responseStatuses, hasMorePages);
         }
 
         if(request.getLimit() > 0) {
@@ -50,8 +49,7 @@ public class FeedDAO {
             }
         }
 
-        arrResponseStatuses = (Status[]) responseStatuses.toArray();
-        return new FeedResponse(arrResponseStatuses, hasMorePages);
+        return new FeedResponse(responseStatuses, hasMorePages);
     }
 
     /**

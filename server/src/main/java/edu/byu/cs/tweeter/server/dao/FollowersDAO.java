@@ -66,8 +66,7 @@ public class FollowersDAO {
 
         if(!isRecognizedUser(request.getUser().getAlias())) {
             List<User> returnMe = new ArrayList<>();
-            User[] arrReturnMe = (User[]) returnMe.toArray();
-            return new FollowersResponse(arrReturnMe, false);
+            return new FollowersResponse(returnMe, false);
         }
 
         List<User> allFollowers = getDummyFollowers();
@@ -85,8 +84,7 @@ public class FollowersDAO {
             hasMorePages = followersIndex < allFollowers.size();
         }
 
-        User[] arrResponseFollowers = (User[]) responseFollowers.toArray();
-        return new FollowersResponse(arrResponseFollowers, hasMorePages);
+        return new FollowersResponse(responseFollowers, hasMorePages);
     }
 
     /**

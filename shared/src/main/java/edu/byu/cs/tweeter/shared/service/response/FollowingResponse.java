@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import edu.byu.cs.tweeter.shared.domain.User;
 
@@ -9,7 +10,7 @@ import edu.byu.cs.tweeter.shared.domain.User;
  */
 public class FollowingResponse extends PagedResponse {
 
-    private User[] followees;
+    private List<User> followees;
 
     public FollowingResponse() {
         super();
@@ -31,7 +32,7 @@ public class FollowingResponse extends PagedResponse {
      * @param followees the followees to be included in the result.
      * @param hasMorePages an indicator of whether more data is available for the request.
      */
-    public FollowingResponse(User[] followees, boolean hasMorePages) {
+    public FollowingResponse(List<User> followees, boolean hasMorePages) {
         super(true, hasMorePages);
         this.followees = followees;
     }
@@ -41,11 +42,11 @@ public class FollowingResponse extends PagedResponse {
      *
      * @return the followees.
      */
-    public User[] getFollowees() {
+    public List<User> getFollowees() {
         return followees;
     }
 
-    public void setFollowees(User[] followees) {
+    public void setFollowees(List<User> followees) {
         this.followees = followees;
     }
 
@@ -54,11 +55,11 @@ public class FollowingResponse extends PagedResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FollowingResponse that = (FollowingResponse) o;
-        return Arrays.equals(followees, that.followees);
+        return Objects.equals(followees, that.followees);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(followees);
+        return Objects.hash(followees);
     }
 }

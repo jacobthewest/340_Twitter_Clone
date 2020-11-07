@@ -18,20 +18,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.Arrays;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.shared.domain.AuthToken;
-import edu.byu.cs.tweeter.shared.domain.User;
-import edu.byu.cs.tweeter.shared.service.request.CountRequest;
-import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
-import edu.byu.cs.tweeter.shared.service.request.LogoutRequest;
-import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
-import edu.byu.cs.tweeter.shared.service.response.CountResponse;
-import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
-import edu.byu.cs.tweeter.shared.service.response.LogoutResponse;
-import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
 import edu.byu.cs.tweeter.client.presenter.CountPresenter;
 import edu.byu.cs.tweeter.client.presenter.FollowingPresenter;
 import edu.byu.cs.tweeter.client.presenter.LogoutPresenter;
@@ -43,6 +32,16 @@ import edu.byu.cs.tweeter.client.view.asyncTasks.LogoutTask;
 import edu.byu.cs.tweeter.client.view.asyncTasks.UpdateFollowTask;
 import edu.byu.cs.tweeter.client.view.main.tweet.TweetFragment;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
+import edu.byu.cs.tweeter.shared.domain.AuthToken;
+import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.shared.service.request.CountRequest;
+import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
+import edu.byu.cs.tweeter.shared.service.request.LogoutRequest;
+import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
+import edu.byu.cs.tweeter.shared.service.response.CountResponse;
+import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
+import edu.byu.cs.tweeter.shared.service.response.LogoutResponse;
+import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
 
 /**
  * The main activity for the application. Contains tabs for feed, story, following, and followers.
@@ -269,8 +268,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
 
     @Override
     public void updateFollowSuccessful(UpdateFollowResponse updateFollowResponse) {
-        User[] arrResponseFollowing = updateFollowResponse.getFollowing();
-        List<User> responseFollowing = Arrays.asList(arrResponseFollowing);
+        List<User> responseFollowing = updateFollowResponse.getFollowing();
 
 
         this.following = responseFollowing;
@@ -296,8 +294,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
 
     @Override
     public void followeesRetrieved(FollowingResponse followingResponse) {
-        User[] arrFollowing = followingResponse.getFollowees();
-        this.following = Arrays.asList(arrFollowing);
+        this.following = followingResponse.getFollowees();
         followButtonHelper(this.following, this.followUser);
         // TODO: What do we do with the followees retrieved?
     }

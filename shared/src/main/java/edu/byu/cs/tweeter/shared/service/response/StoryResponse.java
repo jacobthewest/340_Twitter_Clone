@@ -1,12 +1,13 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import edu.byu.cs.tweeter.shared.domain.Status;
 
 public class StoryResponse extends PagedResponse {
 
-    private Status[] statuses;
+    private List<Status> statuses;
 
     public StoryResponse() {
         super();
@@ -28,7 +29,7 @@ public class StoryResponse extends PagedResponse {
      * @param statuses the statuses to be included in the result.
      * @param hasMorePages an indicator of whether more data is available for the request.
      */
-    public StoryResponse(Status[] statuses, boolean hasMorePages) {
+    public StoryResponse(List<Status> statuses, boolean hasMorePages) {
         super(true, hasMorePages);
         this.statuses = statuses;
     }
@@ -38,11 +39,11 @@ public class StoryResponse extends PagedResponse {
      *
      * @return the story.
      */
-    public Status[] getStory() {
+    public List<Status> getStory() {
         return statuses;
     }
 
-    public void setStatuses(Status[] statuses) {
+    public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }
 
@@ -51,11 +52,11 @@ public class StoryResponse extends PagedResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         StoryResponse that = (StoryResponse) o;
-        return Arrays.equals(statuses, that.statuses);
+        return Objects.equals(statuses, that.statuses);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(statuses);
+        return Objects.hash(statuses);
     }
 }

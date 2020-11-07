@@ -1,12 +1,13 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import edu.byu.cs.tweeter.shared.domain.Status;
 
 public class FeedResponse extends PagedResponse {
 
-    private Status[] statuses;
+    private List<Status> statuses;
 
     public FeedResponse() {
         super();
@@ -28,12 +29,12 @@ public class FeedResponse extends PagedResponse {
      * @param statuses the statuses to be included in the result.
      * @param hasMorePages an indicator of whether more data is available for the request.
      */
-    public FeedResponse(Status[] statuses, boolean hasMorePages) {
+    public FeedResponse(List<Status> statuses, boolean hasMorePages) {
         super(true, hasMorePages);
         this.statuses = statuses;
     }
 
-    public void setStatuses(Status[] statuses) {
+    public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }
 
@@ -42,7 +43,7 @@ public class FeedResponse extends PagedResponse {
      *
      * @return the feed.
      */
-    public Status[] getFeed() {
+    public List<Status> getFeed() {
         return statuses;
     }
 
@@ -51,11 +52,11 @@ public class FeedResponse extends PagedResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FeedResponse that = (FeedResponse) o;
-        return Arrays.equals(statuses, that.statuses);
+        return Objects.equals(statuses, that.statuses);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(statuses);
+        return Objects.hash(statuses);
     }
 }

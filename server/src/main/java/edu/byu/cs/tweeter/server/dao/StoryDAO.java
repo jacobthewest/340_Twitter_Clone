@@ -20,12 +20,11 @@ public class StoryDAO {
 
         List<Status> allStatuses = storyStatusesByUser.get(request.getUser().getAlias());
         List<Status> responseStatuses = new ArrayList<>(request.getLimit());
-        Status[] arrResponseStatuses = (Status[]) responseStatuses.toArray();
 
         boolean hasMorePages = false;
 
         if (allStatuses == null) {
-            return new StoryResponse(arrResponseStatuses, hasMorePages);
+            return new StoryResponse(responseStatuses, hasMorePages);
         }
 
         if(request.getLimit() > 0) {
@@ -40,8 +39,7 @@ public class StoryDAO {
             }
         }
 
-        arrResponseStatuses = (Status[]) responseStatuses.toArray();
-        return new StoryResponse(arrResponseStatuses, hasMorePages);
+        return new StoryResponse(responseStatuses, hasMorePages);
     }
 
     /**

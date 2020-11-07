@@ -337,8 +337,7 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
          */
         @Override
         public void statusesRetrieved(FeedResponse feedResponse) {
-            Status[] arrStatuses = feedResponse.getFeed();
-            List<Status> statuses = Arrays.asList(arrStatuses);
+            List<Status> statuses = feedResponse.getFeed();
 
             lastStatus = (statuses.size() > 0) ? statuses.get(statuses.size() -1) : null;
             hasMorePages = feedResponse.getHasMorePages();

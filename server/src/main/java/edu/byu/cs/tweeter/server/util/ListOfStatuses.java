@@ -73,58 +73,58 @@ public class ListOfStatuses {
             String uTwo = "tinyurl.com";
             d = createDate(2020, 0, 11, 0, 14);
             String b = dateFormat.format(d);
-            s = new Status(Rudy, "You should visit tinyurl.com", uTwo, b, null);
+            s = new Status(Rudy, "You should visit tinyurl.com", uTwo, b, "");
             feed.add(s);
 
             // --------------------- 3 --------------------- //
             String mThree = "@JacobWest";
             d = createDate(2019, 3, 16, 3, 34);
             String c = dateFormat.format(d);
-            s = new Status(theMedia, "Dolphins @JacobWest have Tua", null, c, mThree);
+            s = new Status(theMedia, "Dolphins @JacobWest have Tua", "", c, mThree);
             feed.add(s);
 
             // --------------------- 4 --------------------- //
             d = createDate(2014, 7, 30, 17, 01);
             String de = dateFormat.format(d);
-            s = new Status(JacobWest, "Jacksonville will draft third", null, de, null);
+            s = new Status(JacobWest, "Jacksonville will draft third", "", de, "");
             feed.add(s);
 
             // --------------------- 5 --------------------- //
             String uFive = "dell.com";
             d = createDate(2012, 3, 3, 18, 21);
             String e = dateFormat.format(d);
-            s = new Status(RickyMartin, "I endorse dell.com", uFive, e, null);
+            s = new Status(RickyMartin, "I endorse dell.com", uFive, e, "");
             feed.add(s);
 
             // --------------------- 6 --------------------- //
             String mSix = "@RobertGardner @Snowden @TristanThompson";
             d = createDate(2002, 10, 19, 14, 59);
             String f = dateFormat.format(d);
-            s = new Status(theMedia, "@RobertGardner @Snowden @TristanThompson", null, f, mSix);
+            s = new Status(theMedia, "@RobertGardner @Snowden @TristanThompson", "", f, mSix);
             feed.add(s);
 
             // --------------------- 7 --------------------- //
             d = createDate(2000, 10, 19, 14, 59);
             String g = dateFormat.format(d);
-            s = new Status(KCP, ";)", null, g, null);
+            s = new Status(KCP, ";)", "", g, "");
             feed.add(s);
 
             // --------------------- 8 --------------------- //
             d = createDate(2003, 5, 30, 16, 11);
             String h = dateFormat.format(d);
-            s = new Status(TristanThompson, "One, two, pick and roll", null, h, null);
+            s = new Status(TristanThompson, "One, two, pick and roll", "", h, "");
             feed.add(s);
 
             // --------------------- 9 --------------------- //
             d = createDate(2001, 9, 4, 18, 29);
             String i = dateFormat.format(d);
-            s = new Status(Snowden, "A lot of old guys past their prime.", null, i, null);
+            s = new Status(Snowden, "A lot of old guys past their prime.", "", i, "");
             feed.add(s);
 
             // --------------------- 10 --------------------- //
             d = createDate(2019, 8, 12, 19, 1);
             String j = dateFormat.format(d);
-            s = new Status(TristanThompson, "I remember being a role player.", null, j, null);
+            s = new Status(TristanThompson, "I remember being a role player.", "", j, "");
             feed.add(s);
 
             // --------------------- 11 --------------------- //
@@ -139,13 +139,13 @@ public class ListOfStatuses {
             String mTwelve = "@theMedia @Rudy";
             d = createDate(2016, 8, 9, 8, 5);
             String l = dateFormat.format(d);
-            s = new Status(BillBelichick, "Rudy and I are chill @theMedia @Rudy", null, l, mTwelve);
+            s = new Status(BillBelichick, "Rudy and I are chill @theMedia @Rudy", "", l, mTwelve);
             feed.add(s);
 
             // --------------------- 13 --------------------- //
             d = createDate(2013, 3, 13, 9, 56);
             String m = dateFormat.format(d);
-            s = new Status(JacobWest, "I am the tinker man!", null, m, null);
+            s = new Status(JacobWest, "I am the tinker man!", "", m, "");
             feed.add(s);
 
             // --------------------- 14 --------------------- //
@@ -159,43 +159,43 @@ public class ListOfStatuses {
             // --------------------- 15 --------------------- //
             d = createDate(2012, 3, 13, 9, 55);
             String o = dateFormat.format(d);
-            s = new Status(Snowden, "That takes a lot of ownership!", null, o, null);
+            s = new Status(Snowden, "That takes a lot of ownership!", "", o, "");
             feed.add(s);
 
             // --------------------- 16 --------------------- //
             d = createDate(2012, 3, 12, 9, 55);
             String p = dateFormat.format(d);
-            s = new Status(TristanThompson, "We beat the clippers!", null, p, null);
+            s = new Status(TristanThompson, "We beat the clippers!", "", p, "");
             feed.add(s);
 
             // --------------------- 17 --------------------- //
             d = createDate(2012, 3, 12, 9, 45);
             String q = dateFormat.format(d);
-            s = new Status(BillBelichick, "I lift bro!", null, q, null);
+            s = new Status(BillBelichick, "I lift bro!", "", q, "");
             feed.add(s);
 
             // --------------------- 18 --------------------- //
             d = createDate(2010, 8, 17, 9, 55);
             String r = dateFormat.format(d);
-            s = new Status(Rudy, "The truth is an acquired taste.", null, r, null);
+            s = new Status(Rudy, "The truth is an acquired taste.", "", r, "");
             feed.add(s);
 
             // --------------------- 19 --------------------- //
             d = createDate(2020, 8, 17, 9, 55);
             String sa = dateFormat.format(d);
-            s = new Status(RickyMartin, "Encuentra la buena vida baby! #CoronaLite", null, sa, null);
+            s = new Status(RickyMartin, "Encuentra la buena vida baby! #CoronaLite", "", sa, "");
             feed.add(s);
 
             // --------------------- 20 --------------------- //
             d = createDate(2020, 0, 27, 23, 55);
             String t = dateFormat.format(d);
-            s = new Status(KCP, "Me calle bien el Snoop Dogg", null, t, null);
+            s = new Status(KCP, "Me calle bien el Snoop Dogg", "", t, "");
             feed.add(s);
 
             // --------------------- 21 --------------------- //
             d = createDate(2020, 3, 7, 9, 4);
             String u = dateFormat.format(d);
-            s = new Status(RobertGardner, "Hago buena musica", null, u, null);
+            s = new Status(RobertGardner, "Hago buena musica", "", u, "");
             feed.add(s);
         } else {
             // --------------------- 1--------------------- //
@@ -210,58 +210,58 @@ public class ListOfStatuses {
             String uTwo = "tinyurl.com";
             d = createDate(2020, 0, 11, 0, 14);
             String b = dateFormat.format(d);
-            s = new Status(definedUser, "You should visit tinyurl.com", uTwo, b, null);
+            s = new Status(definedUser, "You should visit tinyurl.com", uTwo, b, "");
             feed.add(s);
 
             // --------------------- 3 --------------------- //
             String mThree = "@JacobWest";
             d = createDate(2019, 3, 16, 3, 34);
             String c = dateFormat.format(d);
-            s = new Status(definedUser, "Dolphins @JacobWest have Tua", null, c, mThree);
+            s = new Status(definedUser, "Dolphins @JacobWest have Tua", "", c, mThree);
             feed.add(s);
 
             // --------------------- 4 --------------------- //
             d = createDate(2014, 7, 30, 17, 01);
             String de = dateFormat.format(d);
-            s = new Status(definedUser, "Jacksonville will draft third", null, de, null);
+            s = new Status(definedUser, "Jacksonville will draft third", "", de, "");
             feed.add(s);
 
             // --------------------- 5 --------------------- //
             String uFive = "dell.com";
             d = createDate(2012, 3, 3, 18, 21);
             String e = dateFormat.format(d);
-            s = new Status(definedUser, "I endorse dell.com", uFive, e, null);
+            s = new Status(definedUser, "I endorse dell.com", uFive, e, "");
             feed.add(s);
 
             // --------------------- 6 --------------------- //
             String mSix = "@RobertGardner @Snowden @TristanThompson";
             d = createDate(2002, 10, 19, 14, 59);
             String f = dateFormat.format(d);
-            s = new Status(definedUser, "@RobertGardner @Snowden @TristanThompson", null, f, mSix);
+            s = new Status(definedUser, "@RobertGardner @Snowden @TristanThompson", "", f, mSix);
             feed.add(s);
 
             // --------------------- 7 --------------------- //
             d = createDate(2000, 10, 19, 14, 59);
             String g = dateFormat.format(d);
-            s = new Status(definedUser, ";)", null, g, null);
+            s = new Status(definedUser, ";)", "", g, "");
             feed.add(s);
 
             // --------------------- 8 --------------------- //
             d = createDate(2003, 5, 30, 16, 11);
             String h = dateFormat.format(d);
-            s = new Status(definedUser, "One, two, pick and roll", null, h, null);
+            s = new Status(definedUser, "One, two, pick and roll", "", h, "");
             feed.add(s);
 
             // --------------------- 9 --------------------- //
             d = createDate(2001, 9, 4, 18, 29);
             String i = dateFormat.format(d);
-            s = new Status(definedUser, "A lot of old guys past their prime.", null, i, null);
+            s = new Status(definedUser, "A lot of old guys past their prime.", "", i, "");
             feed.add(s);
 
             // --------------------- 10 --------------------- //
             d = createDate(2019, 8, 12, 19, 1);
             String j = dateFormat.format(d);
-            s = new Status(definedUser, "I remember being a role player.", null, j, null);
+            s = new Status(definedUser, "I remember being a role player.", "", j, "");
             feed.add(s);
 
             // --------------------- 11 --------------------- //
@@ -275,13 +275,13 @@ public class ListOfStatuses {
             // --------------------- 12 --------------------- //
             String mTwelve = "@theMedia @Rudy";
             String l = dateFormat.format(d);
-            s = new Status(definedUser, "Rudy and I are chill @theMedia @Rudy", null, l, mTwelve);
+            s = new Status(definedUser, "Rudy and I are chill @theMedia @Rudy", "", l, mTwelve);
             feed.add(s);
 
             // --------------------- 13 --------------------- //
             d = createDate(2013, 3, 13, 9, 56);
             String m = dateFormat.format(d);
-            s = new Status(definedUser, "I am the tinker man!", null, m, null);
+            s = new Status(definedUser, "I am the tinker man!", "", m, "");
             feed.add(s);
 
             // --------------------- 14 --------------------- //
@@ -295,43 +295,43 @@ public class ListOfStatuses {
             // --------------------- 15 --------------------- //
             d = createDate(2012, 3, 13, 9, 55);
             String o = dateFormat.format(d);
-            s = new Status(definedUser, "That takes a lot of ownership!", null, o, null);
+            s = new Status(definedUser, "That takes a lot of ownership!", "", o, "");
             feed.add(s);
 
             // --------------------- 16 --------------------- //
             d = createDate(2012, 3, 12, 9, 55);
             String p = dateFormat.format(d);
-            s = new Status(definedUser, "We beat the clippers!", null, p, null);
+            s = new Status(definedUser, "We beat the clippers!", "", p, "");
             feed.add(s);
 
             // --------------------- 17 --------------------- //
             d = createDate(2012, 3, 12, 9, 45);
             String q = dateFormat.format(d);
-            s = new Status(definedUser, "I lift bro!", null, q, null);
+            s = new Status(definedUser, "I lift bro!", "", q, "");
             feed.add(s);
 
             // --------------------- 18 --------------------- //
             d = createDate(2010, 8, 17, 9, 55);
             String r = dateFormat.format(d);
-            s = new Status(definedUser, "The truth is an acquired taste.", null, r, null);
+            s = new Status(definedUser, "The truth is an acquired taste.", "", r, "");
             feed.add(s);
 
             // --------------------- 19 --------------------- //
             d = createDate(2020, 8, 17, 9, 55);
             String sa = dateFormat.format(d);
-            s = new Status(definedUser, "Encuentra la buena vida baby! #CoronaLite", null, sa, null);
+            s = new Status(definedUser, "Encuentra la buena vida baby! #CoronaLite", "", sa, "");
             feed.add(s);
 
             // --------------------- 20 --------------------- //
             d = createDate(2020, 0, 27, 23, 55);
             String t = dateFormat.format(d);
-            s = new Status(definedUser, "Me calle bien el Snoop Dogg", null, t, null);
+            s = new Status(definedUser, "Me calle bien el Snoop Dogg", "", t, "");
             feed.add(s);
 
             // --------------------- 21 --------------------- //
             d = createDate(2020, 3, 7, 9, 4);
             String u = dateFormat.format(d);
-            s = new Status(definedUser, "Hago buena musica", null, u, null);
+            s = new Status(definedUser, "Hago buena musica", "", u, "");
             feed.add(s);
         }
         return feed;

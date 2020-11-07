@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
+import java.util.List;
 import java.util.Objects;
 
 import edu.byu.cs.tweeter.shared.domain.User;
@@ -8,7 +9,7 @@ public class UpdateFollowResponse extends Response {
 
     private User user;
     private User followUser;
-    private User[] following;
+    private List<User> following;
 
     public UpdateFollowResponse() {
         super(true, null);
@@ -23,7 +24,7 @@ public class UpdateFollowResponse extends Response {
         super(false, message);
     }
 
-    public UpdateFollowResponse(User user, User followUser, User[] following) {
+    public UpdateFollowResponse(User user, User followUser, List<User> following) {
         super(true, null);
         this.user = user;
         this.followUser = followUser;
@@ -38,7 +39,7 @@ public class UpdateFollowResponse extends Response {
         return this.followUser;
     }
 
-    public User[] getFollowing() {
+    public List<User> getFollowing() {
         return this.following;
     }
 
@@ -50,7 +51,7 @@ public class UpdateFollowResponse extends Response {
         this.followUser = followUser;
     }
 
-    public void setFollowing(User[] following) {
+    public void setFollowing(List<User> following) {
         this.following = following;
     }
 

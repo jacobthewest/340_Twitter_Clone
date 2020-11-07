@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 import edu.byu.cs.tweeter.shared.domain.User;
 
@@ -9,7 +10,7 @@ import edu.byu.cs.tweeter.shared.domain.User;
  */
 public class FollowersResponse extends PagedResponse {
 
-    private User[] followers;
+    private List<User> followers;
 
     public FollowersResponse() {
         super();
@@ -31,7 +32,7 @@ public class FollowersResponse extends PagedResponse {
      * @param followers the followers to be included in the result.
      * @param hasMorePages an indicator of whether more data is available for the request.
      */
-    public FollowersResponse(User[] followers, boolean hasMorePages) {
+    public FollowersResponse(List<User> followers, boolean hasMorePages) {
         super(true, hasMorePages);
         this.followers = followers;
     }
@@ -41,11 +42,11 @@ public class FollowersResponse extends PagedResponse {
      *
      * @return the followers.
      */
-    public User[] getFollowers() {
+    public List<User> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(User[] followers) {
+    public void setFollowers(List<User> followers) {
         this.followers = followers;
     }
 
@@ -54,11 +55,11 @@ public class FollowersResponse extends PagedResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         FollowersResponse that = (FollowersResponse) o;
-        return Arrays.equals(followers, that.followers);
+        return Objects.equals(followers, that.followers);
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(followers);
+        return Objects.hash(followers);
     }
 }

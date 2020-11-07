@@ -61,8 +61,7 @@ public class UpdateFollowDAO {
             dummyFollowees.remove(request.getFollowUser());
         }
 
-        User[] arrDummyFollowees = (User[]) dummyFollowees.toArray();
-        return new UpdateFollowResponse(request.getUser(), request.getFollowUser(), arrDummyFollowees);
+        return new UpdateFollowResponse(request.getUser(), request.getFollowUser(), dummyFollowees);
     }
 
     public List<User> getDummyFollowees() {

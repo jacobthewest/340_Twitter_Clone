@@ -17,18 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.shared.domain.AuthToken;
-import edu.byu.cs.tweeter.shared.domain.User;
-import edu.byu.cs.tweeter.shared.service.request.FollowersRequest;
-import edu.byu.cs.tweeter.shared.service.response.FollowersResponse;
 import edu.byu.cs.tweeter.client.presenter.FollowersPresenter;
 import edu.byu.cs.tweeter.client.view.asyncTasks.GetFollowersTask;
 import edu.byu.cs.tweeter.client.view.util.AliasClickableSpan;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
+import edu.byu.cs.tweeter.shared.domain.AuthToken;
+import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.shared.service.request.FollowersRequest;
+import edu.byu.cs.tweeter.shared.service.response.FollowersResponse;
 
 /**
  * The fragment that displays on the 'Followers' tab.
@@ -272,8 +271,7 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
          */
         @Override
         public void followersRetrieved(FollowersResponse followersResponse) {
-            User[] arrFollowers = followersResponse.getFollowers();
-            List<User> followers = Arrays.asList(arrFollowers);
+            List<User> followers = followersResponse.getFollowers();
 
             lastFollower = (followers.size() > 0) ? followers.get(followers.size() -1) : null;
             hasMorePages = followersResponse.getHasMorePages();

@@ -9,13 +9,15 @@ import java.util.Objects;
  */
 public class Status implements Comparable<Status>, Serializable {
 
-    private final User user;
-    private final String tweetText;
-    private final String urls;
-    private final String timePosted;
-    private final String mentions;
+    private User user;
+    private String tweetText;
+    private String urls;
+    private String timePosted;
+    private String mentions;
     private byte [] imageBytes;
 
+
+    public Status() {}
 
     public Status(User user, String postText, String urls, String timePosted, String mentions) {
         this.user = user;
@@ -50,6 +52,26 @@ public class Status implements Comparable<Status>, Serializable {
 
     public void setImageBytes(byte[] imageBytes) {
         this.imageBytes = imageBytes;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setTweetText(String tweetText) {
+        this.tweetText = tweetText;
+    }
+
+    public void setUrls(String urls) {
+        this.urls = urls;
+    }
+
+    public void setTimePosted(String timePosted) {
+        this.timePosted = timePosted;
+    }
+
+    public void setMentions(String mentions) {
+        this.mentions = mentions;
     }
 
     @Override

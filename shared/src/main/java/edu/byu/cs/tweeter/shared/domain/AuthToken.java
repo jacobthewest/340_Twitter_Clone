@@ -8,9 +8,11 @@ import java.util.UUID;
  * Represents an auth token in the system.
  */
 public class AuthToken implements Serializable {
-    private final String id;
-    private final String username;
+    private String id;
+    private String username;
     private boolean isActive;
+
+    public AuthToken() {}
 
     public AuthToken(String username) {
         this.id = UUID.randomUUID().toString(); // Generates a random string.
@@ -32,6 +34,22 @@ public class AuthToken implements Serializable {
 
     public void deactivate() {
         isActive = false;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override

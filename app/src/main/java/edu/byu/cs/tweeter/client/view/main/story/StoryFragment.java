@@ -341,8 +341,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
          */
         @Override
         public void statusesRetrieved(StoryResponse storyResponse) {
-            Status[] arrStatuses = storyResponse.getStory();
-            List<Status> statuses = Arrays.asList(arrStatuses);
+            List<Status> statuses = storyResponse.getStory();
 
             lastStatus = (statuses.size() > 0) ? statuses.get(statuses.size() -1) : null;
             hasMorePages = storyResponse.getHasMorePages();

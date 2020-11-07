@@ -14,6 +14,14 @@ public class RegisterRequest {
 
     public RegisterRequest() {}
 
+    public RegisterRequest(String username, String password, String firstName, String lastName, String imageUrl) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.imageUrl = imageUrl;
+    }
+
     /**
      * Creates an instance.
      *
