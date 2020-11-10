@@ -12,7 +12,7 @@ import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
  * A DAO for accessing 'following' data from the database.
  */
 public class FollowingDAO {
-    /// This is the hard coded followee data returned by the 'getFollowees()' method
+    // This is the hard coded followee data returned by the 'getFollowees()' method
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
     private static final String MIKE = "https://i.imgur.com/VZQQiQ1.jpg";
