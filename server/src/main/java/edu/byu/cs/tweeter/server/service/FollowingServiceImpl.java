@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.server.service;
 
+import edu.byu.cs.tweeter.server.util.RequestAndResponseChecker;
 import edu.byu.cs.tweeter.shared.service.FollowingService;
 import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
@@ -21,7 +22,19 @@ public class FollowingServiceImpl implements FollowingService {
      */
     @Override
     public FollowingResponse getFollowees(FollowingRequest request) {
-        return getFollowingDAO().getFollowees(request);
+        RequestAndResponseChecker checker = new RequestAndResponseChecker();
+
+        // Request:: User, limit, lastFollower(type User)
+        checker.checkUserRequest(request.getUser());
+        checker.checkLimitRequest(request.getLimit());
+        checker.checkUserLastFollowRequest(request.getUser(), request.getLastFollowee());
+
+        FollowingResponse followingResponse = getFollowingDAO().getFollowees(request);
+
+        // Response:: List<User> followees
+        checker.checkUserListResponse(followingResponse.getFollowees(), request.getLimit());
+
+        return followingResponse;
     }
 
     /**

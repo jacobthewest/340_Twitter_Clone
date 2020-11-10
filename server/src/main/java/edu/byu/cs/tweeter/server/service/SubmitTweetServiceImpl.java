@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.server.service;
 
 import edu.byu.cs.tweeter.server.dao.SubmitTweetDAO;
+import edu.byu.cs.tweeter.server.util.RequestAndResponseChecker;
 import edu.byu.cs.tweeter.shared.service.SubmitTweetService;
 import edu.byu.cs.tweeter.shared.service.request.SubmitTweetRequest;
 import edu.byu.cs.tweeter.shared.service.response.SubmitTweetResponse;
@@ -9,8 +10,18 @@ public class SubmitTweetServiceImpl implements SubmitTweetService {
 
     @Override
     public SubmitTweetResponse submitTweet(SubmitTweetRequest request) {
-        // TODO: Generates dummy data. Replace with a real implementation.
-        return getSubmitTweetDAO().submitTweet(request);
+        RequestAndResponseChecker checker = new RequestAndResponseChecker();
+
+        // Request:: User
+        checker.checkUserRequest(request.getUser());
+
+        SubmitTweetResponse submitTweetResponse = getSubmitTweetDAO().submitTweet(request);
+
+        // Response:: User, Status
+        checker.checkUserResponse(submitTweetResponse.getUser());
+        checker.checkStatusResponse(request.getUser(), submitTweetResponse.getStatus());
+
+        return submitTweetResponse;
     }
 
     SubmitTweetDAO getSubmitTweetDAO() {return new SubmitTweetDAO();}

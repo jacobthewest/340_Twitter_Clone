@@ -43,6 +43,10 @@ public class RetrieveUserResponse extends Response {
         return user;
     }
 
+    public boolean getSuccess() {
+        return super.isSuccess();
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

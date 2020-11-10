@@ -42,6 +42,10 @@ public class CountResponse extends Response {
         return followersCount;
     }
 
+    public boolean getSuccess() {
+        return super.isSuccess();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

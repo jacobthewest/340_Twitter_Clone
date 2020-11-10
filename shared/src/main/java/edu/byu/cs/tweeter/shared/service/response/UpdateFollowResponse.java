@@ -43,6 +43,10 @@ public class UpdateFollowResponse extends Response {
         return this.following;
     }
 
+    public boolean getSuccess() {
+        return super.isSuccess();
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

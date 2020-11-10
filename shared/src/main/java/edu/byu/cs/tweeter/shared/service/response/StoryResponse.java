@@ -43,6 +43,10 @@ public class StoryResponse extends PagedResponse {
         return statuses;
     }
 
+    public boolean getSuccess() {
+        return super.isSuccess();
+    }
+
     public void setStatuses(List<Status> statuses) {
         this.statuses = statuses;
     }

@@ -2,6 +2,7 @@ package edu.byu.cs.tweeter.client.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import java.io.InputStream;
@@ -44,6 +46,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
     private Toast registerToast;
     private ImageView imageToUpload;
     private byte [] imageBytes;
+    private String imageBytesAsString;
 
     /**
      * Creates an instance of the fragment and places the user and auth token in an arguments
@@ -119,6 +122,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -128,6 +132,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
             try {
                 InputStream iStream = getContext().getContentResolver().openInputStream(selectedImage);
                 this.imageBytes = ImageUtils.byteArrayFromUri(iStream);
+                this.imageBytesAsString = ImageUtils.stringFromByteArray(this.imageBytes);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -147,7 +152,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
         String firstNameString = editTextToString(first);
         String lastNameString = editTextToString(last);
         imageUrl = "https://i.imgur.com/VZQQiQ1.jpg";
-        return new RegisterRequest(userNameString, passwordString, firstNameString, lastNameString, imageUrl, imageBytes);
+        return new RegisterRequest(userNameString, passwordString, firstNameString, lastNameString, imageUrl, imageBytesAsString);
     }
 
     private boolean isValidAlias(EditText username) {

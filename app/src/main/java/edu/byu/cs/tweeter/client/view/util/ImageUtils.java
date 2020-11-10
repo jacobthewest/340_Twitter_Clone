@@ -5,10 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
 /**
  * Contains utility methods for working with Android images.
@@ -36,5 +40,17 @@ public class ImageUtils {
             byteBuffer.write(buffer, 0, len);
         }
         return byteBuffer.toByteArray();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String stringFromByteArray(byte[] imageBytes) {
+        String byteArrayAsString = Base64.getEncoder().encodeToString(imageBytes);
+        return byteArrayAsString;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static byte[] byteArrayFromString(String imageBytesAsString) {
+        byte[] byteArrayFromString = Base64.getEncoder().encode(imageBytesAsString.getBytes());
+        return byteArrayFromString;
     }
 }

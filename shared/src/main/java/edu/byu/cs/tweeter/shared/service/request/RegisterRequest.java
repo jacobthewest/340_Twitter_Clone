@@ -11,32 +11,17 @@ public class RegisterRequest {
     private String lastName;
     private String imageUrl;
     private byte[] imageBytes;
+    private String imageBytesAsString;
 
     public RegisterRequest() {}
 
-    public RegisterRequest(String username, String password, String firstName, String lastName, String imageUrl) {
+    public RegisterRequest(String username, String password, String firstName, String lastName, String imageUrl, String imageBytesAsString) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.imageUrl = imageUrl;
-    }
-
-    /**
-     * Creates an instance.
-     *
-     * @param username the username of the user to be registered.
-     * @param password the password of the user to be registered.
-     * @param firstName the password of the user to be registered.
-     * @param lastName the password of the user to be registered.
-     */
-    public RegisterRequest(String username, String password, String firstName, String lastName, String imageUrl, byte[] imageBytes) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.imageUrl = imageUrl;
-        this.imageBytes = imageBytes;
+        this.imageBytesAsString = imageBytesAsString;
     }
 
     /**
@@ -93,6 +78,8 @@ public class RegisterRequest {
         return imageBytes;
     }
 
+    public String getImageBytesAsString() { return imageBytesAsString; }
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -116,5 +103,7 @@ public class RegisterRequest {
     public void setImageBytes(byte[] imageBytes) {
         this.imageBytes = imageBytes;
     }
+
+    public void setImageBytesAsString(String imageBytesAsString) { this.imageBytesAsString = imageBytesAsString; }
 }
 

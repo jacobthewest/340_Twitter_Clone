@@ -50,6 +50,10 @@ public class FollowingResponse extends PagedResponse {
         this.followees = followees;
     }
 
+    public boolean getSuccess() {
+        return super.isSuccess();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -56,6 +56,10 @@ public class LoginResponse extends Response {
         return authToken;
     }
 
+    public boolean getSuccess() {
+        return super.isSuccess();
+    }
+
     public void setUser(User user) {
         this.user = user;
     }

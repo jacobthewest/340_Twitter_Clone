@@ -61,6 +61,10 @@ public class SubmitTweetResponse extends Response {
         this.user = user;
     }
 
+    public boolean getSuccess() {
+        return super.isSuccess();
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
