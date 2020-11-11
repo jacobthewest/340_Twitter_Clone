@@ -39,7 +39,7 @@ public class StoryResponse extends PagedResponse {
      *
      * @return the story.
      */
-    public List<Status> getStory() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 

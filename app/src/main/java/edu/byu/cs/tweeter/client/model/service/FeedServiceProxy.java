@@ -43,7 +43,7 @@ public class FeedServiceProxy implements FeedService {
      * @param response the response from the feed request.
      */
     private void loadImages(FeedResponse response) throws IOException {
-        for(Status status : response.getFeed()) {
+        for(Status status : response.getStatuses()) {
             byte [] bytes = ByteArrayUtils.bytesFromUrl(status.getUser().getImageUrl());
             status.getUser().setImageBytes(bytes);
         }

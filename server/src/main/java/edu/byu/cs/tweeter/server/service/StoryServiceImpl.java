@@ -19,7 +19,7 @@ public class StoryServiceImpl implements StoryService {
         StoryResponse storyResponse = getStoryDAO().getStory(request);
 
         // Response:: List<Status>
-        checker.checkStatusListResponse(storyResponse.getStory(), request.getLimit());
+        checker.checkStatusListResponse(storyResponse.getStatuses(), request.getLimit());
 
         return storyResponse;
     }

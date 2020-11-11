@@ -26,6 +26,7 @@ import edu.byu.cs.tweeter.client.view.asyncTasks.RegisterTask;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.client.view.util.AliasChecker;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
+import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
@@ -133,7 +134,8 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
             try {
                 InputStream iStream = getContext().getContentResolver().openInputStream(selectedImage);
                 this.imageBytes = ImageUtils.byteArrayFromUri(iStream);
-                this.imageBytesAsString = ImageUtils.stringFromByteArray(this.imageBytes);
+                // this.imageBytesAsString = ImageUtils.stringFromByteArray(this.imageBytes);
+                this.imageBytesAsString = "TheImageBytesAsAString"; // TODO: Replace me in Milestone 4
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -182,7 +184,10 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
      */
     @Override
     public void registerSuccessful(RegisterResponse registerResponse) {
-        Intent intent = new Intent(getActivity(), MainActivity.class);
+        Intent intent = new Intent(getContext(), MainActivity.class);
+
+        User cuk = registerResponse.getUser();
+        AuthToken atk = registerResponse.getAuthToken();
 
         intent.putExtra(MainActivity.CURRENT_USER_KEY, registerResponse.getUser());
         intent.putExtra(MainActivity.CURRENT_FOLLOW_KEY, registerResponse.getUser());

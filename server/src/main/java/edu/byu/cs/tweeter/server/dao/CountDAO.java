@@ -50,7 +50,10 @@ public class CountDAO {
 
     public CountResponse getCount(CountRequest request) {
         // TODO: logs in a hard-coded user. Replace with a real implementation.
-        assert request.getUser() != null;
+
+        if(!isRecognizedUser(request.getUser().getAlias())) {
+            return new CountResponse(request.getUser(), 0, 0);
+        }
 
         List<User> followees = getDummyFollowees();
         List<User> followers = getDummyFollowers();
@@ -74,5 +77,18 @@ public class CountDAO {
         return Arrays.asList(user3, JacobWest, user1, RickyMartin, user4, RobertGardner, user2, Snowden, user5, user6, user7,
                 user17, user9, user13, user11, user12, user10, user14, user15, user8, user19, TristanThompson, KCP, theMedia, Rudy,
                 user18, user20, BillBelichick, TestUser);
+    }
+
+    private boolean isRecognizedUser(String alias) {
+        if (alias.equals(user1.getAlias()) || alias.equals(user2.getAlias()) || alias.equals(user3.getAlias()) ||  alias.equals(user4.getAlias()) ||
+                alias.equals(user5.getAlias()) || alias.equals(user6.getAlias()) || alias.equals(user7.getAlias()) || alias.equals(user8.getAlias()) ||
+                alias.equals(user9.getAlias()) || alias.equals(user10.getAlias()) || alias.equals(user11.getAlias()) || alias.equals(user12.getAlias()) ||
+                alias.equals(user13.getAlias()) || alias.equals(user14.getAlias()) || alias.equals(user15.getAlias()) || alias.equals(user16.getAlias()) ||
+                alias.equals(user17.getAlias()) || alias.equals(user18.getAlias()) || alias.equals(user19.getAlias()) || alias.equals(user20.getAlias()) ||
+                alias.equals(JacobWest.getAlias()) || alias.equals(RickyMartin.getAlias()) || alias.equals(RobertGardner.getAlias()) || alias.equals(Snowden.getAlias()) ||
+                alias.equals(TristanThompson.getAlias()) || alias.equals(KCP.getAlias()) || alias.equals(theMedia.getAlias()) || alias.equals(Rudy.getAlias()) ||
+                alias.equals(BillBelichick.getAlias()) || alias.equals(TestUser.getAlias()) || alias.equals(userBarney.getAlias()) ||
+                alias.equals(DaffyDuck.getAlias()) || alias.equals(Zoe.getAlias())) { return true;}
+        return false;
     }
 }

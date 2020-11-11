@@ -107,12 +107,12 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
      */
     private class StoryHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView userImage;
-        private final TextView userAlias;
-        private final TextView userName;
-        private TextView postText;
-        private TextView timePosted;
-        private TextView mentions;
+        protected final ImageView userImage;
+        protected final TextView userAlias;
+        protected final TextView userName;
+        protected TextView postText;
+        protected TextView timePosted;
+        protected TextView mentions;
 
 
         /**
@@ -341,7 +341,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
          */
         @Override
         public void statusesRetrieved(StoryResponse storyResponse) {
-            List<Status> statuses = storyResponse.getStory();
+            List<Status> statuses = storyResponse.getStatuses();
 
             lastStatus = (statuses.size() > 0) ? statuses.get(statuses.size() -1) : null;
             hasMorePages = storyResponse.getHasMorePages();

@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.server.dao;
 
+import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.LogoutRequest;
 import edu.byu.cs.tweeter.shared.service.response.LogoutResponse;
 
@@ -12,6 +13,9 @@ public class LogoutDAO {
         //  Code to log the user out
         //  END
 
-        return new LogoutResponse(request.getUser(), request.getAuthToken());
+        User user = request.getUser();
+        user.setImageBytes(null);
+
+        return new LogoutResponse(user, request.getAuthToken());
     }
 }

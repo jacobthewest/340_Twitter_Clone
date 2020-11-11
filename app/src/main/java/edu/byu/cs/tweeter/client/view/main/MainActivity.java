@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     public static final String CURRENT_FOLLOW_KEY = "FollowUser";
     public static final String AUTH_TOKEN_KEY = "AuthTokenKey";
     private static final String LOG_TAG = "MainActivity";
-    private User user;
-    private User followUser;
+    protected User user;
+    protected User followUser;
     private AuthToken authToken;
     private List<User> following;
     private CountPresenter countPresenter;
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
         });
     }
 
-    private List<User> getFollowing() {
+    protected List<User> getFollowing() {
         return this.following;
     }
 
@@ -198,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
         countTask.execute(countRequest);
     }
 
-    private void showDialog() {
+    protected void showDialog() {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -214,19 +214,19 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
         dialogFragment.show(fragmentTransaction, "dialog");
     }
 
-    private LogoutTask.Observer getLogoutObserver() {
+    protected LogoutTask.Observer getLogoutObserver() {
         return this;
     }
 
-    private CountTask.Observer getCountObserver() {
+    protected CountTask.Observer getCountObserver() {
         return this;
     }
 
-    private UpdateFollowTask.Observer getUpdateFollowObserver() {
+    protected UpdateFollowTask.Observer getUpdateFollowObserver() {
         return this;
     }
 
-    private GetFollowingTask.Observer getFollowingObserver() {
+    protected GetFollowingTask.Observer getFollowingObserver() {
         return this;
     }
 
@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
      * Used to generate a logoutRequest from our class's member variables
      * @return A new logoutRequest
      */
-    private LogoutRequest getLogoutRequest() {
+    protected LogoutRequest getLogoutRequest() {
         return new LogoutRequest(user, authToken);
     }
 

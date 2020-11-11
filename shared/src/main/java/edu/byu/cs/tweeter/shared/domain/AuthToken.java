@@ -28,7 +28,7 @@ public class AuthToken implements Serializable {
         return username;
     }
 
-    public boolean IsActive() {
+    public boolean getIsActive() {
         return isActive;
     }
 
@@ -44,11 +44,7 @@ public class AuthToken implements Serializable {
         this.username = username;
     }
 
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
+    public void setIsActive(boolean active) {
         isActive = active;
     }
 

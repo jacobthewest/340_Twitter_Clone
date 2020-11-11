@@ -43,7 +43,7 @@ public class StoryServiceProxy implements StoryService {
      * @param response the response from the story request.
      */
     private void loadImages(StoryResponse response) throws IOException {
-        for(Status status : response.getStory()) {
+        for(Status status : response.getStatuses()) {
             byte [] bytes = ByteArrayUtils.bytesFromUrl(status.getUser().getImageUrl());
             status.getUser().setImageBytes(bytes);
         }

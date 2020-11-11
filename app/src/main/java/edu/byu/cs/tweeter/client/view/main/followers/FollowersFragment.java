@@ -42,14 +42,14 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
     private static final int LOADING_DATA_VIEW = 0;
     private static final int ITEM_VIEW = 1;
 
-    private static final int PAGE_SIZE = 10;
+    protected static final int PAGE_SIZE = 10;
 
-    private User user;
-    private User followUser;
-    private AuthToken authToken;
-    private FollowersPresenter presenter;
+    protected User user;
+    protected User followUser;
+    protected AuthToken authToken;
+    protected FollowersPresenter presenter;
 
-    private FollowersRecyclerViewAdapter followersRecyclerViewAdapter;
+    protected FollowersRecyclerViewAdapter followersRecyclerViewAdapter;
 
     /**
      * Creates an instance of the fragment and places the user and auth token in an arguments
@@ -100,9 +100,9 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
      */
     private class FollowersHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView followerImage;
-        private final TextView followerAlias;
-        private final TextView follower_username;
+        protected final ImageView followerImage;
+        protected final TextView followerAlias;
+        protected final TextView follower_username;
 
         /**
          * Creates an instance and sets an OnClickListener for the user's row.
@@ -141,12 +141,12 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
      */
     private class FollowersRecyclerViewAdapter extends RecyclerView.Adapter<FollowersHolder> implements GetFollowersTask.Observer {
 
-        private final List<User> users = new ArrayList<>();
+        protected final List<User> users = new ArrayList<>();
 
-        private User lastFollower;
+        protected User lastFollower;
 
-        private boolean hasMorePages;
-        private boolean isLoading = false;
+        protected boolean hasMorePages;
+        protected boolean isLoading = false;
 
         /**
          * Creates an instance and loads the first page of followers data.

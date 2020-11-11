@@ -100,9 +100,9 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
      */
     private class FollowingHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView followImage;
-        private final TextView followAlias;
-        private final TextView follow_username;
+        protected final ImageView followImage;
+        protected final TextView followAlias;
+        protected final TextView follow_username;
 
         /**
          * Creates an instance and sets an OnClickListener for the user's row.
@@ -141,12 +141,12 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
      */
     private class FollowingRecyclerViewAdapter extends RecyclerView.Adapter<FollowingHolder> implements GetFollowingTask.Observer {
 
-        private final List<User> users = new ArrayList<>();
+        protected final List<User> users = new ArrayList<>();
 
-        private User lastFollowee;
+        protected User lastFollowee;
 
-        private boolean hasMorePages;
-        private boolean isLoading = false;
+        protected boolean hasMorePages;
+        protected boolean isLoading = false;
 
         /**
          * Creates an instance and loads the first page of following data.

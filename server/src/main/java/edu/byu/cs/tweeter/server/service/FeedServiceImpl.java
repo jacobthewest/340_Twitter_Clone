@@ -19,7 +19,7 @@ public class FeedServiceImpl implements FeedService {
         FeedResponse feedResponse = getFeedDAO().getFeed(request);
 
         // Response:: list of statuses
-        checker.checkStatusListResponse(feedResponse.getFeed(), request.getLimit());
+        checker.checkStatusListResponse(feedResponse.getStatuses(), request.getLimit());
 
         return feedResponse;
     }

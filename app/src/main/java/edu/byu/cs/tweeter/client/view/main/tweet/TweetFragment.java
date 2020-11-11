@@ -96,7 +96,7 @@ public class TweetFragment extends DialogFragment implements View.OnClickListene
         return false;
     }
 
-    private SubmitTweetRequest getSubmitTweetRequest() {
+    protected SubmitTweetRequest getSubmitTweetRequest() {
         String tweetText = editText.getText().toString();
 
         UrlParser urlParser = new UrlParser(tweetText);

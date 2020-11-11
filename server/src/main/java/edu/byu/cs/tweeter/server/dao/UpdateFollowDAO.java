@@ -59,7 +59,13 @@ public class UpdateFollowDAO {
             dummyFollowees.remove(request.getFollowUser());
         }
 
-        return new UpdateFollowResponse(request.getUser(), request.getFollowUser(), dummyFollowees);
+        User user = request.getUser();
+        user.setImageBytes(null);
+
+        User followUser = request.getFollowUser();
+        followUser.setImageBytes(null);
+
+        return new UpdateFollowResponse(user, followUser, dummyFollowees);
     }
 
     public List<User> getDummyFollowees() {

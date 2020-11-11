@@ -104,11 +104,11 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
      */
     private class FeedHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView userImage;
-        private final TextView userAlias;
-        private final TextView userName;
-        private TextView postText;
-        private TextView timePosted;
+        protected final ImageView userImage;
+        protected final TextView userAlias;
+        protected final TextView userName;
+        protected TextView postText;
+        protected TextView timePosted;
 
 
         /**
@@ -327,7 +327,7 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
          */
         @Override
         public void statusesRetrieved(FeedResponse feedResponse) {
-            List<Status> statuses = feedResponse.getFeed();
+            List<Status> statuses = feedResponse.getStatuses();
 
             lastStatus = (statuses.size() > 0) ? statuses.get(statuses.size() -1) : null;
             hasMorePages = feedResponse.getHasMorePages();

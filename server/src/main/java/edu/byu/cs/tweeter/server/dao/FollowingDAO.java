@@ -78,6 +78,11 @@ public class FollowingDAO {
     public FollowingResponse getFollowees(FollowingRequest request) {
         // TODO: Generates dummy data. Replace with a real implementation.
 
+        if(!isRecognizedUser(request.getUser().getAlias())) {
+            List<User> tempResponseFollowees = new ArrayList<>();
+            return new FollowingResponse(tempResponseFollowees, false);
+        }
+
         List<User> allFollowees = getDummyFollowees();
         List<User> responseFollowees = new ArrayList<>(request.getLimit());
 
@@ -138,5 +143,18 @@ public class FollowingDAO {
         return Arrays.asList(user1, user2, theMedia, user4, user5, user6, user7, RickyMartin, RobertGardner, TristanThompson,
                 user8, user9, user10, user11, Snowden, user12, user13, user14, user15, user16, user17, user18, TestUser,
                 user19, user20, BillBelichick, KCP, Rudy, TestUser);
+    }
+
+    private boolean isRecognizedUser(String alias) {
+        if (alias.equals(user1.getAlias()) || alias.equals(user2.getAlias()) || alias.equals(user3.getAlias()) ||  alias.equals(user4.getAlias()) ||
+                alias.equals(user5.getAlias()) || alias.equals(user6.getAlias()) || alias.equals(user7.getAlias()) || alias.equals(user8.getAlias()) ||
+                alias.equals(user9.getAlias()) || alias.equals(user10.getAlias()) || alias.equals(user11.getAlias()) || alias.equals(user12.getAlias()) ||
+                alias.equals(user13.getAlias()) || alias.equals(user14.getAlias()) || alias.equals(user15.getAlias()) || alias.equals(user16.getAlias()) ||
+                alias.equals(user17.getAlias()) || alias.equals(user18.getAlias()) || alias.equals(user19.getAlias()) || alias.equals(user20.getAlias()) ||
+                alias.equals(JacobWest.getAlias()) || alias.equals(RickyMartin.getAlias()) || alias.equals(RobertGardner.getAlias()) || alias.equals(Snowden.getAlias()) ||
+                alias.equals(TristanThompson.getAlias()) || alias.equals(KCP.getAlias()) || alias.equals(theMedia.getAlias()) || alias.equals(Rudy.getAlias()) ||
+                alias.equals(BillBelichick.getAlias()) || alias.equals(TestUser.getAlias()) || alias.equals(userBarney.getAlias()) ||
+                alias.equals(DaffyDuck.getAlias()) || alias.equals(Zoe.getAlias())) { return true;}
+        return false;
     }
 }

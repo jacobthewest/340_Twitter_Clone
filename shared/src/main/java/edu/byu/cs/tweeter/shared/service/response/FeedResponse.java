@@ -43,7 +43,7 @@ public class FeedResponse extends PagedResponse {
      *
      * @return the feed.
      */
-    public List<Status> getFeed() {
+    public List<Status> getStatuses() {
         return statuses;
     }
 
