@@ -34,24 +34,22 @@ public class UpdateFollowDAO {
     private final User user17 = new User("Igor", "Isaacson", MALE_IMAGE_URL, "password");
     private final User user18 = new User("Isabel", "Isaacson", FEMALE_IMAGE_URL, "password");
     private final User user19 = new User("Justin", "Jones", MALE_IMAGE_URL, "password");
-    private final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL, "password");
-    private final User JacobWest = new User("Jacob", "West", "@JacobWest", MIKE, "password");
-    private final User RickyMartin = new User("Ricky", "Martin", "@RickyMartin", MIKE, "password");
-    private final User RobertGardner = new User("Robert", "Gardner", "@RobertGardner", MIKE, "password");
-    private final User Snowden = new User("The", "Snowden", "@Snowden", MIKE, "password");
-    private final User TristanThompson = new User("Tristan", "Thompson", "@TristanThompson", MIKE, "password");
-    private final User KCP = new User("Kontavius", "Caldwell Pope", "@KCP", MIKE, "password");
-    private final User theMedia = new User("the", "Media", "@theMedia", MIKE, "password");
-    private final User Rudy = new User("Rudy", "Gobert", "@Rudy", MIKE, "password");
-    private final User BillBelichick = new User("Bill", "Belichick", "@BillBelichick", MIKE, "password");
-    private final User TestUser = new User("Test", "User", "@TestUser", MALE_IMAGE_URL, "password");
-    private final User userBarney = new User("Barney", "Rubble", "", "password");
-    private final User DaffyDuck = new User("Daffy", "Duck", "", "password");
-    private final User Zoe = new User("Zoe", "Zabriski", "", "password");
+    private final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL,"password");
+    private final User JacobWest = new User("Jacob", "West", MIKE, "password");
+    private final User RickyMartin = new User("Ricky", "Martin",  MIKE, "password");
+    private final User RobertGardner = new User("Robert", "Gardner",  MIKE, "password");
+    private final User Snowden = new User("The", "Snowden", MIKE, "password");
+    private final User TristanThompson = new User("Tristan", "Thompson", MIKE, "password");
+    private final User KCP = new User("Kontavius", "Caldwell Pope", MIKE,"password");
+    private final User theMedia = new User("the", "Media", MIKE, "password");
+    private final User Rudy = new User("Rudy", "Gobert", MIKE, "password");
+    private final User BillBelichick = new User("Bill", "Belichick", MIKE, "password");
+    private final User TestUser = new User("Test", "User", MALE_IMAGE_URL, "password");
+    private final User userBarney = new User("Barney", "Rubble", MALE_IMAGE_URL, "password");
+    private final User DaffyDuck = new User("Daffy", "Duck", FEMALE_IMAGE_URL, "password");
+    private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
     public UpdateFollowResponse updateFollow(UpdateFollowRequest request) {
-        assert request.getUser() != null;
-        assert request.getFollowUser() != null;
 
         List<User> dummyFollowees = new ArrayList<>(getDummyFollowees());
 

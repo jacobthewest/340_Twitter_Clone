@@ -143,9 +143,9 @@ class ClientCommunicator {
      * code.
      */
     @SuppressWarnings("unused")
-    private static class ErrorResponse {
-        private String errorMessage;
-        private String errorType;
-        private List<String> stackTrace;
+    protected static class ErrorResponse {
+        protected String errorMessage;
+        protected String errorType;
+        protected List<String> stackTrace;
     }
 }

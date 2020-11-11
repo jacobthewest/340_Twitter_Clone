@@ -12,6 +12,7 @@ import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
  * A DAO for accessing 'following' data from the database.
  */
 public class FollowingDAO {
+
     // This is the hard coded followee data returned by the 'getFollowees()' method
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
@@ -36,20 +37,20 @@ public class FollowingDAO {
     private final User user17 = new User("Igor", "Isaacson", MALE_IMAGE_URL, "password");
     private final User user18 = new User("Isabel", "Isaacson", FEMALE_IMAGE_URL, "password");
     private final User user19 = new User("Justin", "Jones", MALE_IMAGE_URL, "password");
-    private final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL, "password");
-    private final User JacobWest = new User("Jacob", "West", "@JacobWest", MIKE, "password");
-    private final User RickyMartin = new User("Ricky", "Martin", "@RickyMartin", MIKE, "password");
-    private final User RobertGardner = new User("Robert", "Gardner", "@RobertGardner", MIKE, "password");
-    private final User Snowden = new User("The", "Snowden", "@Snowden", MIKE, "password");
-    private final User TristanThompson = new User("Tristan", "Thompson", "@TristanThompson", MIKE, "password");
-    private final User KCP = new User("Kontavius", "Caldwell Pope", "@KCP", MIKE, "password");
-    private final User theMedia = new User("the", "Media", "@theMedia", MIKE, "password");
-    private final User Rudy = new User("Rudy", "Gobert", "@Rudy", MIKE, "password");
-    private final User BillBelichick = new User("Bill", "Belichick", "@BillBelichick", MIKE, "password");
-    private final User TestUser = new User("Test", "User", "@TestUser", MALE_IMAGE_URL, "password");
-    private final User userBarney = new User("Barney", "Rubble", "", "password");
-    private final User DaffyDuck = new User("Daffy", "Duck", "", "password");
-    private final User Zoe = new User("Zoe", "Zabriski", "", "password");
+    private final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL,"password");
+    private final User JacobWest = new User("Jacob", "West", MIKE, "password");
+    private final User RickyMartin = new User("Ricky", "Martin",  MIKE, "password");
+    private final User RobertGardner = new User("Robert", "Gardner",  MIKE, "password");
+    private final User Snowden = new User("The", "Snowden", MIKE, "password");
+    private final User TristanThompson = new User("Tristan", "Thompson", MIKE, "password");
+    private final User KCP = new User("Kontavius", "Caldwell Pope", MIKE,"password");
+    private final User theMedia = new User("the", "Media", MIKE, "password");
+    private final User Rudy = new User("Rudy", "Gobert", MIKE, "password");
+    private final User BillBelichick = new User("Bill", "Belichick", MIKE, "password");
+    private final User TestUser = new User("Test", "User", MALE_IMAGE_URL, "password");
+    private final User userBarney = new User("Barney", "Rubble", MALE_IMAGE_URL, "password");
+    private final User DaffyDuck = new User("Daffy", "Duck", FEMALE_IMAGE_URL, "password");
+    private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
     /**
      * Gets the count of users from the database that the user specified is following. The
@@ -76,8 +77,6 @@ public class FollowingDAO {
      */
     public FollowingResponse getFollowees(FollowingRequest request) {
         // TODO: Generates dummy data. Replace with a real implementation.
-        assert request.getLimit() > 0;
-        assert request.getUser() != null;
 
         List<User> allFollowees = getDummyFollowees();
         List<User> responseFollowees = new ArrayList<>(request.getLimit());

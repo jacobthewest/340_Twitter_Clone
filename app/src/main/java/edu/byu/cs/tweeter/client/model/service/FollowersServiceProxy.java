@@ -15,7 +15,7 @@ import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
  */
 public class FollowersServiceProxy implements FollowersService {
 
-    private static final String URL_PATH = "/getfollowers";
+    private static final String URL_PATH = "/followers";
 
     /**
      * Returns the users who are following the specified user in the request. Uses information in

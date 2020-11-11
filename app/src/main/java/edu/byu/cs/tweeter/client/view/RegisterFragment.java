@@ -21,13 +21,14 @@ import androidx.fragment.app.Fragment;
 import java.io.InputStream;
 
 import edu.byu.cs.tweeter.R;
-import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
-import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
 import edu.byu.cs.tweeter.client.presenter.RegisterPresenter;
 import edu.byu.cs.tweeter.client.view.asyncTasks.RegisterTask;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.client.view.util.AliasChecker;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
+import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
+import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -35,18 +36,18 @@ import static android.app.Activity.RESULT_OK;
  * The fragment that displays on the 'Register' tab.
  */
 public class RegisterFragment extends Fragment implements RegisterPresenter.View, RegisterTask.Observer {
-    private static final int RESULT_LOAD_IMAGE = 1;
-    private static final String LOG_TAG = "RegisterFragment";
-    private static final String USER_KEY = "UserKey";
-    private static final String FOLLOW_KEY = "FollowKey";
-    private static final String AUTH_TOKEN_KEY = "AuthTokenKey";
+    protected static final int RESULT_LOAD_IMAGE = 1;
+    protected static final String LOG_TAG = "RegisterFragment";
+    protected static final String USER_KEY = "UserKey";
+    protected static final String FOLLOW_KEY = "FollowKey";
+    protected static final String AUTH_TOKEN_KEY = "AuthTokenKey";
 
-    private String imageUrl;
-    private RegisterPresenter presenter;
-    private Toast registerToast;
-    private ImageView imageToUpload;
-    private byte [] imageBytes;
-    private String imageBytesAsString;
+    protected String imageUrl;
+    protected RegisterPresenter presenter;
+    protected Toast registerToast;
+    protected ImageView imageToUpload;
+    protected byte [] imageBytes;
+    protected String imageBytesAsString;
 
     /**
      * Creates an instance of the fragment and places the user and auth token in an arguments
@@ -142,32 +143,35 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
         }
     }
 
-    private RegisterTask.Observer getObserver() {
+    protected RegisterTask.Observer getObserver() {
         return this;
     }
 
-    private RegisterRequest getRegisterRequest(EditText userName, EditText password, EditText first, EditText last) {
+    protected RegisterRequest getRegisterRequest(EditText userName, EditText password, EditText first, EditText last) {
         String userNameString = editTextToString(userName);
         String passwordString = editTextToString(password);
         String firstNameString = editTextToString(first);
         String lastNameString = editTextToString(last);
         imageUrl = "https://i.imgur.com/VZQQiQ1.jpg";
-        return new RegisterRequest(userNameString, passwordString, firstNameString, lastNameString, imageUrl, imageBytesAsString);
+        User user = new User(firstNameString, lastNameString, imageUrl, passwordString);
+        user.setAlias(userNameString);
+        user.setImageBytesAsString(imageBytesAsString);
+        return new RegisterRequest(user);
     }
 
-    private boolean isValidAlias(EditText username) {
+    protected boolean isValidAlias(EditText username) {
         AliasChecker aliasChecker = new AliasChecker(username);
         if(isEmpty(username)) {return false;}
         if(aliasChecker.isValid()) {return true;}
         return false;
     }
 
-    private boolean isEmpty(EditText text) {
+    protected boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();
         return TextUtils.isEmpty(str);
     }
 
-    private String editTextToString(EditText text) {
+    protected String editTextToString(EditText text) {
         return text.getText().toString();
     }
 

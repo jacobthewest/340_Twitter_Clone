@@ -15,6 +15,7 @@ public class UpdateFollowServiceImpl implements UpdateFollowService {
         // Request:: User, followUser, boolean followTheFollowUser
         checker.checkUserRequest(request.getUser());
         checker.checkUserRequest(request.getFollowUser());
+        checker.checkSameUser(request.getUser(), request.getFollowUser());
 
         UpdateFollowResponse updateFollowResponse = getUpdateFollowDAO().updateFollow(request);
 

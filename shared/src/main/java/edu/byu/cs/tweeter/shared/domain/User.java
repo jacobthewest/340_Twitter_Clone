@@ -13,36 +13,25 @@ public class User implements Comparable<User>, Serializable {
     private String alias;
     private String imageUrl;
     private String password;
-    private byte [] imageBytes;
+    private String imageBytesAsString;
+    private byte[] imageBytes;
 
     public User() {}
 
+    // Most basic constructor
     public User(String firstName, String lastName, String imageUrl) {
-        this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageUrl);
-    }
-
-    public User(String firstName, String lastName, String imageURL, String password) {
-        this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL, password);
-    }
-
-    public User(String firstName, String lastName, String imageURL, byte[] imageBytes, String password) {
-        this(firstName, lastName, String.format("@%s%s", firstName, lastName), imageURL, imageBytes, password);
-    }
-
-    public User(String firstName, String lastName, String alias, String imageURL, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.alias = alias;
-        this.imageUrl = imageURL;
-        this.password = password;
+        this.alias = "@" + firstName + lastName;
+        this.imageUrl = imageUrl;
     }
 
-    public User(String firstName, String lastName, String alias, String imageURL, byte[] imageBytes, String password) {
+    // Constructor with a password
+    public User(String firstName, String lastName, String imageUrl, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.alias = alias;
-        this.imageUrl = imageURL;
-        this.imageBytes = imageBytes;
+        this.alias = "@" + firstName + lastName;
+        this.imageUrl = imageUrl;
         this.password = password;
     }
 
@@ -70,12 +59,10 @@ public class User implements Comparable<User>, Serializable {
         return password;
     }
 
-    public byte [] getImageBytes() {
-        return imageBytes;
-    }
+    public String getImageBytesAsString() { return imageBytesAsString; }
 
-    public void setImageBytes(byte[] imageBytes) {
-        this.imageBytes = imageBytes;
+    public byte[] getImageBytes() {
+        return imageBytes;
     }
 
     public void setFirstName(String firstName) {
@@ -96,6 +83,12 @@ public class User implements Comparable<User>, Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setImageBytesAsString(String imageBytesAsString) { this.imageBytesAsString = imageBytesAsString; }
+
+    public void setImageBytes(byte[] imageBytes) {
+        this.imageBytes = imageBytes;
     }
 
     @Override

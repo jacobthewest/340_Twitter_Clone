@@ -22,8 +22,6 @@ public class FeedDAO {
      * @return the following response.
      */
     public FeedResponse getFeed(FeedRequest request) {
-        assert request.getLimit() >= 0;
-        assert request.getUser() != null;
 
         ListOfStatuses tool = new ListOfStatuses();
         Map<String, List<Status>> feedStatusesByUser = tool.initializeFeed();

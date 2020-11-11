@@ -12,8 +12,6 @@ import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 public class StoryDAO {
 
     public StoryResponse getStory(StoryRequest request) {
-        assert request.getLimit() >= 0;
-        assert request.getUser() != null;
 
         ListOfStatuses tool = new ListOfStatuses();
         Map<String, List<Status>> storyStatusesByUser = tool.initializeStory();

@@ -19,9 +19,9 @@ public class Status implements Comparable<Status>, Serializable {
 
     public Status() {}
 
-    public Status(User user, String postText, String urls, String timePosted, String mentions) {
+    public Status(User user, String tweetText, String urls, String timePosted, String mentions) {
         this.user = user;
-        this.tweetText = postText;
+        this.tweetText = tweetText;
         this.urls = urls;
         this.timePosted = timePosted;
         this.mentions = mentions;

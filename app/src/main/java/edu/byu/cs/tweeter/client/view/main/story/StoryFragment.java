@@ -39,22 +39,22 @@ import edu.byu.cs.tweeter.client.view.util.*;
  */
 public class StoryFragment extends Fragment implements StoryPresenter.View {
 
-    private static final String LOG_TAG = "FollowingFragment";
-    private static final String USER_KEY = "UserKey";
-    private static final String FOLLOW_KEY = "FollowKey";
-    private static final String AUTH_TOKEN_KEY = "AuthTokenKey";
+    protected static final String LOG_TAG = "FollowingFragment";
+    protected static final String USER_KEY = "UserKey";
+    protected static final String FOLLOW_KEY = "FollowKey";
+    protected static final String AUTH_TOKEN_KEY = "AuthTokenKey";
 
-    private static final int LOADING_DATA_VIEW = 0;
-    private static final int ITEM_VIEW = 1;
+    protected static final int LOADING_DATA_VIEW = 0;
+    protected static final int ITEM_VIEW = 1;
 
-    private static final int PAGE_SIZE = 10;
+    protected static final int PAGE_SIZE = 10;
 
-    private User user;
-    private User followUser;
-    private AuthToken authToken;
-    private StoryPresenter presenter;
+    protected User user;
+    protected User followUser;
+    protected AuthToken authToken;
+    protected StoryPresenter presenter;
 
-    private StoryFragment.StoryRecyclerViewAdapter storyRecyclerViewAdapter;
+    protected StoryFragment.StoryRecyclerViewAdapter storyRecyclerViewAdapter;
 
     /**
      * Creates an instance of the fragment and places the user and auth token in an arguments
@@ -211,12 +211,12 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
      */
     private class StoryRecyclerViewAdapter extends RecyclerView.Adapter<StoryFragment.StoryHolder> implements GetStoryTask.Observer {
 
-        private final List<Status> story = new ArrayList<>();
+        protected final List<Status> story = new ArrayList<>();
 
-        private Status lastStatus;
+        protected Status lastStatus;
 
-        private boolean hasMorePages;
-        private boolean isLoading = false;
+        protected boolean hasMorePages;
+        protected boolean isLoading = false;
 
         /**
          * Creates an instance and loads the first page of following data.

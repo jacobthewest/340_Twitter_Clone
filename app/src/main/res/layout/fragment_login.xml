@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.LoginFragment">
+    tools:context=".client.view.LoginFragment">
 
     <EditText
         android:id="@+id/userNameLogin"
@@ -31,5 +31,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
-        android:text="Login w/ Hard coded User" />
+        android:text="Login" />
 </LinearLayout>

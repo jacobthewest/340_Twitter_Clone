@@ -2,13 +2,13 @@ package edu.byu.cs.tweeter.client.model.service;
 
 import java.io.IOException;
 
-import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
+import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
+import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.RegisterService;
 import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
-import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
 
 /**
  * Contains the business logic to support the register operation.
@@ -35,15 +35,8 @@ public class RegisterServiceProxy implements RegisterService {
      * @param user the user whose profile image data is to be loaded.
      */
     private void loadImage(User user) throws IOException {
-        byte[] preExistingBytes = user.getImageBytes();
-        byte [] bytes;
-        if(preExistingBytes != null) {
-            preExistingBytes = user.getImageBytes();
-            user.setImageBytes(preExistingBytes);
-        } else {
-            bytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
-            user.setImageBytes(bytes);
-        }
+        byte[] imageBytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
+        user.setImageBytes(imageBytes);
     }
 
     /**

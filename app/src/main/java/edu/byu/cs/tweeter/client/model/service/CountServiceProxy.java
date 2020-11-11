@@ -10,7 +10,7 @@ import edu.byu.cs.tweeter.shared.service.response.CountResponse;
 
 public class CountServiceProxy implements CountService {
 
-    static final String URL_PATH = "/getcount";
+    static final String URL_PATH = "/count";
 
     @Override
     public CountResponse getCount(CountRequest request) throws IOException, TweeterRemoteException {

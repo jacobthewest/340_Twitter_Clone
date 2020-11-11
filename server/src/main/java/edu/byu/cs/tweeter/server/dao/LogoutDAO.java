@@ -7,8 +7,6 @@ public class LogoutDAO {
 
     public LogoutResponse logout(LogoutRequest request) {
         // TODO: logs in a hard-coded user. Replace with a real implementation.
-        assert request.getUser() != null;
-        assert request.getAuthToken() != null;
 
         //  START
         //  Code to log the user out

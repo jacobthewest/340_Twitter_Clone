@@ -9,8 +9,6 @@ public class LoginDAO {
 
     public LoginResponse login(LoginRequest request) {
         // TODO: logs in a hard-coded user. Replace with a real implementation.
-        assert request.getUsername() != null;
-        assert request.getPassword() != null;
 
         //  START
         //  Code to log the user in

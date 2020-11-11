@@ -30,8 +30,8 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
     private static final String FOLLOW_KEY = "FollowKey";
     private static final String AUTH_TOKEN_KEY = "AuthTokenKey";
 
-    private LoginPresenter presenter;
-    private Toast loginToast;
+    protected LoginPresenter presenter;
+    protected Toast loginToast;
 
     /**
      * Creates an instance of the fragment and places the user and auth token in an arguments
@@ -95,7 +95,7 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
      * @param text The username
      * @return True if the format works, false if not.
      */
-    private boolean hasAtSymbol(EditText text) {
+    protected boolean hasAtSymbol(EditText text) {
         CharSequence str = text.getText().toString();
         char result = str.charAt(0);
         if (result == '@') {
@@ -104,52 +104,23 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
         return false;
     }
 
-    /**
-     * Checks to make sure the username is registered in the system.
-     * @param text The username
-     * @return True if the user is registered, false if not.
-     * TODO: Delete the hard coded value here after milestone 2.
-     */
-    private boolean isRegistered(EditText text) {
-        CharSequence str = text.getText().toString();
-        if (str.equals("@TestUser")) {
-            return true;
-        }
-        return false;
-    }
-
-
-    /**
-     * Checks to make sure the password is registered in the system.
-     * @param text The password
-     * @return True if the password is correct, false if not.
-     * TODO: Delete the hard coded value here after milestone 2.
-     */
-    private boolean isPasswordCorrect(EditText text) {
-        CharSequence str = text.getText().toString();
-        if (str.equals("password")) {
-            return true;
-        }
-        return false;
-    }
-
-    private LoginTask.Observer getObserver() {
+    protected LoginTask.Observer getObserver() {
         return this;
     }
 
-    private LoginRequest getLoginRequest(EditText userName, EditText password) {
+    protected LoginRequest getLoginRequest(EditText userName, EditText password) {
         String userNameString = editTextToString(userName);
         String passwordString = editTextToString(password);
 
         return new LoginRequest(userNameString, passwordString);
     }
 
-    private boolean isEmpty(EditText text) {
+    protected boolean isEmpty(EditText text) {
         CharSequence str = text.getText().toString();
         return TextUtils.isEmpty(str);
     }
 
-    private String editTextToString(EditText text) {
+    protected String editTextToString(EditText text) {
         return text.getText().toString();
     }
 

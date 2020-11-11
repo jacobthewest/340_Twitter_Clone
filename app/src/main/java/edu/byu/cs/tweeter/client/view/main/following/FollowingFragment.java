@@ -34,22 +34,22 @@ import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
  */
 public class FollowingFragment extends Fragment implements FollowingPresenter.View {
 
-    private static final String LOG_TAG = "FollowingFragment";
-    private static final String USER_KEY = "UserKey";
-    private static final String FOLLOW_KEY = "followKey";
-    private static final String AUTH_TOKEN_KEY = "AuthTokenKey";
+    protected static final String LOG_TAG = "FollowingFragment";
+    protected static final String USER_KEY = "UserKey";
+    protected static final String FOLLOW_KEY = "followKey";
+    protected static final String AUTH_TOKEN_KEY = "AuthTokenKey";
 
-    private static final int LOADING_DATA_VIEW = 0;
-    private static final int ITEM_VIEW = 1;
+    protected static final int LOADING_DATA_VIEW = 0;
+    protected static final int ITEM_VIEW = 1;
 
-    private static final int PAGE_SIZE = 10;
+    protected static final int PAGE_SIZE = 10;
 
-    private User user;
-    private User followUser;
-    private AuthToken authToken;
-    private FollowingPresenter presenter;
+    protected User user;
+    protected User followUser;
+    protected AuthToken authToken;
+    protected FollowingPresenter presenter;
 
-    private FollowingRecyclerViewAdapter followingRecyclerViewAdapter;
+    protected FollowingRecyclerViewAdapter followingRecyclerViewAdapter;
 
     /**
      * Creates an instance of the fragment and places the user and auth token in an arguments

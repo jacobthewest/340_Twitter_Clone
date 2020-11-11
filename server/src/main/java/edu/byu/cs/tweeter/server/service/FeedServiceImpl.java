@@ -15,7 +15,6 @@ public class FeedServiceImpl implements FeedService {
         // Request:: User, limit, lastStatus
         checker.checkUserRequest(request.getUser());
         checker.checkLimitRequest(request.getLimit());
-        checker.checkStatus(request.getLastStatus());
 
         FeedResponse feedResponse = getFeedDAO().getFeed(request);
 

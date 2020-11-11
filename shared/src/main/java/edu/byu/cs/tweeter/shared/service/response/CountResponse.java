@@ -26,6 +26,10 @@ public class CountResponse extends Response {
     public CountResponse(User user, int followingCount, int followersCount) {
         super(true, null);
         this.user = user;
+        if(this.user.getImageBytesAsString() == null) {
+            this.user.setImageBytesAsString("");
+        }
+        this.user.setImageBytes(null);
         this.followingCount = followingCount;
         this.followersCount = followersCount;
     }

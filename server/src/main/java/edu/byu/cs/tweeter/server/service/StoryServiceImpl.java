@@ -15,7 +15,6 @@ public class StoryServiceImpl implements StoryService {
         // Request:: User, limit, lastStatus
         checker.checkUserRequest(request.getUser());
         checker.checkLimitRequest(request.getLimit());
-        checker.checkStatus(request.getLastStatus());
 
         StoryResponse storyResponse = getStoryDAO().getStory(request);
 

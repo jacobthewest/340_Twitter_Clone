@@ -15,7 +15,7 @@ import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
  */
 public class StoryServiceProxy implements StoryService {
 
-    private static final String URL_PATH = "/getstory";
+    private static final String URL_PATH = "/story";
 
     /**
      * Returns the statuses of the specified user in the request. Uses information in

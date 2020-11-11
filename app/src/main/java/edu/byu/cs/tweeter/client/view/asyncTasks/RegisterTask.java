@@ -1,8 +1,14 @@
 package edu.byu.cs.tweeter.client.view.asyncTasks;
 
 import android.os.AsyncTask;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import java.io.IOException;
 
 import edu.byu.cs.tweeter.client.presenter.RegisterPresenter;
+import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
@@ -45,6 +51,7 @@ public class RegisterTask extends AsyncTask<RegisterRequest, Void, RegisterRespo
      * @param registerRequests the request object (there will only be one).
      * @return the response.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected RegisterResponse doInBackground(RegisterRequest... registerRequests) {
         RegisterResponse registerResponse = null;
@@ -67,13 +74,14 @@ public class RegisterTask extends AsyncTask<RegisterRequest, Void, RegisterRespo
      *
      * @param user the user whose profile image is to be loaded.
      */
-    private void loadImage(User user) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void loadImage(User user) throws IOException {
         // TODO: I changed this to get the user's set image bytes that we DID NOT get from the imageURL from the server.
         // we will probably have to load that manually from the server, but for Milestone #2, I'm just using the image
         // locally.
 //        try {
-        byte [] bytes = user.getImageBytes();
-        user.setImageBytes(bytes);
+        byte[] imageBytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
+        user.setImageBytes(imageBytes);
 //                ***Old code below*** Includes the try catch
 //                byte [] bytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
 //                user.setImageBytes(bytes);

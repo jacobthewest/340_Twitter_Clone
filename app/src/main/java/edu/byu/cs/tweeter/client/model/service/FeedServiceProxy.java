@@ -15,7 +15,7 @@ import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
  */
 public class FeedServiceProxy implements FeedService {
 
-    static final String URL_PATH = "/getfeed";
+    static final String URL_PATH = "/feed";
 
     /**
      * Returns the statuses of the specified user in the request. Uses information in

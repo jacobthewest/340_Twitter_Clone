@@ -15,7 +15,7 @@ import edu.byu.cs.tweeter.shared.service.FollowingService;
  */
 public class FollowingServiceProxy implements FollowingService {
 
-    static final String URL_PATH = "/getfollowing";
+    static final String URL_PATH = "/following";
 
     /**
      * Returns the users that the user specified in the request is following. Uses information in

@@ -39,19 +39,19 @@ public class ListOfStatuses {
     public final User user18 = new User("Isabel", "Isaacson", FEMALE_IMAGE_URL, "password");
     public final User user19 = new User("Justin", "Jones", MALE_IMAGE_URL, "password");
     public final User user20 = new User("Jill", "Johnson", FEMALE_IMAGE_URL, "password");
-    public final User JacobWest = new User("Jacob", "West", "@JacobWest", MIKE, "password");
-    public final User RickyMartin = new User("Ricky", "Martin", "@RickyMartin", MIKE, "password");
-    public final User RobertGardner = new User("Robert", "Gardner", "@RobertGardner", MIKE, "password");
-    public final User Snowden = new User("The", "Snowden", "@Snowden", MIKE, "password");
-    public final User TristanThompson = new User("Tristan", "Thompson", "@TristanThompson", MIKE, "password");
-    public final User KCP = new User("Kontavius", "Caldwell Pope", "@KCP", MIKE, "password");
-    public final User theMedia = new User("the", "Media", "@theMedia", MIKE, "password");
-    public final User Rudy = new User("Rudy", "Gobert", "@Rudy", MIKE, "password");
-    public final User BillBelichick = new User("Bill", "Belichick", "@BillBelichick", MIKE, "password");
-    public final User TestUser = new User("Test", "User", "@TestUser", MALE_IMAGE_URL, "password");
-    public final User userBarney = new User("Barney", "Rubble", "", "password");
-    public final User DaffyDuck = new User("Daffy", "Duck", "", "password");
-    public final User Zoe = new User("Zoe", "Zabriski", "", "password");
+    private final User JacobWest = new User("Jacob", "West", MIKE, "password");
+    private final User RickyMartin = new User("Ricky", "Martin",  MIKE, "password");
+    private final User RobertGardner = new User("Robert", "Gardner",  MIKE, "password");
+    private final User Snowden = new User("The", "Snowden", MIKE, "password");
+    private final User TristanThompson = new User("Tristan", "Thompson", MIKE, "password");
+    private final User KCP = new User("Kontavius", "Caldwell Pope", MIKE,"password");
+    private final User theMedia = new User("the", "Media", MIKE, "password");
+    private final User Rudy = new User("Rudy", "Gobert", MIKE, "password");
+    private final User BillBelichick = new User("Bill", "Belichick", MIKE, "password");
+    private final User TestUser = new User("Test", "User", MALE_IMAGE_URL, "password");
+    private final User userBarney = new User("Barney", "Rubble", MALE_IMAGE_URL, "password");
+    private final User DaffyDuck = new User("Daffy", "Duck", FEMALE_IMAGE_URL, "password");
+    private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
 
     public ListOfStatuses() {}
@@ -97,10 +97,10 @@ public class ListOfStatuses {
             feed.add(s);
 
             // --------------------- 6 --------------------- //
-            String mSix = "@RobertGardner @Snowden @TristanThompson";
+            String mSix = "@RobertGardner @TheSnowden @TristanThompson";
             d = createDate(2002, 10, 19, 14, 59);
             String f = dateFormat.format(d);
-            s = new Status(theMedia, "@RobertGardner @Snowden @TristanThompson", "", f, mSix);
+            s = new Status(theMedia, "@RobertGardner @TheSnowden @TristanThompson", "", f, mSix);
             feed.add(s);
 
             // --------------------- 7 --------------------- //
@@ -136,10 +136,10 @@ public class ListOfStatuses {
             feed.add(s);
 
             // --------------------- 12 --------------------- //
-            String mTwelve = "@theMedia @Rudy";
+            String mTwelve = "@theMedia @RudyGobert";
             d = createDate(2016, 8, 9, 8, 5);
             String l = dateFormat.format(d);
-            s = new Status(BillBelichick, "Rudy and I are chill @theMedia @Rudy", "", l, mTwelve);
+            s = new Status(BillBelichick, "Rudy and I are chill @theMedia @RudyGobert", "", l, mTwelve);
             feed.add(s);
 
             // --------------------- 13 --------------------- //
@@ -234,10 +234,10 @@ public class ListOfStatuses {
             feed.add(s);
 
             // --------------------- 6 --------------------- //
-            String mSix = "@RobertGardner @Snowden @TristanThompson";
+            String mSix = "@RobertGardner @TheSnowden @TristanThompson";
             d = createDate(2002, 10, 19, 14, 59);
             String f = dateFormat.format(d);
-            s = new Status(definedUser, "@RobertGardner @Snowden @TristanThompson", "", f, mSix);
+            s = new Status(definedUser, "@RobertGardner @TheSnowden @TristanThompson", "", f, mSix);
             feed.add(s);
 
             // --------------------- 7 --------------------- //
@@ -273,9 +273,9 @@ public class ListOfStatuses {
             feed.add(s);
 
             // --------------------- 12 --------------------- //
-            String mTwelve = "@theMedia @Rudy";
+            String mTwelve = "@theMedia @RudyGobert";
             String l = dateFormat.format(d);
-            s = new Status(definedUser, "Rudy and I are chill @theMedia @Rudy", "", l, mTwelve);
+            s = new Status(definedUser, "Rudy and I are chill @theMedia @RudyGobert", "", l, mTwelve);
             feed.add(s);
 
             // --------------------- 13 --------------------- //
