@@ -106,7 +106,7 @@ public class RequestAndResponseChecker {
 
     public void checkAuthTokenRequest(User user, AuthToken authToken) {
         if(!user.getAlias().equals(authToken.getUsername())) {
-            throw new RuntimeException("[BadRequest] Response user and AuthToken usernames don't match.");
+            throw new RuntimeException("[BadRequest] Request user and AuthToken usernames don't match.");
         }
         checkEmptyNullStringRequest(authToken.getId(), "Id");
         checkEmptyNullStringRequest(authToken.getUsername(), "Alias");

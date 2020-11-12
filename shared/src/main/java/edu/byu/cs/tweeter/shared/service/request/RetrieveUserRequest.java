@@ -14,7 +14,7 @@ public class RetrieveUserRequest {
      *
      * @param username the username of the user to be retrieved.
      */
-    public RetrieveUserRequest(String username) {
+    public  RetrieveUserRequest(String username) {
         this.username = username;
     }
 

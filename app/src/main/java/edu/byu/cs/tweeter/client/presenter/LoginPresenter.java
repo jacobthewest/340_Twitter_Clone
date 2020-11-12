@@ -38,7 +38,7 @@ public class LoginPresenter {
      * @param loginRequest the request.
      */
     public LoginResponse login(LoginRequest loginRequest) throws IOException, TweeterRemoteException {
-        LoginService loginService = new LoginServiceProxy();
+        LoginService loginService = getLoginService();
         return loginService.login(loginRequest);
     }
 
