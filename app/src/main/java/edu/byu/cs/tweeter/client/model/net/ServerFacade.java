@@ -32,6 +32,10 @@ import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
  */
 public class ServerFacade {
 
+    FollowGenerator getFollowGenerator() {
+        return FollowGenerator.getInstance();
+    }
+
     // TODO: Set this to the invoke URL of your API. Find it by going to your API in AWS, clicking
     //  on stages in the right-side menu, and clicking on the stage you deployed your API to.
     private static final String SERVER_URL = " https://vdimhw3cwe.execute-api.us-west-2.amazonaws.com/TweeterProd/";
