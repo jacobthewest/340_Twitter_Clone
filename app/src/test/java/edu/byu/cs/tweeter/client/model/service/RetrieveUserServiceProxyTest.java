@@ -13,7 +13,7 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.RetrieveUserRequest;
 import edu.byu.cs.tweeter.shared.service.response.RetrieveUserResponse;
 
-public class RetrieveUserServiceTest {
+public class RetrieveUserServiceProxyTest {
 
     String username = "@TestUser";
     final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
@@ -25,6 +25,8 @@ public class RetrieveUserServiceTest {
     private RetrieveUserResponse successResponse;
     private RetrieveUserResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private RetrieveUserServiceProxy retrieveUserServiceProxy;
+
 
     @BeforeEach
     public void setup() throws IOException, TweeterRemoteException {
@@ -36,7 +38,7 @@ public class RetrieveUserServiceTest {
         validRequest = new RetrieveUserRequest(username);
         invalidRequestOne = new RetrieveUserRequest("@NotRegistered"); // Username not registered
         invalidRequestTwo = new RetrieveUserRequest(null); // Username is null
-        invalidRequestThree = new RetrieveUserRequest(""); // Username is null
+        invalidRequestThree = new RetrieveUserRequest(""); // Username is empty
 
         // Setup a mock ServerFacade that will return known responses
         successResponse = new RetrieveUserResponse(TestUser);
@@ -46,29 +48,33 @@ public class RetrieveUserServiceTest {
         Mockito.when(mockServerFacade.retrieveUser(invalidRequestOne, "/retrieveuser")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.retrieveUser(invalidRequestTwo, "/retrieveuser")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.retrieveUser(invalidRequestThree, "/retrieveuser")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        retrieveUserServiceProxy = Mockito.spy(new RetrieveUserServiceProxy());
+        Mockito.when(retrieveUserServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testRetrieveUser_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        RetrieveUserResponse response = mockServerFacade.retrieveUser(validRequest, "/retrieveuser");
+        RetrieveUserResponse response = retrieveUserServiceProxy.retrieveUser(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testRetrieveUser_invalidRequest_usernameNotRegistered() throws IOException, TweeterRemoteException {
-        RetrieveUserResponse response = mockServerFacade.retrieveUser(invalidRequestOne, "/retrieveuser");
+        RetrieveUserResponse response = retrieveUserServiceProxy.retrieveUser(invalidRequestOne);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testRetrieveUser_invalidRequest_usernameIsNull() throws IOException, TweeterRemoteException {
-        RetrieveUserResponse response = mockServerFacade.retrieveUser(invalidRequestTwo, "/retrieveuser");
+        RetrieveUserResponse response = retrieveUserServiceProxy.retrieveUser(invalidRequestTwo);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testRetrieveUser_invalidRequest_usernameIsEmpty() throws IOException, TweeterRemoteException {
-        RetrieveUserResponse response = mockServerFacade.retrieveUser(invalidRequestThree, "/retrieveuser");
+        RetrieveUserResponse response = retrieveUserServiceProxy.retrieveUser(invalidRequestThree);
         Assertions.assertEquals(failureResponse, response);
     }
 

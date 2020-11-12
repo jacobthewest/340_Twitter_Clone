@@ -20,7 +20,7 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.FeedRequest;
 import edu.byu.cs.tweeter.shared.service.response.FeedResponse;
 
-public class FeedServiceTest {
+public class FeedServiceProxyTest {
 
     private static final String MIKE = "https://i.imgur.com/VZQQiQ1.jpg";
     private FeedRequest validRequest;
@@ -29,6 +29,7 @@ public class FeedServiceTest {
     private FeedResponse successResponse;
     private FeedResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private FeedServiceProxy feedServiceProxy;
     private String imageUrl = "https://i.imgur.com/VZQQiQ1.jpg";
     private final User JacobWest = new User("Jacob", "West", MIKE, "password");
     private final User RickyMartin = new User("Ricky", "Martin",  MIKE, "password");
@@ -38,7 +39,6 @@ public class FeedServiceTest {
 
     @BeforeEach
     public void setup() throws IOException, TweeterRemoteException {
-        ServerFacade mockServerFacade = Mockito.mock(ServerFacade.class);
         User currentUser = new User("Test", "User", null, "password");
         List<Status> feed = getFeed();
 
@@ -49,24 +49,27 @@ public class FeedServiceTest {
 
         // Setup a mock ServerFacade that will return known responses
         successResponse = new FeedResponse(feed, false);
+        mockServerFacade = Mockito.mock(ServerFacade.class);
         Mockito.when(mockServerFacade.getFeed(validRequest, "/feed")).thenReturn(successResponse);
 
         failureResponse = new FeedResponse("An exception occured");
         Mockito.when(mockServerFacade.getFeed(invalidRequestOne, "/feed")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.getFeed(invalidRequestTwo, "/feed")).thenReturn(failureResponse);
 
-        mockServerFacade = Mockito.mock(ServerFacade.class);
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        feedServiceProxy = Mockito.spy(new FeedServiceProxy());
+        Mockito.when(feedServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testGetFeed_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        FeedResponse response = mockServerFacade.getFeed(validRequest, "/feed");
+        FeedResponse response = feedServiceProxy.getFeed(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testGetFeed_validRequest_loadsProfileImages() throws IOException, TweeterRemoteException {
-        FeedResponse response = mockServerFacade.getFeed(validRequest, "/feed");
+        FeedResponse response = feedServiceProxy.getFeed(validRequest);
 
         for(Status status : response.getStatuses()) {
             byte [] bytes = ByteArrayUtils.bytesFromUrl(status.getUser().getImageUrl());
@@ -77,13 +80,13 @@ public class FeedServiceTest {
 
     @Test
     public void testGetFeed_invalidRequest_nullUser() throws IOException, TweeterRemoteException {
-        FeedResponse response = mockServerFacade.getFeed(invalidRequestOne, "/feed");
+        FeedResponse response = feedServiceProxy.getFeed(invalidRequestOne);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testGetFeed_invalidRequest_negativeLimit() throws IOException, TweeterRemoteException {
-        FeedResponse response = mockServerFacade.getFeed(invalidRequestTwo, "/feed");
+        FeedResponse response = feedServiceProxy.getFeed(invalidRequestTwo);
         Assertions.assertEquals(failureResponse, response);
     }
 

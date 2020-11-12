@@ -14,7 +14,7 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.LogoutRequest;
 import edu.byu.cs.tweeter.shared.service.response.LogoutResponse;
 
-public class LogoutServiceTest {
+public class LogoutServiceProxyTest {
 
     private LogoutRequest validRequest;
     private LogoutRequest invalidRequestOne;
@@ -22,6 +22,8 @@ public class LogoutServiceTest {
     private LogoutResponse successResponse;
     private LogoutResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private LogoutServiceProxy logoutServiceProxy;
+
 
     @BeforeEach
     public void setup() throws IOException, TweeterRemoteException {
@@ -44,23 +46,27 @@ public class LogoutServiceTest {
         failureResponse = new LogoutResponse("An exception occured");
         Mockito.when(mockServerFacade.logout(invalidRequestOne, "/logout")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.logout(invalidRequestTwo, "/logout")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        logoutServiceProxy = Mockito.spy(new LogoutServiceProxy());
+        Mockito.when(logoutServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testLogout_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        LogoutResponse response = mockServerFacade.logout(validRequest, "/logout");
+        LogoutResponse response = logoutServiceProxy.logout(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testLogout_invalidRequest_emptyUsername() throws IOException, TweeterRemoteException {
-        LogoutResponse response = mockServerFacade.logout(invalidRequestOne, "/logout");
+        LogoutResponse response = logoutServiceProxy.logout(invalidRequestOne);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testLogout_invalidRequest_authTokenDoesNotMatch() throws IOException, TweeterRemoteException {
-        LogoutResponse response = mockServerFacade.logout(invalidRequestTwo, "/logout");
+        LogoutResponse response = logoutServiceProxy.logout(invalidRequestTwo);
         Assertions.assertEquals(failureResponse, response);
     }
 }

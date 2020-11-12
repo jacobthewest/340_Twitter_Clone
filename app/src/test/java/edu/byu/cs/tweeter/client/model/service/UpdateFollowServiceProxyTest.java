@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.byu.cs.tweeter.client.model.net.ServerFacade;
@@ -15,13 +15,14 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
 import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
 
-public class UpdateFollowServiceTest {
+public class UpdateFollowServiceProxyTest {
 
     private UpdateFollowRequest validRequestFollow;
     private UpdateFollowRequest validRequestUnFollow;
     private UpdateFollowResponse followSuccessResponse;
     private UpdateFollowResponse unFollowSuccessResponse;
     private ServerFacade mockServerFacade;
+    private UpdateFollowServiceProxy updateFollowServiceProxy;
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
     private static final String MIKE = "https://i.imgur.com/VZQQiQ1.jpg";
@@ -60,6 +61,8 @@ public class UpdateFollowServiceTest {
     private final User DaffyDuck = new User("Daffy", "Duck", FEMALE_IMAGE_URL, "password");
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
     final User user = new User("Test", "User", MALE_IMAGE_URL, "password");
+    private List<User> follow_following;
+    private List<User> unFollow_following;
 
     @BeforeEach
     public void setup() throws IOException, TweeterRemoteException {
@@ -67,42 +70,74 @@ public class UpdateFollowServiceTest {
         User unFollowThisUser = Rudy;
         User followThisUser = JacobWest;
 
-        List<User> follow_following = getFollowing();
-        follow_following.add(JacobWest);
+        follow_following = getFollowing();
+        follow_following.add(followThisUser);
 
-        List<User> unFollow_following = getFollowing();
-        unFollow_following.remove(Rudy);
+        unFollow_following = getFollowing();
+        unFollow_following.remove(unFollowThisUser);
 
         // Setup request objects to use in the tests
         validRequestFollow = new UpdateFollowRequest(user, followThisUser, true);
         validRequestUnFollow = new UpdateFollowRequest(user, unFollowThisUser, false);
-//        unFollowUserWeDontFollow = new UpdateFollowRequest(user, unRecognizedUser, false);
-//        followUserWeAlreadyFollow = new UpdateFollowRequest(user, Rudy, true);
 
         // Setup a mock ServerFacade that will return known responses
         followSuccessResponse = new UpdateFollowResponse(user, followThisUser, follow_following);
         unFollowSuccessResponse = new UpdateFollowResponse(user, unFollowThisUser, unFollow_following);
         mockServerFacade = Mockito.mock(ServerFacade.class);
-        Mockito.when(mockServerFacade.updateFollow(validRequestFollow, "updatefollow")).thenReturn(followSuccessResponse);
-        Mockito.when(mockServerFacade.updateFollow(validRequestUnFollow, "updatefollow")).thenReturn(unFollowSuccessResponse);
+        Mockito.when(mockServerFacade.updateFollow(validRequestFollow, "/updatefollow")).thenReturn(followSuccessResponse);
+        Mockito.when(mockServerFacade.updateFollow(validRequestUnFollow, "/updatefollow")).thenReturn(unFollowSuccessResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        updateFollowServiceProxy = Mockito.spy(new UpdateFollowServiceProxy());
+        Mockito.when(updateFollowServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testUpdateFollow_validRequest_validRequestFollow() throws IOException, TweeterRemoteException {
-        UpdateFollowResponse response =   mockServerFacade.updateFollow(validRequestFollow, "updatefollow");
+        UpdateFollowResponse response = updateFollowServiceProxy.updateFollow(validRequestFollow);
         Assertions.assertEquals(followSuccessResponse, response);
     }
 
     @Test
     public void testUpdateFollow_validRequest_validRequestUnFollow() throws IOException, TweeterRemoteException {
-        UpdateFollowResponse response =   mockServerFacade.updateFollow(validRequestUnFollow, "updatefollow");
+        UpdateFollowResponse response = updateFollowServiceProxy.updateFollow(validRequestUnFollow);
         Assertions.assertEquals(unFollowSuccessResponse, response);
     }
 
     private List<User> getFollowing() {
-        return Arrays.asList(user1, user2, theMedia, user4, user5, user6, user7, RickyMartin, RobertGardner, TristanThompson,
-                user8, user9, user10, user11, Snowden, user12, user13, user14, user15, user16, user17, user18, TestUser,
-                user19, user20, BillBelichick, KCP, Rudy, TestUser);
+        List<User> list = new ArrayList<>();
+        list.add(user1);
+        list.add(user2);
+        list.add(theMedia);
+        list.add(user4);
+        list.add(user5);
+        list.add(user6);
+        list.add(user7);
+        list.add(RickyMartin);
+        list.add(RobertGardner);
+        list.add(TristanThompson);
+        list.add(user8);
+        list.add(user9);
+        list.add(user10);
+        list.add(Snowden);
+        list.add(user12);
+        list.add(user13);
+        list.add(user14);
+        list.add(user15);
+        list.add(user16);
+        list.add(user17);
+        list.add(user18);
+        list.add(TestUser);
+        list.add(user19);
+        list.add(user20);
+        list.add(BillBelichick);
+        list.add(KCP);
+        list.add(Rudy);
+        list.add(TestUser);
+//        return Arrays.asList(user1, user2, theMedia, user4, user5, user6, user7, RickyMartin, RobertGardner, TristanThompson,
+//                user8, user9, user10, user11, Snowden, user12, user13, user14, user15, user16, user17, user18, TestUser,
+//                user19, user20, BillBelichick, KCP, Rudy, TestUser);
+        return list;
     }
 
 }

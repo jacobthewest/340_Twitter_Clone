@@ -17,7 +17,7 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.SubmitTweetRequest;
 import edu.byu.cs.tweeter.shared.service.response.SubmitTweetResponse;
 
-public class SubmitTweetServiceTest {
+public class SubmitTweetServiceProxyTest {
 
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private SubmitTweetRequest validRequest;
@@ -27,6 +27,7 @@ public class SubmitTweetServiceTest {
     private SubmitTweetResponse successResponse;
     private SubmitTweetResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private SubmitTweetServiceProxy submitTweetServiceProxy;
 
     @BeforeEach
     public void setup() throws IOException, TweeterRemoteException {
@@ -51,29 +52,33 @@ public class SubmitTweetServiceTest {
         Mockito.when(mockServerFacade.submitTweet(invalidRequest1, "/submittweet")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.submitTweet(invalidRequest2, "/submittweet")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.submitTweet(invalidRequest3, "/submittweet")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        submitTweetServiceProxy = Mockito.spy(new SubmitTweetServiceProxy());
+        Mockito.when(submitTweetServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testSubmitTweet_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        SubmitTweetResponse response = mockServerFacade.submitTweet(validRequest, "/submittweet");
+        SubmitTweetResponse response = submitTweetServiceProxy.submitTweet(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testSubmitTweet_invalidRequest_userDoesNotMatchStatus() throws IOException, TweeterRemoteException {
-        SubmitTweetResponse response = mockServerFacade.submitTweet(invalidRequest1, "/submittweet");
+        SubmitTweetResponse response = submitTweetServiceProxy.submitTweet(invalidRequest1);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testSubmitTweet_invalidRequest_userIsNull() throws IOException, TweeterRemoteException {
-        SubmitTweetResponse response = mockServerFacade.submitTweet(invalidRequest2, "/submittweet");
+        SubmitTweetResponse response = submitTweetServiceProxy.submitTweet(invalidRequest2);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testSubmitTweet_invalidRequest_statusIsNull() throws IOException, TweeterRemoteException {
-        SubmitTweetResponse response = mockServerFacade.submitTweet(invalidRequest3, "/submittweet");
+        SubmitTweetResponse response = submitTweetServiceProxy.submitTweet(invalidRequest3);
         Assertions.assertEquals(failureResponse, response);
     }
 

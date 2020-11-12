@@ -17,7 +17,7 @@ import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
 
-public class RegisterServiceTest {
+public class RegisterServiceProxyTest {
 
     private RegisterRequest validRequest;
     private RegisterRequest invalidRequestOne;
@@ -25,6 +25,7 @@ public class RegisterServiceTest {
     private RegisterResponse successResponse;
     private RegisterResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private RegisterServiceProxy registerServiceProxy;
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
 
     @BeforeEach
@@ -73,23 +74,27 @@ public class RegisterServiceTest {
         failureResponse = new RegisterResponse("An exception occured");
         Mockito.when(mockServerFacade.register(invalidRequestOne, "/register")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.register(invalidRequestTwo, "/register")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        registerServiceProxy = Mockito.spy(new RegisterServiceProxy());
+        Mockito.when(registerServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testRegister_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        RegisterResponse response = mockServerFacade.register(validRequest, "/register");
+        RegisterResponse response = registerServiceProxy.register(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testRegister_invalidRequest_emptyImageBytes() throws IOException, TweeterRemoteException {
-        RegisterResponse response = mockServerFacade.register(invalidRequestOne, "/register");
+        RegisterResponse response = registerServiceProxy.register(invalidRequestOne);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testRegister_invalidRequest_usernameDoesNotMatchWithAuthToken() throws IOException, TweeterRemoteException {
-        RegisterResponse response = mockServerFacade.register(invalidRequestTwo, "/register");
+        RegisterResponse response = registerServiceProxy.register(invalidRequestTwo);
         Assertions.assertEquals(failureResponse, response);
     }
 }

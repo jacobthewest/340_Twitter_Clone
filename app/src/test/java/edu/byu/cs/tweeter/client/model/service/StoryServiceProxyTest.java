@@ -20,13 +20,14 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.StoryRequest;
 import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 
-public class StoryServiceTest {
+public class StoryServiceProxyTest {
     private StoryRequest validRequest;
     private StoryRequest invalidRequestOne;
     private StoryRequest invalidRequestTwo;
     private StoryResponse successResponse;
     private StoryResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private StoryServiceProxy storyServiceProxy;
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
 
     @BeforeEach
@@ -47,17 +48,21 @@ public class StoryServiceTest {
         failureResponse = new StoryResponse("An exception occured");
         Mockito.when(mockServerFacade.getStory(invalidRequestOne, "/story")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.getStory(invalidRequestTwo, "/story")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        storyServiceProxy = Mockito.spy(new StoryServiceProxy());
+        Mockito.when(storyServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testGetStory_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        StoryResponse response = mockServerFacade.getStory(validRequest, "/story");
+        StoryResponse response = storyServiceProxy.getStory(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testGetStory_validRequest_loadsProfileImages() throws IOException, TweeterRemoteException {
-        StoryResponse response = mockServerFacade.getStory(validRequest, "/story");
+        StoryResponse response = storyServiceProxy.getStory(validRequest);
 
         for(Status status : response.getStatuses()) {
             byte [] bytes = ByteArrayUtils.bytesFromUrl(status.getUser().getImageUrl());
@@ -68,13 +73,13 @@ public class StoryServiceTest {
 
     @Test
     public void testGetStory_invalidRequest_nullUser() throws IOException, TweeterRemoteException {
-        StoryResponse response = mockServerFacade.getStory(invalidRequestOne, "/story");
+        StoryResponse response = storyServiceProxy.getStory(invalidRequestOne);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testGetStory_invalidRequest_negativeLimit() throws IOException, TweeterRemoteException {
-        StoryResponse response = mockServerFacade.getStory(invalidRequestTwo, "/story");
+        StoryResponse response = storyServiceProxy.getStory(invalidRequestTwo);
         Assertions.assertEquals(failureResponse, response);
     }
 

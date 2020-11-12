@@ -13,13 +13,14 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.CountRequest;
 import edu.byu.cs.tweeter.shared.service.response.CountResponse;
 
-public class CountServiceTest {
+public class CountServiceProxyTest {
 
     private CountRequest validRequest;
     private CountRequest invalidRequest;
     private CountResponse successResponse;
     private CountResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private CountServiceProxy countServiceProxy;
     private int followingCount = 29;
     private int followersCount = 29;
 
@@ -38,17 +39,21 @@ public class CountServiceTest {
 
         failureResponse = new CountResponse("An exception occured");
         Mockito.when(mockServerFacade.getCount(invalidRequest, "/count")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        countServiceProxy = Mockito.spy(new CountServiceProxy());
+        Mockito.when(countServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testGetCount_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        CountResponse response = mockServerFacade.getCount(validRequest, "/count");
+        CountResponse response = countServiceProxy.getCount(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testGetCount_invalidRequest_returnsNoCount() throws IOException, TweeterRemoteException {
-        CountResponse response = mockServerFacade.getCount(invalidRequest, "/count");
+        CountResponse response = countServiceProxy.getCount(invalidRequest);
         Assertions.assertEquals(failureResponse, response);
     }
 

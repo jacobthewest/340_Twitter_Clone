@@ -14,7 +14,7 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
 
-public class FollowingServiceTest {
+public class FollowingServiceProxyTest {
 
     private FollowingRequest validRequest;
     private FollowingRequest invalidRequest;
@@ -23,6 +23,8 @@ public class FollowingServiceTest {
     private FollowingResponse failureResponse;
 
     private ServerFacade mockServerFacade;
+    private FollowingServiceProxy followingServiceProxy;
+
     /**
      * Create a FollowingService spy that uses a mock ServerFacade to return known responses to
      * requests.
@@ -49,17 +51,21 @@ public class FollowingServiceTest {
 
         failureResponse = new FollowingResponse("An exception occured");
         Mockito.when(mockServerFacade.getFollowees(invalidRequest, "/following")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        followingServiceProxy = Mockito.spy(new FollowingServiceProxy());
+        Mockito.when(followingServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testGetFollowees_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        FollowingResponse response = mockServerFacade.getFollowees(validRequest, "/following");
+        FollowingResponse response = followingServiceProxy.getFollowees(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testGetFollowees_validRequest_loadsProfileImages() throws IOException, TweeterRemoteException {
-        FollowingResponse response = mockServerFacade.getFollowees(validRequest, "/following");
+        FollowingResponse response = followingServiceProxy.getFollowees(validRequest);
 
         for(User user : response.getFollowees()) {
             Assertions.assertNotNull(user.getImageBytes());
@@ -68,7 +74,7 @@ public class FollowingServiceTest {
 
     @Test
     public void testGetFollowees_invalidRequest_returnsNoFollowees() throws IOException, TweeterRemoteException {
-        FollowingResponse response = mockServerFacade.getFollowees(invalidRequest, "/following");
+        FollowingResponse response = followingServiceProxy.getFollowees(invalidRequest);
         Assertions.assertEquals(failureResponse, response);
     }
 }

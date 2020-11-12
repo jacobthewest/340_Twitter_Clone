@@ -14,7 +14,7 @@ import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.LoginRequest;
 import edu.byu.cs.tweeter.shared.service.response.LoginResponse;
 
-public class LoginServiceTest {
+public class LoginServiceProxyTest {
 
     private LoginRequest validRequest;
     private LoginRequest invalidRequestOne;
@@ -22,6 +22,8 @@ public class LoginServiceTest {
     private LoginResponse successResponse;
     private LoginResponse failureResponse;
     private ServerFacade mockServerFacade;
+    private LoginServiceProxy loginServiceProxy;
+
 
     @BeforeEach
     public void setup() throws IOException, TweeterRemoteException {
@@ -43,23 +45,27 @@ public class LoginServiceTest {
         failureResponse = new LoginResponse("An exception occured");
         Mockito.when(mockServerFacade.login(invalidRequestOne, "/login")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.login(invalidRequestTwo, "/login")).thenReturn(failureResponse);
+
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        loginServiceProxy = Mockito.spy(new LoginServiceProxy());
+        Mockito.when(loginServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }
 
     @Test
     public void testLogin_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        LoginResponse response = mockServerFacade.login(validRequest, "/login");
+        LoginResponse response = loginServiceProxy.login(validRequest);
         Assertions.assertEquals(successResponse, response);
     }
 
     @Test
     public void testLogin_invalidRequest_emptyUsername() throws IOException, TweeterRemoteException {
-        LoginResponse response = mockServerFacade.login(invalidRequestOne, "/login");
+        LoginResponse response = loginServiceProxy.login(invalidRequestOne);
         Assertions.assertEquals(failureResponse, response);
     }
 
     @Test
     public void testLogin_invalidRequest_emptyAuthToken() throws IOException, TweeterRemoteException {
-        LoginResponse response = mockServerFacade.login(invalidRequestTwo, "/login");
+        LoginResponse response = loginServiceProxy.login(invalidRequestTwo);
         Assertions.assertEquals(failureResponse, response);
     }
 }
