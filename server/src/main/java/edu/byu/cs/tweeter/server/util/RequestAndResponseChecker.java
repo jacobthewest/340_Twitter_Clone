@@ -13,13 +13,13 @@ public class RequestAndResponseChecker {
         if(user == null) {
             throw new RuntimeException("[BadRequest] User object cannot be null.");
         }
-        if(user.getAlias().equals(null) || user.getAlias().equals("")) {
+        if(user.getAlias() == null || user.getAlias().equals("")) {
             throw new RuntimeException("[BadRequest] User alias cannot be an empty string or null.");
         }
-        if(user.getFirstName().equals(null) || user.getFirstName().equals("")) {
+        if(user.getFirstName() == null || user.getFirstName().equals("")) {
             throw new RuntimeException("[BadRequest] User firstName cannot be an empty string or null.");
         }
-        if(user.getLastName().equals(null) || user.getLastName().equals("")) {
+        if(user.getLastName() == null || user.getLastName().equals("")) {
             throw new RuntimeException("[BadRequest] User lastName cannot be an empty string or null.");
         }
     }
@@ -32,15 +32,15 @@ public class RequestAndResponseChecker {
 
     public void checkUserResponse(User user) {
         if(user == null) {
-            throw new RuntimeException("[InternalServerError] User object cannot be null.");
+            throw new RuntimeException("[InternalServerError] User object cannot be null. User does not exist in database.");
         }
-        if(user.getAlias().equals(null) || user.getAlias().equals("")) {
+        if(user.getAlias() == null || user.getAlias().equals("")) {
             throw new RuntimeException("[InternalServerError] User alias cannot be an empty string or null.");
         }
-        if(user.getFirstName().equals(null) || user.getFirstName().equals("")) {
+        if(user.getFirstName()== null || user.getFirstName().equals("")) {
             throw new RuntimeException("[InternalServerError] User firstName cannot be an empty string or null.");
         }
-        if(user.getLastName().equals(null) || user.getLastName().equals("")) {
+        if(user.getLastName()== null || user.getLastName().equals("")) {
             throw new RuntimeException("[InternalServerError] User lastName cannot be an empty string or null.");
         }
     }

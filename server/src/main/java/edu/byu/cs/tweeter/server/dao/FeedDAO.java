@@ -27,8 +27,7 @@ public class FeedDAO {
         Map<String, List<Status>> feedStatusesByUser = tool.initializeFeed();
 
         List<Status> allStatuses = feedStatusesByUser.get(request.getUser().getAlias());
-        //List<Status> responseStatuses = new ArrayList<>(request.getLimit());
-        ArrayList<Status> responseStatuses = new ArrayList<>(request.getLimit());
+        List<Status> responseStatuses = new ArrayList<>(request.getLimit());
 
         boolean hasMorePages = false;
 

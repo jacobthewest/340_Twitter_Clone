@@ -1,9 +1,8 @@
-package edu.byu.cs.tweeter.server.service;
+package edu.byu.cs.tweeter.client.model.integration;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -12,20 +11,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.byu.cs.tweeter.server.dao.StoryDAO;
+import edu.byu.cs.tweeter.client.model.service.StoryServiceProxy;
 import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
 import edu.byu.cs.tweeter.shared.service.request.StoryRequest;
 import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 
-public class StoryServiceImplTest {
+public class StoryIntegrationTest {
 
     private StoryRequest validRequest;
     private StoryRequest invalidRequest;
     private StoryResponse correctResponse;
-    private StoryDAO mockStoryDAO;
-    private StoryServiceImpl storyServiceImplSpy;
+    private StoryServiceProxy storyServiceProxy;
     private static final String MIKE = "https://i.imgur.com/VZQQiQ1.jpg";
     private User user;
 
@@ -42,28 +40,24 @@ public class StoryServiceImplTest {
 
         // Setup a mock StoryDAO that will return known responses
         correctResponse = new StoryResponse(statuses, true);
-        mockStoryDAO = Mockito.mock(StoryDAO.class);
-        Mockito.when(mockStoryDAO.getStory(validRequest)).thenReturn(correctResponse);
 
-        storyServiceImplSpy = Mockito.spy(StoryServiceImpl.class);
-        Mockito.when(storyServiceImplSpy.getStoryDAO()).thenReturn(mockStoryDAO);
+        storyServiceProxy = new StoryServiceProxy();
     }
 
-    /**
-     * Verify that the {@link StoryServiceImpl#getStory(StoryRequest)}
-     * method returns the same result as the {@link StoryDAO} class.
-     */
     @Test
     public void testGetStory_validRequest_correctResponse() throws IOException, TweeterRemoteException {
-        StoryResponse response = storyServiceImplSpy.getStory(validRequest);
+        StoryResponse response = storyServiceProxy.getStory(validRequest);
         Assertions.assertEquals(correctResponse, response);
     }
 
     @Test
     public void testGetStory_invalidRequest_correctResponse() throws IOException, TweeterRemoteException {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            storyServiceImplSpy.getStory(invalidRequest);
-        });
+        try {
+            storyServiceProxy.getStory(invalidRequest);
+        } catch(TweeterRemoteException e) {
+            String error = e.getMessage().toString();
+            Assertions.assertTrue(error.contains("[BadRequest]"));
+        }
     }
 
     private List<Status> getStatuses() {

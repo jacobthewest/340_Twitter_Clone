@@ -1,19 +1,28 @@
-package edu.byu.cs.tweeter.server.dao;
+package edu.byu.cs.tweeter.client.model.integration;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.byu.cs.tweeter.client.model.service.UpdateFollowServiceProxy;
 import edu.byu.cs.tweeter.shared.domain.User;
-import edu.byu.cs.tweeter.shared.service.request.CountRequest;
-import edu.byu.cs.tweeter.shared.service.response.CountResponse;
+import edu.byu.cs.tweeter.shared.net.TweeterRemoteException;
+import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
+import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
 
-public class CountDAO {
+public class UpdateFollowIntegrationTest {
 
-    // This is the hard coded followee data returned by the 'getFollowees()' method
+    private UpdateFollowRequest validRequest;
+    private UpdateFollowRequest invalidRequest;
+    private UpdateFollowResponse correctResponse;
+    private UpdateFollowServiceProxy updateFollowServiceProxy;
     private static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     private static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
     private static final String MIKE = "https://i.imgur.com/VZQQiQ1.jpg";
-
     private final User user1 = new User("Allen", "Anderson", MALE_IMAGE_URL, "password");
     private final User user2 = new User("Amy", "Ames", FEMALE_IMAGE_URL, "password");
     private final User user3 = new User("Bob", "Bobson", MALE_IMAGE_URL, "password");
@@ -48,47 +57,40 @@ public class CountDAO {
     private final User DaffyDuck = new User("Daffy", "Duck", FEMALE_IMAGE_URL, "password");
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
-    public CountResponse getCount(CountRequest request) {
-        // TODO: logs in a hard-coded user. Replace with a real implementation.
+    @BeforeEach
+    public void setup() {
+        boolean followTheFollowUser = true;
+        List<User> following = getFollowing();
 
-        if(!isRecognizedUser(request.getUser().getAlias())) {
-            return new CountResponse("User does not exist in the database.");
-        }
+        // Setup a request object to use in the tests
+        validRequest = new UpdateFollowRequest(TestUser, user3, followTheFollowUser);
+        invalidRequest = new UpdateFollowRequest(TestUser, null, followTheFollowUser);
 
-        List<User> followees = getDummyFollowees();
-        List<User> followers = getDummyFollowers();
+        // Setup a mock UpdateFollowDAO that will return known responses
+        correctResponse = new UpdateFollowResponse(TestUser, user3, following);
 
-        //  START
-        //  Code to get the count of the user
-        //  END
-
-        int followingCount = followees.size();
-        int followersCount = followers.size();
-        return new CountResponse(request.getUser(), followingCount, followersCount);
+        updateFollowServiceProxy = new UpdateFollowServiceProxy();
     }
 
-    public List<User> getDummyFollowees() {
+    @Test
+    public void testGetUpdateFollow_validRequest_correctResponse() throws IOException, TweeterRemoteException {
+        UpdateFollowResponse response = updateFollowServiceProxy.updateFollow(validRequest);
+        Assertions.assertEquals(correctResponse, response);
+    }
+
+    @Test
+    public void testGetUpdateFollow_invalidRequest_correctResponse() throws IOException, TweeterRemoteException {
+        try {
+            updateFollowServiceProxy.updateFollow(invalidRequest);
+        } catch(TweeterRemoteException e) {
+            String error = e.getMessage().toString();
+            Assertions.assertTrue(error.contains("[BadRequest]"));
+        }
+    }
+
+    private List<User> getFollowing() {
         return Arrays.asList(user1, user2, theMedia, user4, user5, user6, user7, RickyMartin, RobertGardner, TristanThompson,
                 user8, user9, user10, user11, Snowden, user12, user13, user14, user15, user16, user17, user18, TestUser,
-                user19, user20, BillBelichick, KCP, Rudy, TestUser);
-    }
-
-    List<User> getDummyFollowers() {
-        return Arrays.asList(user3, JacobWest, user1, RickyMartin, user4, RobertGardner, user2, Snowden, user5, user6, user7,
-                user17, user9, user13, user11, user12, user10, user14, user15, user8, user19, TristanThompson, KCP, theMedia, Rudy,
-                user18, user20, BillBelichick, TestUser);
-    }
-
-    private boolean isRecognizedUser(String alias) {
-        if (alias.equals(user1.getAlias()) || alias.equals(user2.getAlias()) || alias.equals(user3.getAlias()) ||  alias.equals(user4.getAlias()) ||
-                alias.equals(user5.getAlias()) || alias.equals(user6.getAlias()) || alias.equals(user7.getAlias()) || alias.equals(user8.getAlias()) ||
-                alias.equals(user9.getAlias()) || alias.equals(user10.getAlias()) || alias.equals(user11.getAlias()) || alias.equals(user12.getAlias()) ||
-                alias.equals(user13.getAlias()) || alias.equals(user14.getAlias()) || alias.equals(user15.getAlias()) || alias.equals(user16.getAlias()) ||
-                alias.equals(user17.getAlias()) || alias.equals(user18.getAlias()) || alias.equals(user19.getAlias()) || alias.equals(user20.getAlias()) ||
-                alias.equals(JacobWest.getAlias()) || alias.equals(RickyMartin.getAlias()) || alias.equals(RobertGardner.getAlias()) || alias.equals(Snowden.getAlias()) ||
-                alias.equals(TristanThompson.getAlias()) || alias.equals(KCP.getAlias()) || alias.equals(theMedia.getAlias()) || alias.equals(Rudy.getAlias()) ||
-                alias.equals(BillBelichick.getAlias()) || alias.equals(TestUser.getAlias()) || alias.equals(userBarney.getAlias()) ||
-                alias.equals(DaffyDuck.getAlias()) || alias.equals(Zoe.getAlias())) { return true;}
-        return false;
+                user19, user20, BillBelichick, KCP, Rudy, TestUser, user3);
     }
 }

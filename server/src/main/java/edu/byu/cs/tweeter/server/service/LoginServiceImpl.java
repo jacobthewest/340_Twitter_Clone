@@ -21,7 +21,7 @@ public class LoginServiceImpl implements LoginService {
 
         // Response:: User, AuthToken
         checker.checkUserResponse(loginResponse.getUser());
-        checker.checkAuthTokenResponse(loginResponse.getUser() ,loginResponse.getAuthToken());
+        checker.checkAuthTokenResponse(loginResponse.getUser(), loginResponse.getAuthToken());
 
         return loginResponse;
     }

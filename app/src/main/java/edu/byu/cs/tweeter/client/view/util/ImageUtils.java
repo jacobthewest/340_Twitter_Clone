@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Base64;
 
 /**
@@ -49,8 +50,23 @@ public class ImageUtils {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static byte[] byteArrayFromString(String imageBytesAsString) {
+    public static byte[] byteArrayFromImageBytesAsString(String imageBytesAsString) {
         byte[] byteArrayFromString = Base64.getEncoder().encode(imageBytesAsString.getBytes());
         return byteArrayFromString;
+    }
+
+    public static byte[] byteArrayFromUrl(String urlText) throws Exception {
+        URL url = new URL(urlText);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+        try (InputStream inputStream = url.openStream()) {
+            int n = 0;
+            byte [] buffer = new byte[ 1024 ];
+            while (-1 != (n = inputStream.read(buffer))) {
+                output.write(buffer, 0, n);
+            }
+        }
+
+        return output.toByteArray();
     }
 }

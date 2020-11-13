@@ -1,5 +1,7 @@
 package edu.byu.cs.tweeter.shared.service.response;
 
+import java.util.Objects;
+
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.User;
 
@@ -64,6 +66,20 @@ public class RegisterResponse extends Response {
 
     public void setAuthToken(AuthToken authToken) {
         this.authToken = authToken;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RegisterResponse that = (RegisterResponse) o;
+        return Objects.equals(user, that.user) &&
+                Objects.equals(authToken, that.authToken);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, authToken);
     }
 }
 

@@ -15,6 +15,10 @@ public class RegisterServiceImpl implements RegisterService {
         // Request:: User
         checker.checkUserRequest(request.getUser());
         checker.checkEmptyNullStringRequest(request.getUser().getImageBytesAsString(), "ImageBytesAsString");
+        checker.checkEmptyNullStringRequest(request.getUser().getAlias(), "Alias");
+        checker.checkEmptyNullStringRequest(request.getUser().getFirstName(), "FirstName");
+        checker.checkEmptyNullStringRequest(request.getUser().getLastName(), "LastName");
+        checker.checkEmptyNullStringRequest(request.getUser().getImageUrl(), "ImageUrl");
 
         RegisterResponse registerResponse = getRegisterDAO().register(request);
 
