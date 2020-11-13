@@ -1,0 +1,1586 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2020-11-13T00:38:48Z",
+    "title": "Tweeter"
+  },
+  "host": "vdimhw3cwe.execute-api.us-west-2.amazonaws.com",
+  "basePath": "/TweeterProd",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/count": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "countRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/countRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/countResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/feed": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "feedRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/feedRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/feedResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/followers": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "followersRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/followersRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/followersResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/following": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "followingRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/followingRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/followingResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "loginRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/loginResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "logoutRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/logoutRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/logoutResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "registerRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/registerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/registerResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/retrieveuser": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "retrieveUserRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/retrieveUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/retrieveUserResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/story": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "storyRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/storyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/storyResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/submittweet": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "submitTweetRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/submitTweetRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/submitTweetResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/updatefollow": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "updateFollowRequest",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateFollowRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "schema": {
+              "$ref": "#/definitions/updateFollowResponse"
+            }
+          },
+          "400": {
+            "description": "400 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "500 response",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "logoutResponseUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "feedRequest": {
+      "type": "object",
+      "required": [
+        "lastStatus",
+        "limit",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/feedRequestUser"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "lastStatus": {
+          "$ref": "#/definitions/feedRequestLastStatus"
+        }
+      }
+    },
+    "feedRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "submitTweetResponseStatus": {
+      "type": "object",
+      "required": [
+        "mentions",
+        "timePosted",
+        "tweetText",
+        "urls",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/submitTweetResponseUser"
+        },
+        "tweetText": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "string"
+        },
+        "timePosted": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "string"
+        }
+      }
+    },
+    "followersResponseFollowersItem": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "followingResponse": {
+      "type": "object",
+      "required": [
+        "followees",
+        "hasMorePages",
+        "success"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "followees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/followingResponseFolloweesItem"
+          }
+        },
+        "hasMorePages": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "storyResponseStatusesItemUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "retrieveUserResponse": {
+      "type": "object",
+      "required": [
+        "success",
+        "user"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/retrieveUserResponseUser"
+        }
+      }
+    },
+    "storyRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "loginResponse": {
+      "type": "object",
+      "required": [
+        "authToken",
+        "success",
+        "user"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/loginResponseUser"
+        },
+        "authToken": {
+          "$ref": "#/definitions/loginResponseAuthToken"
+        }
+      }
+    },
+    "logoutRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "updateFollowResponse": {
+      "type": "object",
+      "required": [
+        "followUser",
+        "following",
+        "success",
+        "user"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "user": {
+          "$ref": "#/definitions/updateFollowResponseUser"
+        },
+        "followUser": {
+          "$ref": "#/definitions/updateFollowResponseUser"
+        },
+        "following": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/updateFollowResponseUser"
+          }
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "logoutRequest": {
+      "type": "object",
+      "required": [
+        "authToken",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/logoutRequestUser"
+        },
+        "authToken": {
+          "$ref": "#/definitions/logoutRequestAuthToken"
+        }
+      }
+    },
+    "followingRequest": {
+      "type": "object",
+      "required": [
+        "lastFollowee",
+        "limit",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/followingRequestUser"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "lastFollowee": {
+          "$ref": "#/definitions/followingRequestUser"
+        }
+      }
+    },
+    "followingRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "countResponse": {
+      "type": "object",
+      "required": [
+        "followersCount",
+        "followingCount",
+        "success",
+        "user"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "user": {
+          "$ref": "#/definitions/countResponseUser"
+        },
+        "followingCount": {
+          "type": "integer"
+        },
+        "followersCount": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "followersRequest": {
+      "type": "object",
+      "required": [
+        "lastFollower",
+        "limit",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/followersRequestUser"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "lastFollower": {
+          "$ref": "#/definitions/followersRequestUser"
+        }
+      }
+    },
+    "submitTweetResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "success",
+        "user"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "user": {
+          "$ref": "#/definitions/submitTweetResponseUser"
+        },
+        "status": {
+          "$ref": "#/definitions/submitTweetResponseStatus"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "feedRequestLastStatus": {
+      "type": "object",
+      "required": [
+        "mentions",
+        "timePosted",
+        "tweetText",
+        "urls",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/feedRequestUser"
+        },
+        "tweetText": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "string"
+        },
+        "timePosted": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "string"
+        }
+      }
+    },
+    "countResponseUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "retrieveUserResponseUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "storyRequestLastStatus": {
+      "type": "object",
+      "required": [
+        "mentions",
+        "timePosted",
+        "tweetText",
+        "urls",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/storyRequestUser"
+        },
+        "tweetText": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "string"
+        },
+        "timePosted": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "string"
+        }
+      }
+    },
+    "feedResponse": {
+      "type": "object",
+      "required": [
+        "hasMorePages",
+        "statuses",
+        "success"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "statuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/feedResponseStatusesItem"
+          }
+        },
+        "hasMorePages": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "registerRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "imageBytesAsString",
+        "imageUrl",
+        "lastName",
+        "password"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "imageBytesAsString": {
+          "type": "string"
+        }
+      }
+    },
+    "loginResponseAuthToken": {
+      "type": "object",
+      "required": [
+        "id",
+        "isActive",
+        "username"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "updateFollowRequest": {
+      "type": "object",
+      "required": [
+        "followTheFollowUser",
+        "followUser",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/updateFollowRequestUser"
+        },
+        "followUser": {
+          "$ref": "#/definitions/updateFollowRequestUser"
+        },
+        "followTheFollowUser": {
+          "type": "boolean"
+        }
+      }
+    },
+    "loginResponseUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "countRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "logoutResponse": {
+      "type": "object",
+      "required": [
+        "authToken",
+        "success",
+        "user"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/logoutResponseUser"
+        },
+        "authToken": {
+          "$ref": "#/definitions/logoutResponseAuthToken"
+        }
+      }
+    },
+    "followersResponse": {
+      "type": "object",
+      "required": [
+        "followers",
+        "hasMorePages",
+        "success"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "followers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/followersResponseFollowersItem"
+          }
+        },
+        "hasMorePages": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "followersRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "submitTweetRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "followingResponseFolloweesItem": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "updateFollowResponseUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "submitTweetRequestStatus": {
+      "type": "object",
+      "required": [
+        "mentions",
+        "timePosted",
+        "tweetText",
+        "urls",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/submitTweetRequestUser"
+        },
+        "tweetText": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "string"
+        },
+        "timePosted": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "string"
+        }
+      }
+    },
+    "feedResponseStatusesItem": {
+      "type": "object",
+      "required": [
+        "mentions",
+        "timePosted",
+        "tweetText",
+        "urls",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/feedResponseStatusesItemUser"
+        },
+        "tweetText": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "string"
+        },
+        "timePosted": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "string"
+        }
+      }
+    },
+    "countRequest": {
+      "type": "object",
+      "required": [
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/countRequestUser"
+        }
+      }
+    },
+    "loginRequest": {
+      "type": "object",
+      "required": [
+        "password",
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "registerResponseUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "retrieveUserRequest": {
+      "type": "object",
+      "required": [
+        "username"
+      ],
+      "properties": {
+        "username": {
+          "type": "string"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        }
+      },
+      "title": "Error Schema"
+    },
+    "logoutResponseAuthToken": {
+      "type": "object",
+      "required": [
+        "id",
+        "isActive",
+        "username"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "submitTweetResponseUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "storyRequest": {
+      "type": "object",
+      "required": [
+        "lastStatus",
+        "limit",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/storyRequestUser"
+        },
+        "limit": {
+          "type": "integer"
+        },
+        "lastStatus": {
+          "$ref": "#/definitions/storyRequestLastStatus"
+        }
+      }
+    },
+    "updateFollowRequestUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "feedResponseStatusesItemUser": {
+      "type": "object",
+      "required": [
+        "alias",
+        "firstName",
+        "lastName"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "alias": {
+          "type": "string"
+        },
+        "imageUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "submitTweetRequest": {
+      "type": "object",
+      "required": [
+        "status",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/submitTweetRequestUser"
+        },
+        "status": {
+          "$ref": "#/definitions/submitTweetRequestStatus"
+        }
+      }
+    },
+    "storyResponseStatusesItem": {
+      "type": "object",
+      "required": [
+        "mentions",
+        "timePosted",
+        "tweetText",
+        "urls",
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/storyResponseStatusesItemUser"
+        },
+        "tweetText": {
+          "type": "string"
+        },
+        "urls": {
+          "type": "string"
+        },
+        "timePosted": {
+          "type": "string"
+        },
+        "mentions": {
+          "type": "string"
+        }
+      }
+    },
+    "storyResponse": {
+      "type": "object",
+      "required": [
+        "hasMorePages",
+        "statuses",
+        "success"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "statuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/storyResponseStatusesItem"
+          }
+        },
+        "hasMorePages": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "registerResponse": {
+      "type": "object",
+      "required": [
+        "authToken",
+        "success",
+        "user"
+      ],
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "user": {
+          "$ref": "#/definitions/registerResponseUser"
+        },
+        "authToken": {
+          "$ref": "#/definitions/registerResponseAuthToken"
+        }
+      }
+    },
+    "registerResponseAuthToken": {
+      "type": "object",
+      "required": [
+        "id",
+        "isActive",
+        "username"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "registerRequest": {
+      "type": "object",
+      "required": [
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/registerRequestUser"
+        }
+      }
+    },
+    "logoutRequestAuthToken": {
+      "type": "object",
+      "required": [
+        "id",
+        "isActive",
+        "username"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "isActive": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
