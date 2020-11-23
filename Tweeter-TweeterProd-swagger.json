@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2020-11-13T00:38:48Z",
+    "version": "2020-11-19T03:44:19Z",
     "title": "Tweeter"
   },
   "host": "vdimhw3cwe.execute-api.us-west-2.amazonaws.com",
@@ -12,6 +12,7 @@
   "paths": {
     "/count": {
       "post": {
+        "description": "Returns the given user and the number of followers and followees for a given user.",
         "consumes": [
           "application/json"
         ],
@@ -52,6 +53,7 @@
     },
     "/feed": {
       "post": {
+        "description": "Returns a list of statuses, ordered by date, from the following of the given user.",
         "consumes": [
           "application/json"
         ],
@@ -92,6 +94,7 @@
     },
     "/followers": {
       "post": {
+        "description": "Returns a list of followers who follow the given user.",
         "consumes": [
           "application/json"
         ],
@@ -132,6 +135,7 @@
     },
     "/following": {
       "post": {
+        "description": "Returns a list of users whom the given user follows.",
         "consumes": [
           "application/json"
         ],
@@ -172,6 +176,7 @@
     },
     "/login": {
       "post": {
+        "description": "Returns the given user along with a newly created AuthToken for session management.",
         "consumes": [
           "application/json"
         ],
@@ -212,6 +217,7 @@
     },
     "/logout": {
       "post": {
+        "description": "Returns the given user and his/her now expired AuthToken.",
         "consumes": [
           "application/json"
         ],
@@ -252,6 +258,7 @@
     },
     "/register": {
       "post": {
+        "description": "Returns the given user and the a newly created AuthToken for session management.",
         "consumes": [
           "application/json"
         ],
@@ -292,6 +299,7 @@
     },
     "/retrieveuser": {
       "post": {
+        "description": "Returns a user who is requested by the given username.",
         "consumes": [
           "application/json"
         ],
@@ -332,6 +340,7 @@
     },
     "/story": {
       "post": {
+        "description": "Returns a list of statuses, ordered by date, posted by the given user.",
         "consumes": [
           "application/json"
         ],
@@ -372,6 +381,7 @@
     },
     "/submittweet": {
       "post": {
+        "description": "Returns a the given user and the newly created status. Both are provided from the request, but are returned only if the operation is successful.",
         "consumes": [
           "application/json"
         ],
@@ -412,6 +422,7 @@
     },
     "/updatefollow": {
       "post": {
+        "description": "Returns the given user, the user who was requested to follow/unfollow the given user, and a list of the user's new following from the result of the operation.",
         "consumes": [
           "application/json"
         ],
