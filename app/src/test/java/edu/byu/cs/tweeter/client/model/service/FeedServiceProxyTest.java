@@ -56,7 +56,7 @@ public class FeedServiceProxyTest {
         Mockito.when(mockServerFacade.getFeed(invalidRequestOne, "/feed")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.getFeed(invalidRequestTwo, "/feed")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         feedServiceProxy = Mockito.spy(new FeedServiceProxy());
         Mockito.when(feedServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

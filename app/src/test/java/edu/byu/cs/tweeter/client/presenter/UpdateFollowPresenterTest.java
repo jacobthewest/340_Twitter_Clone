@@ -69,7 +69,7 @@ public class UpdateFollowPresenterTest {
         mockUpdateFollowService = Mockito.mock(UpdateFollowService.class);
         Mockito.when(mockUpdateFollowService.updateFollow(request)).thenReturn(response);
 
-        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new UpdateFollowPresenter(new UpdateFollowPresenter.View() {}));
         Mockito.when(presenter.getUpdateFollowService()).thenReturn(mockUpdateFollowService);
     }

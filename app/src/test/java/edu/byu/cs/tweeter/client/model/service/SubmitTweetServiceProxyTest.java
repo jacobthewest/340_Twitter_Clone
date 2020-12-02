@@ -53,7 +53,7 @@ public class SubmitTweetServiceProxyTest {
         Mockito.when(mockServerFacade.submitTweet(invalidRequest2, "/submittweet")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.submitTweet(invalidRequest3, "/submittweet")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         submitTweetServiceProxy = Mockito.spy(new SubmitTweetServiceProxy());
         Mockito.when(submitTweetServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

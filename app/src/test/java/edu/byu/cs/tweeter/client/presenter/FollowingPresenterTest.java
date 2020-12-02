@@ -38,7 +38,7 @@ public class FollowingPresenterTest {
         mockFollowingService = Mockito.mock(FollowingService.class);
         Mockito.when(mockFollowingService.getFollowees(request)).thenReturn(response);
 
-        // Wrap a FollowingPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowingPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new FollowingPresenter(new FollowingPresenter.View() {}));
         Mockito.when(presenter.getFollowingService()).thenReturn(mockFollowingService);
     }
@@ -47,7 +47,7 @@ public class FollowingPresenterTest {
     public void testGetFollowing_returnsServiceResult() throws IOException, TweeterRemoteException {
         Mockito.when(mockFollowingService.getFollowees(request)).thenReturn(response);
 
-        // Assert that the presenter returns the same response as the edu.byu.cs.tweeter.shared.service (it doesn't do
+        // Assert that the presenter returns the same response as the edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service (it doesn't do
         // anything else, so there's nothing else to test).
         Assertions.assertEquals(response, presenter.getFollowing(request));
     }

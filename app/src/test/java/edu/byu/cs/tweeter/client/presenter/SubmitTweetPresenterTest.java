@@ -36,7 +36,7 @@ public class SubmitTweetPresenterTest {
         mockSubmitTweetService = Mockito.mock(SubmitTweetService.class);
         Mockito.when(mockSubmitTweetService.submitTweet(request)).thenReturn(response);
 
-        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new SubmitTweetPresenter(new SubmitTweetPresenter.View() {}));
         Mockito.when(presenter.getSubmitTweetService()).thenReturn(mockSubmitTweetService);
     }

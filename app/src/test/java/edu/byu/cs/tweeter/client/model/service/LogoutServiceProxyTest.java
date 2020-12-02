@@ -47,7 +47,7 @@ public class LogoutServiceProxyTest {
         Mockito.when(mockServerFacade.logout(invalidRequestOne, "/logout")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.logout(invalidRequestTwo, "/logout")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         logoutServiceProxy = Mockito.spy(new LogoutServiceProxy());
         Mockito.when(logoutServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

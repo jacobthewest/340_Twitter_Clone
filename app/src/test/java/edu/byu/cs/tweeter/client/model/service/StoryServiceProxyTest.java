@@ -49,7 +49,7 @@ public class StoryServiceProxyTest {
         Mockito.when(mockServerFacade.getStory(invalidRequestOne, "/story")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.getStory(invalidRequestTwo, "/story")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         storyServiceProxy = Mockito.spy(new StoryServiceProxy());
         Mockito.when(storyServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

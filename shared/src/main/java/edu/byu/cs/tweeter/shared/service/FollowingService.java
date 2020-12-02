@@ -7,7 +7,7 @@ import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
 
 /**
- * Defines the interface for the 'following' edu.byu.cs.tweeter.shared.service.
+ * Defines the interface for the 'following' edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
  */
 public interface FollowingService {
 

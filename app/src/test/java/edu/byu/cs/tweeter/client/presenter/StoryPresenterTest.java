@@ -42,7 +42,7 @@ public class StoryPresenterTest {
         mockFeedService = Mockito.mock(FeedService.class);
         Mockito.when(mockFeedService.getFeed(request)).thenReturn(response);
 
-        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new FeedPresenter(new FeedPresenter.View() {}));
         Mockito.when(presenter.getFeedService()).thenReturn(mockFeedService);
     }

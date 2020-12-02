@@ -31,7 +31,7 @@ public class RetrieveUserPresenterTest {
         mockRetrieveUserService = Mockito.mock(RetrieveUserService.class);
         Mockito.when(mockRetrieveUserService.retrieveUser(request)).thenReturn(response);
 
-        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new RetrieveUserPresenter(new RetrieveUserPresenter.View() {}));
         Mockito.when(presenter.getRetrieveUserService()).thenReturn(mockRetrieveUserService);
     }

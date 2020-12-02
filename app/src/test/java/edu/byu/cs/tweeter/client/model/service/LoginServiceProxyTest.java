@@ -46,7 +46,7 @@ public class LoginServiceProxyTest {
         Mockito.when(mockServerFacade.login(invalidRequestOne, "/login")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.login(invalidRequestTwo, "/login")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         loginServiceProxy = Mockito.spy(new LoginServiceProxy());
         Mockito.when(loginServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

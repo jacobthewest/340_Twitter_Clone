@@ -36,7 +36,7 @@ public class RegisterPresenterTest {
         mockRegisterService = Mockito.mock(RegisterService.class);
         Mockito.when(mockRegisterService.register(request)).thenReturn(response);
 
-        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new RegisterPresenter(new RegisterPresenter.View() {}));
         Mockito.when(presenter.getRegisterService()).thenReturn(mockRegisterService);
     }

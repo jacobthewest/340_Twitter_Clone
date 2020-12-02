@@ -75,7 +75,7 @@ public class RegisterServiceProxyTest {
         Mockito.when(mockServerFacade.register(invalidRequestOne, "/register")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.register(invalidRequestTwo, "/register")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         registerServiceProxy = Mockito.spy(new RegisterServiceProxy());
         Mockito.when(registerServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

@@ -49,7 +49,7 @@ public class RetrieveUserServiceProxyTest {
         Mockito.when(mockServerFacade.retrieveUser(invalidRequestTwo, "/retrieveuser")).thenReturn(failureResponse);
         Mockito.when(mockServerFacade.retrieveUser(invalidRequestThree, "/retrieveuser")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         retrieveUserServiceProxy = Mockito.spy(new RetrieveUserServiceProxy());
         Mockito.when(retrieveUserServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

@@ -52,7 +52,7 @@ public class FollowersServiceProxyTest {
         failureResponse = new FollowersResponse("An exception occured");
         Mockito.when(mockServerFacade.getFollowers(invalidRequest, "/followers")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         followersServiceProxy = Mockito.spy(new FollowersServiceProxy());
         Mockito.when(followersServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

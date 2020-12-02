@@ -87,7 +87,7 @@ public class UpdateFollowServiceProxyTest {
         Mockito.when(mockServerFacade.updateFollow(validRequestFollow, "/updatefollow")).thenReturn(followSuccessResponse);
         Mockito.when(mockServerFacade.updateFollow(validRequestUnFollow, "/updatefollow")).thenReturn(unFollowSuccessResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         updateFollowServiceProxy = Mockito.spy(new UpdateFollowServiceProxy());
         Mockito.when(updateFollowServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

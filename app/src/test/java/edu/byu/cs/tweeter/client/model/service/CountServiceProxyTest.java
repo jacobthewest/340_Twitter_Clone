@@ -40,7 +40,7 @@ public class CountServiceProxyTest {
         failureResponse = new CountResponse("An exception occured");
         Mockito.when(mockServerFacade.getCount(invalidRequest, "/count")).thenReturn(failureResponse);
 
-        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock service
+        // Create a CountServiceProxy instance and wrap it with a spy that will use the mock edu.byu.cs.tweeter.server.service
         countServiceProxy = Mockito.spy(new CountServiceProxy());
         Mockito.when(countServiceProxy.getServerFacade()).thenReturn(mockServerFacade);
     }

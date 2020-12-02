@@ -34,7 +34,7 @@ public class CountPresenterTest {
         mockCountService = Mockito.mock(CountService.class);
         Mockito.when(mockCountService.getCount(request)).thenReturn(response);
 
-        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new CountPresenter(new CountPresenter.View() {}));
         Mockito.when(presenter.getCountService()).thenReturn(mockCountService);
     }

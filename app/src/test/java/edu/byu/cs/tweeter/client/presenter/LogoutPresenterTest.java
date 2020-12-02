@@ -37,7 +37,7 @@ public class LogoutPresenterTest {
         mockLogoutService = Mockito.mock(LogoutService.class);
         Mockito.when(mockLogoutService.logout(request)).thenReturn(response);
 
-        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.service.
+        // Wrap a FollowersPresenter in a spy that will use the mock edu.byu.cs.tweeter.shared.edu.byu.cs.tweeter.server.service.
         presenter = Mockito.spy(new LogoutPresenter(new LogoutPresenter.View() {}));
         Mockito.when(presenter.getLogoutService()).thenReturn(mockLogoutService);
     }
