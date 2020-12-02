@@ -25,6 +25,7 @@ public class RegisterDaoTest {
     public static final String PASSWORD = "password";
     public static final String EXISTS_IMAGE_URL = "https://340tweeter.s3-us-west-2.amazonaws.com/%40doNotDeleteTestImage";
     public static final String filePath = "C:\\Users\\jacob\\Documents\\Fall2020\\340\\Milestones\\M4\\Project\\server\\catch.png";
+    public static final String PERMANENT_IMAGE_ALIAS = "@doNotDeleteTest";
 
     @BeforeEach
     public void setup() {
@@ -43,7 +44,7 @@ public class RegisterDaoTest {
         RegisterResponse existsRegisterResponse = registerDAO.register(existsRequest);
 
         Assertions.assertFalse(registerDAO.register(existsRequest).getSuccess());
-    }
+}
 
     @Test
     public void testRegisterNonExistingUser() {

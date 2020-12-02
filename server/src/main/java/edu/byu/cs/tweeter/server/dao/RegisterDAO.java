@@ -38,11 +38,11 @@ public class RegisterDAO {
             return new RegisterResponse("Failed to upload user image to AWS S3.");
         }
         createMe.setImageUrl(imageUrl);
-        byte[] returnedBytes = S3.getImage(createMe.getAlias());
-        if(returnedBytes == null) {
-            return new RegisterResponse("Failed to get Image bytes from S3.");
-        }
-        createMe.setImageBytes(returnedBytes);
+//        byte[] returnedBytes = S3.getImage(createMe.getAlias());
+//        if(returnedBytes == null) {
+//            return new RegisterResponse("Failed to get Image bytes from S3.");
+//        }
+//        createMe.setImageBytes(returnedBytes);
 
         // Hash the password.
         createMe.setPassword(ManagePassword.hashPassword(createMe.getPassword()));

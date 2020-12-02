@@ -17,6 +17,7 @@ public class PutUser {
     public static final String LAST_NAME = "lasttName";
     public static final String IMAGE_URL = "imageUrl";
     public static final String PASSWORD = "password";
+    public static final String IMAGE_BYTES = "imageBytes";
 
     public static Object putUser(User user) {
         try {
@@ -41,6 +42,7 @@ public class PutUser {
         userInfoMap.put(LAST_NAME, user.getLastName());
         userInfoMap.put(IMAGE_URL, user.getImageUrl());
         userInfoMap.put(PASSWORD, user.getPassword());
+        // userInfoMap.put(IMAGE_BYTES, user.getImageBytes());
         
         return userInfoMap;
     }
