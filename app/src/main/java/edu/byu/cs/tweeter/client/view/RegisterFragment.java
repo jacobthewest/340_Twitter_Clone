@@ -101,6 +101,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
                     registerToast.show();
 
                     RegisterRequest registerRequest = getRegisterRequest(userNameRegister, passwordRegister, firstName, lastName);
+
                     RegisterTask registerTask = new RegisterTask(presenter, getObserver());
 
                     registerTask.execute(registerRequest);
@@ -135,7 +136,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
                 InputStream iStream = getContext().getContentResolver().openInputStream(selectedImage);
                 this.imageBytes = ImageUtils.byteArrayFromUri(iStream);
                 // this.imageBytesAsString = ImageUtils.stringFromByteArray(this.imageBytes);
-                this.imageBytesAsString = "TheImageBytesAsAString"; // TODO: Replace me in Milestone 4
+                // this.imageBytesAsString = "TheImageBytesAsAString"; // TODO: Replace me in Milestone 4
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -157,7 +158,8 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
         imageUrl = "https://i.imgur.com/VZQQiQ1.jpg";
         User user = new User(firstNameString, lastNameString, imageUrl, passwordString);
         user.setAlias(userNameString);
-        user.setImageBytesAsString(imageBytesAsString);
+        user.setImageBytes(this.imageBytes);
+        // user.setImageBytesAsString(imageBytesAsString);
         return new RegisterRequest(user);
     }
 

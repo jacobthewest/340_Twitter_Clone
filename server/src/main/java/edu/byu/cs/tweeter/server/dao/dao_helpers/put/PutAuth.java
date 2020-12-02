@@ -10,14 +10,14 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.byu.cs.tweeter.server.dao.dao_helpers.database.DB;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.User;
 
 public class PutAuth {
 
     public static final String AUTH_PARTITION_KEY = "username"; // AKA the primary key.
-    public static final String AUTH_SORT_KEY = "id"; // AKA the primary key.
+    public static final String ID = "id";
     public static final String IS_ACTIVE = "isActive";
     public static final String TABLE_NAME = "authToken";
 
@@ -29,8 +29,8 @@ public class PutAuth {
 
             /** Adds json information to the object through "info" **/
             PutItemOutcome outcome = table
-                    .putItem(new Item().withPrimaryKey(AUTH_PARTITION_KEY, newAuthToken.getUsername(),
-                            AUTH_SORT_KEY, newAuthToken.getId()).withMap("info", authInfoMap));
+                    .putItem(new Item().withPrimaryKey(AUTH_PARTITION_KEY, newAuthToken.getUsername())
+                            .withMap("info", authInfoMap));
             return outcome;
         }
         catch (Exception e) {
@@ -42,6 +42,7 @@ public class PutAuth {
 
     public static Map<String, Object> getAuthInfoMap(AuthToken authToken) {
         final Map<String, Object> userInfoMap = new HashMap<String, Object>();
+        userInfoMap.put(ID, authToken.getId());
         userInfoMap.put(IS_ACTIVE, authToken.getIsActive());
 
         return userInfoMap;

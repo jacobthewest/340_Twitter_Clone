@@ -2,6 +2,8 @@ package edu.byu.cs.tweeter.server.dao;
 
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.ManagePassword;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetAuthToken;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutAuth;
@@ -14,7 +16,6 @@ import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
 public class RegisterDAO {
 
     public static final String USER_PARTITION_KEY = "alias"; // AKA the primary key.
-
 
     public RegisterResponse register(RegisterRequest request) {
 
@@ -29,6 +30,24 @@ public class RegisterDAO {
         }
 
         // Attempt to create User in the database
+        User createMe = request.getUser();
+
+        // Attempt to upload user image to S3 bucket
+        String imageUrl = S3.uploadImage(createMe.getImageBytes(), createMe.getAlias());
+        if(imageUrl.toUpperCase().contains("ERROR")) {
+            return new RegisterResponse("Failed to upload user image to AWS S3.");
+        }
+        createMe.setImageUrl(imageUrl);
+        byte[] returnedBytes = S3.getImage(createMe.getAlias());
+        if(returnedBytes == null) {
+            return new RegisterResponse("Failed to get Image bytes from S3.");
+        }
+        createMe.setImageBytes(returnedBytes);
+
+        // Hash the password.
+        createMe.setPassword(ManagePassword.hashPassword(createMe.getPassword()));
+
+        // Attempt to create the new user.
         PutItemOutcome putUserOutcome = (PutItemOutcome) PutUser.putUser(request.getUser());
 
         // If we failed to create a new User

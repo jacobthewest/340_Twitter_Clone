@@ -6,7 +6,7 @@ import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 
 import java.util.Map;
 
-import edu.byu.cs.tweeter.server.dao.dao_helpers.database.DB;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 
 public class GetAuthToken {

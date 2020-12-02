@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec;
 
-import edu.byu.cs.tweeter.server.dao.dao_helpers.database.DB;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
 
 public class DeleteUser {
 

@@ -1,4 +1,4 @@
-package edu.byu.cs.tweeter.server.dao.dao_helpers.database;
+package edu.byu.cs.tweeter.server.dao.dao_helpers.aws;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
