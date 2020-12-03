@@ -38,11 +38,6 @@ public class RegisterDAO {
             return new RegisterResponse("Failed to upload user image to AWS S3.");
         }
         createMe.setImageUrl(imageUrl);
-//        byte[] returnedBytes = S3.getImage(createMe.getAlias());
-//        if(returnedBytes == null) {
-//            return new RegisterResponse("Failed to get Image bytes from S3.");
-//        }
-//        createMe.setImageBytes(returnedBytes);
 
         // Hash the password.
         createMe.setPassword(ManagePassword.hashPassword(createMe.getPassword()));
@@ -56,7 +51,7 @@ public class RegisterDAO {
         }
 
         // Attempt to create a new AuthToken in the database
-        PutItemOutcome putAuthOutcome = (PutItemOutcome) PutAuth.putAuth(request.getUser());
+        PutItemOutcome putAuthOutcome = (PutItemOutcome) PutAuth.putAuth(request.getUser().getAlias());
 
         // If we failed to create a new authToken
         if(putUserOutcome.toString().toUpperCase().contains("ERROR")) {
@@ -68,6 +63,13 @@ public class RegisterDAO {
 
         AuthToken createdAuthToken = GetAuthToken.getAuthToken(alias);
         User createdUser = GetUser.getUser(alias);
+
+        // Lastly, set the image bytes
+        byte[] returnedBytes = S3.getImage(createdUser.getAlias());
+        if(returnedBytes == null) {
+            return new RegisterResponse("Failed to get Image bytes from S3.");
+        }
+        createdUser.setImageBytes(returnedBytes);
 
         return new RegisterResponse(createdUser, createdAuthToken);
     }

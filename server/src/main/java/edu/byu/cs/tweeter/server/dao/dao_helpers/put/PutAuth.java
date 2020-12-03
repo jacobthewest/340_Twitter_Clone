@@ -12,7 +12,6 @@ import java.util.Map;
 
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
-import edu.byu.cs.tweeter.shared.domain.User;
 
 public class PutAuth {
 
@@ -21,20 +20,42 @@ public class PutAuth {
     public static final String IS_ACTIVE = "isActive";
     public static final String TABLE_NAME = "authToken";
 
-    public static Object putAuth(User user) {
+    public static Object putAuth(String alias) {
         try {
             Table table = DB.getDatabase(TABLE_NAME);
-            AuthToken newAuthToken = new AuthToken(user.getAlias());
+            AuthToken newAuthToken = new AuthToken(alias);
             Map<String, Object> authInfoMap = getAuthInfoMap(newAuthToken);
 
             /** Adds json information to the object through "info" **/
             PutItemOutcome outcome = table
                     .putItem(new Item().withPrimaryKey(AUTH_PARTITION_KEY, newAuthToken.getUsername())
                             .withMap("info", authInfoMap));
+            outcome.getPutItemResult().getAttributes();
             return outcome;
         }
         catch (Exception e) {
-            System.err.println("Unable to add item: " + user.getAlias());
+            System.err.println("Unable to add item: " + alias);
+            System.err.println(e.getMessage());
+            return e.getMessage();
+        }
+    }
+
+    public static Object putAuthWithFixedId(String alias, String fixedId) {
+        try {
+            Table table = DB.getDatabase(TABLE_NAME);
+            AuthToken newAuthToken = new AuthToken(alias);
+            newAuthToken.setId(fixedId);
+            Map<String, Object> authInfoMap = getAuthInfoMap(newAuthToken);
+
+            /** Adds json information to the object through "info" **/
+            PutItemOutcome outcome = table
+                    .putItem(new Item().withPrimaryKey(AUTH_PARTITION_KEY, newAuthToken.getUsername())
+                            .withMap("info", authInfoMap));
+            outcome.getPutItemResult().getAttributes();
+            return outcome;
+        }
+        catch (Exception e) {
+            System.err.println("Unable to add item: " + alias);
             System.err.println(e.getMessage());
             return e.getMessage();
         }

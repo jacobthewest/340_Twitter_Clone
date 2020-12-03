@@ -1,12 +1,17 @@
 package edu.byu.cs.tweeter.server.dao.dao_helpers.get;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.ItemCollection;
+import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.utils.Converter;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 
 public class GetAuthToken {
@@ -24,7 +29,7 @@ public class GetAuthToken {
 
         try {
             Item outcome = table.getItem(spec);
-            AuthToken returnAuthToken = convertItemToUser(outcome);
+            AuthToken returnAuthToken = Converter.convertItemToAuthToken(outcome);
             return returnAuthToken;
         }
         catch (Exception e) {
@@ -34,19 +39,24 @@ public class GetAuthToken {
         }
     }
 
-    public static AuthToken convertItemToUser(Item outcome) {
-        Map<String, Object> info = outcome.getMap("info");
+    public static AuthToken getAuthTokenByUsernameAndId(String username, String id) {
+        GetItemSpec spec = new GetItemSpec().withPrimaryKey(AUTH_PARTITION_KEY, username);
 
-        boolean isActive = (boolean) info.get(IS_ACTIVE);
-        String username = (String) outcome.get(AUTH_PARTITION_KEY);
-        String id = (String) outcome.get(AUTH_SORT_KEY);
+        ItemCollection<QueryOutcome > items = null;
+        Iterator<Item> iterator = null;
+        List<Item> responseItems = new ArrayList<>();
 
-        AuthToken returnMe = new AuthToken();
-
-        returnMe.setId(id);
-        returnMe.setUsername(username);
-        returnMe.setIsActive(isActive);
-
-        return returnMe;
+        try {
+            Table table = DB.getDatabase(TABLE_NAME);
+            Item outcome = table.getItem(spec);
+            AuthToken returnAuthToken = Converter.convertItemToAuthToken(outcome);
+            return returnAuthToken;
+        } catch (Exception e) {
+            System.err.println("Unable to perform the query.");
+            System.err.println(e.getMessage());
+            return null;
+        }
     }
+
+
 }

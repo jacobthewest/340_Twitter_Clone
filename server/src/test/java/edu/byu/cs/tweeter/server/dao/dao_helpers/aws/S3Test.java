@@ -1,4 +1,4 @@
-package edu.byu.cs.tweeter.server.dao.dao_helpers;
+package edu.byu.cs.tweeter.server.dao.dao_helpers.aws;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -20,8 +20,6 @@ import java.net.URL;
 import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
-
-import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 
 public class S3Test {
 

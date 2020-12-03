@@ -14,7 +14,7 @@ public class PutUser {
     public static final String USER_PARTITION_KEY = "alias"; // AKA the primary key.
     public static final String TABLE_NAME = "user";
     public static final String FIRST_NAME = "firstName";
-    public static final String LAST_NAME = "lasttName";
+    public static final String LAST_NAME = "lastName";
     public static final String IMAGE_URL = "imageUrl";
     public static final String PASSWORD = "password";
     public static final String IMAGE_BYTES = "imageBytes";

@@ -4,9 +4,8 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 
-import java.util.Map;
-
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.utils.Converter;
 import edu.byu.cs.tweeter.shared.domain.User;
 
 public class GetUser {
@@ -26,7 +25,7 @@ public class GetUser {
 
         try {
             Item outcome = table.getItem(spec);
-            User returnUser = convertItemToUser(outcome);
+            User returnUser = Converter.convertItemToUser(outcome);
             return returnUser;
         }
         catch (Exception e) {
@@ -34,16 +33,5 @@ public class GetUser {
             System.err.println(e.getMessage());
             return null;
         }
-    }
-
-    public static User convertItemToUser(Item outcome) {
-        Map<String, Object> info = outcome.getMap("info");
-
-        String firstName = (String) info.get(FIRST_NAME);
-        String lastName = (String) info.get(LAST_NAME);
-        String imageUrl = (String) info.get(IMAGE_URL);
-        String password = (String) info.get(PASSWORD);
-
-        return new User(firstName, lastName, imageUrl, password);
     }
 }

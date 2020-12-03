@@ -3,6 +3,7 @@ package edu.byu.cs.tweeter.server.dao;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryFollows;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.CountRequest;
 import edu.byu.cs.tweeter.shared.service.response.CountResponse;
@@ -49,6 +50,15 @@ public class CountDAO {
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
     public CountResponse getCount(CountRequest request) {
+
+        String requestAlias = request.getUser().getAlias();
+        int followersCount = QueryFollows.getFollowersCount(requestAlias);
+        int followingCount = QueryFollows.getFollowersCount(requestAlias);
+
+        return new CountResponse(request.getUser(), followingCount, followersCount);
+    }
+
+    public CountResponse oldGetCount(CountRequest request) {
         // TODO: logs in a hard-coded user. Replace with a real implementation.
 
         if(!isRecognizedUser(request.getUser().getAlias())) {

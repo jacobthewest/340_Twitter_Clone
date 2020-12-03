@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.server.dao;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.RetrieveUserRequest;
 import edu.byu.cs.tweeter.shared.service.response.RetrieveUserResponse;
@@ -46,6 +47,15 @@ public class RetrieveUserDAO {
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
     public RetrieveUserResponse retrieveUser(RetrieveUserRequest request) {
+
+        User retrievedUser = GetUser.getUser(request.getUsername());
+        if (retrievedUser == null) {
+            return new RetrieveUserResponse("No user found by the alias: " + request.getUsername());
+        }
+        return new RetrieveUserResponse(retrievedUser);
+    }
+
+    public RetrieveUserResponse oldRetrieveUser(RetrieveUserRequest request) {
 
         // START
         // Code to get the user from the database by their username
