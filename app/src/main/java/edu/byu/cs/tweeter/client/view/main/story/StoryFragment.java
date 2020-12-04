@@ -143,7 +143,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
          * @param status the status.
          */
         void bindStatus(Status status) {
-            SpannableString tempPostText = formulatePostText(status); // TODO: Update this thing right here.
+            SpannableString tempPostText = formulatePostText(status);
             String tempTimePosted = status.getTimePosted();
             User statusUser = status.getUser();
 

@@ -13,8 +13,6 @@ import edu.byu.cs.tweeter.shared.domain.User;
 
 public class ListOfStatuses {
 
-    private User definedUser;
-
     public static final String MALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/donald_duck.png";
     public static final String FEMALE_IMAGE_URL = "https://faculty.cs.byu.edu/~jwilkerson/cs340/tweeter/images/daisy_duck.png";
     public static final String MIKE = "https://i.imgur.com/VZQQiQ1.jpg";
@@ -52,7 +50,6 @@ public class ListOfStatuses {
     private final User userBarney = new User("Barney", "Rubble", MALE_IMAGE_URL, "password");
     private final User DaffyDuck = new User("Daffy", "Duck", FEMALE_IMAGE_URL, "password");
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
-
 
     public ListOfStatuses() {}
 

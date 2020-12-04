@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutUser;
+import edu.byu.cs.tweeter.server.util.ListOfStatuses;
+import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.domain.User;
 
 public class DbPopulator {
@@ -24,7 +26,7 @@ public class DbPopulator {
     /**
      * Parent function
      */
-    public static void putFamilyAndTestUser() {
+    public static void putUserDataForTest() {
         List<User> family = getFamilyForPutUsersData();
         for(User person: family) {
             PutUser.putUser(person);
@@ -56,6 +58,28 @@ public class DbPopulator {
                 }
             }
         }
+    }
+
+    /**
+     * Parent function.
+     * @throws Exception
+     */
+    public void putStatusDataForTest() {
+        // TODO: Implement with statuses for everyone. Just make the same
+        // generic statuses for everyone involved.
+
+        // User object, String tweetText, String urls, String timePosted, String mentions
+        Status s = new Status();
+        ListOfStatuses listOfStatuses = new ListOfStatuses();
+        // TODO: do a function on the listOfStatuses class to help get the right kind of data.
+    }
+
+    /**
+     * Parent function.
+     * @throws Exception
+     */
+    public void putImageDataForTest() {
+        // TODO: Implement with imageUrl. See the S3 class.
     }
 
     public Object put(String followeeHandle, String followeeName, String followerHandle, String followerName) throws Exception {

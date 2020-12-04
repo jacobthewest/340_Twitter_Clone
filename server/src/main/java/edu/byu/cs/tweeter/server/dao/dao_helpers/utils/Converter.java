@@ -2,9 +2,14 @@ package edu.byu.cs.tweeter.server.dao.dao_helpers.utils;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
+import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.domain.User;
 
 public class Converter {
@@ -37,5 +42,49 @@ public class Converter {
         returnMe.setAlias(alias);
 
         return returnMe;
+    }
+
+    public static Status convertItemToStatus(Item outcome, User user) {
+        Map<String, Object> info = outcome.getMap("info");
+
+        String tweetText = (String) info.get("tweetText");
+        String urls = (String) info.get("urls");
+        String mentions = (String) info.get("mentions");
+
+        String timePosted = (String) outcome.getString("timePosted");
+        timePosted = convertSortableTimeToTimePosted(timePosted);
+
+        Status returnMe = new Status(user, tweetText, urls, timePosted, mentions);
+        return returnMe;
+    }
+
+    public static String convertTimePostedToSortableTime(String timePosted) {
+        // Current form is "MMM d yyyy h:mm aaa"
+        // We need the form to be "yyyyMMddHHmm"
+
+        // Convert timePosted to a date object
+        try {
+            Date date = new SimpleDateFormat("MMM d yyyy h:mm aaa").parse(timePosted);
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
+            String formattedDate = dateFormat.format(date);
+            return formattedDate;
+        } catch(ParseException e) {
+            return e.getMessage();
+        }
+    }
+
+    public static String convertSortableTimeToTimePosted(String timePosted) {
+        // Current form is "yyyyMMddHHmm"
+        // We need the form to be "MMM d yyyy h:mm aaa"
+
+        // Convert timePosted to a date object
+        try {
+            Date date = new SimpleDateFormat("yyyyMMddHHmm").parse(timePosted);
+            DateFormat dateFormat = new SimpleDateFormat("MMM d yyyy h:mm aaa");
+            String formattedDate = dateFormat.format(date);
+            return formattedDate;
+        } catch(ParseException e) {
+            return e.getMessage();
+        }
     }
 }
