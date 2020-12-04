@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryFollows;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.FollowersRequest;
 import edu.byu.cs.tweeter.shared.service.response.FollowersResponse;
@@ -50,6 +51,23 @@ public class FollowersDAO {
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
 
+    public FollowersResponse getFollowers(FollowersRequest request) {
+
+        List<User> responseFollowers = QueryFollows.queryFollowersSorted(request);
+
+        if (responseFollowers == null) {
+            return new FollowersResponse("Error retrieving the followers.");
+        }
+
+        // How do we tell if we need more pages?
+        boolean hasMorePages = false;
+        if(responseFollowers.size() == request.getLimit()) {
+            hasMorePages = true;
+        }
+
+        return new FollowersResponse(responseFollowers, hasMorePages);
+    }
+
     /**
      * Returns the users who follow the user specified in the request. Uses information in
      * the request object to limit the number of followers returned and to return the next set of
@@ -60,7 +78,7 @@ public class FollowersDAO {
      *                other information required to satisfy the request.
      * @return the following response.
      */
-    public FollowersResponse getFollowers(FollowersRequest request) {
+    public FollowersResponse oldGetFollowers(FollowersRequest request) {
 
         if(!isRecognizedUser(request.getUser().getAlias())) {
             List<User> returnMe = new ArrayList<>();
@@ -73,6 +91,8 @@ public class FollowersDAO {
         boolean hasMorePages = false;
 
         if(request.getLimit() > 0) {
+            // TODO the followers index will now be the last followerHandle and the followeeHandle pair
+            // TODO: The followees index won't implement the index.
             int followersIndex = getFollowersStartingIndex(request.getLastFollower(), allFollowers);
 
             for(int limitCounter = 0; followersIndex < allFollowers.size() && limitCounter < request.getLimit(); followersIndex++, limitCounter++) {

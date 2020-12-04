@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryFollows;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
@@ -52,6 +53,23 @@ public class FollowingDAO {
     private final User DaffyDuck = new User("Daffy", "Duck", FEMALE_IMAGE_URL, "password");
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
+    public FollowingResponse getFollowees(FollowingRequest request) {
+
+        List<User> responseFollowees = QueryFollows.queryFollowingSorted(request);
+
+        if (responseFollowees == null) {
+            return new FollowingResponse("Error retrieving the following.");
+        }
+
+        // How do we tell if we need more pages?
+        boolean hasMorePages = false;
+        if(responseFollowees.size() == request.getLimit()) {
+            hasMorePages = true;
+        }
+
+        return new FollowingResponse(responseFollowees, hasMorePages);
+    }
+
     /**
      * Gets the count of users from the database that the user specified is following. The
      * current implementation uses generated data and doesn't actually access a database.
@@ -75,7 +93,7 @@ public class FollowingDAO {
      *                other information required to satisfy the request.
      * @return the followees.
      */
-    public FollowingResponse getFollowees(FollowingRequest request) {
+    public FollowingResponse oldGetFollowees(FollowingRequest request) {
         // TODO: Generates dummy data. Replace with a real implementation.
 
         if(!isRecognizedUser(request.getUser().getAlias())) {

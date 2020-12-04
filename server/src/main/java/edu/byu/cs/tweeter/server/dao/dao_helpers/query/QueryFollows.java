@@ -13,6 +13,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
+import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.shared.service.request.FollowersRequest;
+import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
 
 public class QueryFollows {
 
@@ -154,31 +158,38 @@ public class QueryFollows {
         return totalFollowers;
     }
 
-    public static List<Item> queryFollowingSorted(String followingAlias, String followerAlias) {
+    public static List<User> queryFollowingSorted(FollowingRequest request) {
+
+        String followingAlias = null;
+        if(request.getLastFollowee() != null) {
+            followingAlias = request.getLastFollowee().getAlias();
+        }
+        String followerAlias = request.getUser().getAlias();
+        int limit = request.getLimit();
 
         HashMap<String, String> nameMap = new HashMap<String, String>();
         nameMap.put("#follower_handle", SORT_KEY);
 
         HashMap<String, Object> valueMap = new HashMap<String, Object>();
-        valueMap.put(":follower_handle_value", followingAlias);
+        valueMap.put(":follower_handle_value", followerAlias);
 
         QuerySpec querySpec;
         String keyConditionExpression = "#" + SORT_KEY + " = :follower_handle_value";
 
-        if(followerAlias == null) {
+        if(followingAlias == null) {
             // Need the first ten users.
             querySpec = new QuerySpec()
-                    .withMaxResultSize(10)
-                    .withScanIndexForward(false)
+                    .withMaxResultSize(limit)
+                    .withScanIndexForward(true)
                     .withKeyConditionExpression(keyConditionExpression)
                     .withNameMap(nameMap)
                     .withValueMap(valueMap);
         } else {
             // Need only the next ten users.
             querySpec = new QuerySpec()
-                    .withExclusiveStartKey("followee_handle", followerAlias, "follower_handle", followingAlias)
-                    .withMaxResultSize(10)
-                    .withScanIndexForward(false)
+                    .withExclusiveStartKey("followee_handle", followingAlias, "follower_handle", followerAlias)
+                    .withMaxResultSize(limit)
+                    .withScanIndexForward(true)
                     .withKeyConditionExpression(keyConditionExpression)
                     .withNameMap(nameMap)
                     .withValueMap(valueMap);
@@ -199,14 +210,80 @@ public class QueryFollows {
         } catch (Exception e) {
             System.err.println("Unable to perform the query.");
             System.err.println(e.getMessage());
+            return null;
         }
 
-        /** TODO: Put this code up a layer into the dao's so we know what to use as our lastEvaluatatedKey **/
-//        Item lastItem = responseItems.get(responseItems.size() - 1);
-//        Map<String, String> lastEvaluatedKey = new HashMap<>();
-//        lastEvaluatedKey.put("follower_handle", lastItem.getString("follower_handle"));
-//        lastEvaluatedKey.put("followee_handle", lastItem.getString("followee_handle"));
+        List<User> returnMe = new ArrayList<>();
+        for(Item item: responseItems) {
+            String followeeAlias = (String) item.get("followee_handle");
+            User u = GetUser.getUser(followeeAlias);
+            returnMe.add(u);
+        }
+        return returnMe;
+    }
 
-        return responseItems;
+    public static List<User> queryFollowersSorted(FollowersRequest request) {
+
+        String followerAlias = null;
+        if(request.getLastFollower() != null) {
+            followerAlias = request.getLastFollower().getAlias();
+        }
+        String followeeAlias = request.getUser().getAlias();
+        int limit = request.getLimit();
+
+        HashMap<String, String> nameMap = new HashMap<String, String>();
+        nameMap.put("#" + PARTITION_KEY, PARTITION_KEY);
+
+        HashMap<String, Object> valueMap = new HashMap<String, Object>();
+        valueMap.put(":followee_handle_value", followeeAlias);
+
+        QuerySpec querySpec;
+        String keyConditionExpression = "#" + PARTITION_KEY + " = :followee_handle_value";
+
+        if(followerAlias == null) {
+            // Need the first ten users.
+            querySpec = new QuerySpec()
+                    .withMaxResultSize(limit)
+                    .withScanIndexForward(true)
+                    .withKeyConditionExpression(keyConditionExpression)
+                    .withNameMap(nameMap)
+                    .withValueMap(valueMap);
+        } else {
+            // Need only the next ten users.
+            querySpec = new QuerySpec()
+                    .withExclusiveStartKey("followee_handle", followeeAlias, "follower_handle", followerAlias)
+                    .withMaxResultSize(limit)
+                    .withScanIndexForward(true)
+                    .withKeyConditionExpression(keyConditionExpression)
+                    .withNameMap(nameMap)
+                    .withValueMap(valueMap);
+        }
+
+        ItemCollection<QueryOutcome> items = null;
+        Iterator<Item> iterator = null;
+        List<Item> responseItems = new ArrayList<>();
+
+        try {
+            Table table = DB.getDatabase(TABLE_NAME);
+            Index index = table.getIndex("follows_index");
+            items = index.query(querySpec);
+
+            iterator = items.iterator();
+            while (iterator.hasNext()) {
+                responseItems.add(iterator.next());
+            }
+        } catch (Exception e) {
+            System.err.println("Unable to perform the query.");
+            System.err.println(e.getMessage());
+            return null;
+        }
+
+        List<User> returnMe = new ArrayList<>();
+        for(Item item: responseItems) {
+            String tempAlias = (String) item.get("follower_handle");
+            User u = GetUser.getUser(tempAlias);
+            returnMe.add(u);
+        }
+        return returnMe;
     }
 }
