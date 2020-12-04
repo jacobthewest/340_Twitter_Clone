@@ -4,9 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PutItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
@@ -47,78 +45,5 @@ public class PutUser {
         // userInfoMap.put(IMAGE_BYTES, user.getImageBytes());
         
         return userInfoMap;
-    }
-
-    private static List<User> getFamily() {
-        List<User> returnMe = new ArrayList<>();
-
-        User dad = new User("Brett", "West", "imageUrl", "password");
-        dad.setAlias("@Dad");
-        returnMe.add(dad);
-
-        User mom = new User("Holly", "West", "imageUrl", "password");
-        mom.setAlias("@Mom");
-        returnMe.add(mom);
-
-        User jacob = new User("Jacob", "West", "imageUrl", "password");
-        jacob.setAlias("@Jacob");
-        returnMe.add(jacob);
-
-        User jenny = new User("Jenny", "West", "imageUrl", "password");
-        jenny.setAlias("@Jenny");
-        returnMe.add(jenny);
-
-        User allison = new User("Allison", "Monney", "imageUrl", "password");
-        allison.setAlias("@Allison");
-        returnMe.add(allison);
-
-        User trevor = new User("Trevor", "Monney", "imageUrl", "password");
-        trevor.setAlias("@Trevor");
-        returnMe.add(trevor);
-
-        User kevin = new User("Kevin", "West", "imageUrl", "password");
-        kevin.setAlias("@Kevin");
-        returnMe.add(kevin);
-
-        User Rachel = new User("Rachel", "West", "imageUrl", "password");
-        Rachel.setAlias("@Rachel");
-        returnMe.add(Rachel);
-
-        User Melissa = new User("Melissa", "West", "imageUrl", "password");
-        Melissa.setAlias("@Melissa");
-        returnMe.add(Melissa);
-
-        User Kyle = new User("Kyle", "West", "imageUrl", "password");
-        Kyle.setAlias("@Kyle");
-        returnMe.add(Kyle);
-
-        User Katelyn = new User("Katelyn", "West", "imageUrl", "password");
-        Katelyn.setAlias("@Katelyn");
-        returnMe.add(Katelyn);
-
-        User Rebecca = new User("Rebecca", "West", "imageUrl", "password");
-        Rebecca.setAlias("@Rebecca");
-        returnMe.add(Rebecca);
-
-        User Sarah = new User("Sarah", "West", "imageUrl", "password");
-        Sarah.setAlias("@Sarah");
-        returnMe.add(Sarah);
-
-        User Tyler = new User("Tyler", "West", "imageUrl", "password");
-        Tyler.setAlias("@Tyler");
-        returnMe.add(Tyler);
-
-        User permanentTestUser = new User("Permanent Test", "User", "imageUrl", "password");
-        permanentTestUser.setAlias("@PermanentTestUser");
-        returnMe.add(permanentTestUser);
-
-        return returnMe;
-    }
-
-    public static void putFamilyAndTestUser() {
-        List<User> family = getFamily();
-        for(User person: family) {
-            putUser(person);
-        }
     }
 }
