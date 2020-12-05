@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryStatus;
 import edu.byu.cs.tweeter.server.util.ListOfStatuses;
 import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.service.request.StoryRequest;
@@ -12,6 +13,22 @@ import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 public class StoryDAO {
 
     public StoryResponse getStory(StoryRequest request) {
+        List<Status> story = QueryStatus.queryStorySorted(request);
+
+        if (story == null) {
+            return new StoryResponse("Error retrieving the story.");
+        }
+
+        // How do we tell if we need more pages?
+        boolean hasMorePages = false;
+        if(story.size() == request.getLimit()) {
+            hasMorePages = true;
+        }
+
+        return new StoryResponse(story, hasMorePages);
+    }
+
+    public StoryResponse oldGetStory(StoryRequest request) {
 
         ListOfStatuses tool = new ListOfStatuses();
         Map<String, List<Status>> storyStatusesByUser = tool.initializeStory();

@@ -19,11 +19,13 @@ public class GetStatus {
     public static final String IMAGE_URL = "imageUrl";
     public static final String PASSWORD = "password";
 
-    public static Status getStatus(String alias, String timePosted) {
+    public static Status getStatus(String alias, String timePosted, boolean convertTimePostedForDb) {
 
         Table table = DB.getDatabase(TABLE_NAME);
 
-        timePosted = Converter.convertTimePostedToSortableTime(timePosted);
+        if (convertTimePostedForDb) {
+            timePosted = Converter.convertTimePostedToSortableTime(timePosted);
+        }
 
         GetItemSpec spec = new GetItemSpec().withPrimaryKey(USER_PARTITION_KEY, alias, SORT_KEY, timePosted);
 

@@ -24,7 +24,7 @@ public class GetStatusTest {
         Object o = PutStatus.putStatus(valid);
         Assertions.assertTrue(!o.toString().toUpperCase().contains("ERROR"));
 
-        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted());
+        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted(), false);
         Assertions.assertEquals(retrievedStatus, valid);
     }
 
@@ -34,7 +34,7 @@ public class GetStatusTest {
      */
     public void testGetStatusInvalidUsername() {
         Status invalid = getNonExistingStatus();
-        Status invalidStatus = GetStatus.getStatus(invalid.getUser().getAlias(), invalid.getTimePosted());
+        Status invalidStatus = GetStatus.getStatus(invalid.getUser().getAlias(), invalid.getTimePosted(), false);
         Assertions.assertNull(invalidStatus);
     }
 
@@ -48,7 +48,7 @@ public class GetStatusTest {
         Assertions.assertTrue(!o.toString().toUpperCase().contains("ERROR"));
 
         Status s = getExistingStatusNonExistingDate();
-        Status invalidStatus = GetStatus.getStatus(s.getUser().getAlias(), s.getTimePosted());
+        Status invalidStatus = GetStatus.getStatus(s.getUser().getAlias(), s.getTimePosted(), false);
         Assertions.assertNull(invalidStatus);
     }
 

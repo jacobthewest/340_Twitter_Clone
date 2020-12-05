@@ -74,6 +74,6 @@ public class FollowingDaoTest {
 
 //    @Test
 //    public void initFamilyInAws() {
-//        PutUser.putFamilyAndTestUser();
+//        DbPopulator.putFollowsDataForTest();
 //    }
 }

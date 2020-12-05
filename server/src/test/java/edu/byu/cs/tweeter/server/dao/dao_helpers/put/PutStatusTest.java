@@ -25,7 +25,7 @@ public class PutStatusTest {
         Object o = PutStatus.putStatus(valid);
         Assertions.assertTrue(!o.toString().toUpperCase().contains("ERROR"));
 
-        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted());
+        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted(), false);
         Assertions.assertEquals(retrievedStatus, valid);
     }
 

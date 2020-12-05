@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutStatus;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutUser;
 import edu.byu.cs.tweeter.server.util.ListOfStatuses;
 import edu.byu.cs.tweeter.shared.domain.Status;
@@ -64,14 +65,17 @@ public class DbPopulator {
      * Parent function.
      * @throws Exception
      */
-    public void putStatusDataForTest() {
-        // TODO: Implement with statuses for everyone. Just make the same
-        // generic statuses for everyone involved.
-
-        // User object, String tweetText, String urls, String timePosted, String mentions
-        Status s = new Status();
+    public static void putStoryDataForTest() {
+        List<User> family = getFamilyForPutUsersData();
         ListOfStatuses listOfStatuses = new ListOfStatuses();
-        // TODO: do a function on the listOfStatuses class to help get the right kind of data.
+
+        // Put Stories
+        for(User familyMember: family) {
+            List<Status> story = listOfStatuses.get21StatusesForStoryDaoTest(familyMember);
+            for(Status singlePost: story) {
+                PutStatus.putStatus(singlePost);
+            }
+        }
     }
 
     /**
