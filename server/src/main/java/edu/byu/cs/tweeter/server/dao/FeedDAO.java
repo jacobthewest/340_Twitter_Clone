@@ -4,12 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryStatus;
 import edu.byu.cs.tweeter.server.util.ListOfStatuses;
 import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.service.request.FeedRequest;
 import edu.byu.cs.tweeter.shared.service.response.FeedResponse;
 
 public class FeedDAO {
+
+    public FeedResponse getFeed(FeedRequest request) {
+        List<Status> feed = QueryStatus.queryFeedSorted(request);
+
+        if (feed == null) {
+            return new FeedResponse("Error retrieving the feed.");
+        }
+
+        // How do we tell if we need more pages?
+        boolean hasMorePages = false;
+        if(feed.size() == request.getLimit()) {
+            hasMorePages = true;
+        }
+
+        return new FeedResponse(feed, hasMorePages);
+    }
 
     /**
      * Returns the statuses of the user specified in the request. Uses information in
@@ -21,7 +38,7 @@ public class FeedDAO {
      *                other information required to satisfy the request.
      * @return the following response.
      */
-    public FeedResponse getFeed(FeedRequest request) {
+    public FeedResponse oldGetFeed(FeedRequest request) {
 
         ListOfStatuses tool = new ListOfStatuses();
         Map<String, List<Status>> feedStatusesByUser = tool.initializeFeed();
