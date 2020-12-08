@@ -2,6 +2,7 @@ package edu.byu.cs.tweeter.client.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -26,7 +27,6 @@ import edu.byu.cs.tweeter.client.view.asyncTasks.RegisterTask;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
 import edu.byu.cs.tweeter.client.view.util.AliasChecker;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
-import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
@@ -104,7 +104,7 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
 
                     RegisterTask registerTask = new RegisterTask(presenter, getObserver());
 
-                    registerTask.execute(registerRequest);
+                    registerTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, registerRequest);
                 }
             }
         });
@@ -187,9 +187,6 @@ public class RegisterFragment extends Fragment implements RegisterPresenter.View
     @Override
     public void registerSuccessful(RegisterResponse registerResponse) {
         Intent intent = new Intent(getContext(), MainActivity.class);
-
-        User cuk = registerResponse.getUser();
-        AuthToken atk = registerResponse.getAuthToken();
 
         intent.putExtra(MainActivity.CURRENT_USER_KEY, registerResponse.getUser());
         intent.putExtra(MainActivity.CURRENT_FOLLOW_KEY, registerResponse.getUser());

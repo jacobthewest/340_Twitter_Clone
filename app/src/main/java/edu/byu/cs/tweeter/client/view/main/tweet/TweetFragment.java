@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.client.view.main.tweet;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,7 +81,7 @@ public class TweetFragment extends DialogFragment implements View.OnClickListene
         } else {
             SubmitTweetRequest submitTweetRequest = getSubmitTweetRequest();
             SubmitTweetTask submitTweetTask = new SubmitTweetTask(presenter, getObserver());
-            submitTweetTask.execute(submitTweetRequest);
+            submitTweetTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, submitTweetRequest);
         }
     }
 

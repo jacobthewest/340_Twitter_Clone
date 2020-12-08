@@ -18,6 +18,10 @@ public class FeedServiceImpl implements FeedService {
 
         FeedResponse feedResponse = getFeedDAO().getFeed(request);
 
+        if(!feedResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + feedResponse.getMessage());
+        }
+
         // Response:: list of statuses
         checker.checkStatusListResponse(feedResponse.getStatuses(), request.getLimit());
 

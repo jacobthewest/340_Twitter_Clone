@@ -57,7 +57,7 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResponse> {
             loginResponse = presenter.login(loginRequests[0]);
 
             if(loginResponse.isSuccess()) {
-                loadImage(loginResponse.getUser());
+                // loadImage(loginResponse.getUser());
             }
         } catch (Exception ex) {
             exception = ex;

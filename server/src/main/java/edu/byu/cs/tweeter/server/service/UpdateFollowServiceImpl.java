@@ -19,6 +19,10 @@ public class UpdateFollowServiceImpl implements UpdateFollowService {
 
         UpdateFollowResponse updateFollowResponse = getUpdateFollowDAO().updateFollow(request);
 
+        if(!updateFollowResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + updateFollowResponse.getMessage());
+        }
+
         // Response:: User, followUser, List<User> following
         checker.checkUserResponse(updateFollowResponse.getUser());
         checker.checkUserResponse(updateFollowResponse.getFollowUser());

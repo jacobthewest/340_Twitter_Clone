@@ -31,6 +31,10 @@ public class FollowingServiceImpl implements FollowingService {
 
         FollowingResponse followingResponse = getFollowingDAO().getFollowees(request);
 
+        if(!followingResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + followingResponse.getMessage());
+        }
+
         // Response:: List<User> followees
         checker.checkUserListResponse(followingResponse.getFollowees(), request.getLimit());
 

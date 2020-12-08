@@ -2,6 +2,7 @@ package edu.byu.cs.tweeter.client.view.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +45,7 @@ public class AliasClickableSpan extends ClickableSpan implements RetrieveUserPre
     public void onClick(@NonNull View widget) {
         RetrieveUserRequest retrieveUserRequest = new RetrieveUserRequest(mention);
         RetrieveUserTask retrieveUserTask = new RetrieveUserTask(presenter, getObserver());
-        retrieveUserTask.execute(retrieveUserRequest);
+        retrieveUserTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, retrieveUserRequest);
     }
 
     @Override

@@ -17,6 +17,10 @@ public class RetrieveUserServiceImpl implements RetrieveUserService {
 
         RetrieveUserResponse retrieveUserResponse = getRetrieveUserDAO().retrieveUser(request);
 
+        if(!retrieveUserResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + retrieveUserResponse.getMessage());
+        }
+
         // Response:: User
         checker.checkUserResponse(retrieveUserResponse.getUser());
 

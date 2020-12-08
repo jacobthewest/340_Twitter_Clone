@@ -23,7 +23,7 @@ public class RetrieveUserServiceProxy implements RetrieveUserService {
         RetrieveUserResponse retrieveUserResponse = serverFacade.retrieveUser(request, URL_PATH);
 
         if(retrieveUserResponse.isSuccess()) {
-            loadImage(retrieveUserResponse.getUser());
+            // loadImage(retrieveUserResponse.getUser());
         }
 
         return retrieveUserResponse;

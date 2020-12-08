@@ -23,7 +23,7 @@ public class RegisterServiceProxy implements RegisterService {
         RegisterResponse registerResponse = serverFacade.register(request, URL_PATH);
 
         if(registerResponse.isSuccess()) {
-            loadImage(registerResponse.getUser());
+            // loadImage(registerResponse.getUser());
         }
 
         return registerResponse;

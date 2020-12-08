@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.client.view;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -83,7 +84,7 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
                     LoginRequest loginRequest = getLoginRequest(userNameLogin, passwordLogin);
                     LoginTask loginTask = new LoginTask(presenter, getObserver());
 
-                    loginTask.execute(loginRequest);
+                    loginTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loginRequest);
                 }
             }
         });

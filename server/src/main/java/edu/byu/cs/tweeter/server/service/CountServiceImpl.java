@@ -17,6 +17,10 @@ public class CountServiceImpl implements CountService {
 
         CountResponse countResponse = getCountDAO().getCount(request);
 
+        if(!countResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + countResponse.getMessage());
+        }
+
         // Response:: User, followingCount, followersCount
         checker.checkUserResponse(countResponse.getUser());
         checker.checkFollowingFollowersResponse(countResponse.getFollowingCount(), countResponse.getFollowersCount());

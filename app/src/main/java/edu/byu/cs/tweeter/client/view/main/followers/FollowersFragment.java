@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.client.view.main.followers;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -260,7 +261,7 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
 
             GetFollowersTask getFollowersTask = new GetFollowersTask(presenter, this);
             FollowersRequest request = new FollowersRequest(followUser, PAGE_SIZE, lastFollower);
-            getFollowersTask.execute(request);
+            getFollowersTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
         }
 
         /**

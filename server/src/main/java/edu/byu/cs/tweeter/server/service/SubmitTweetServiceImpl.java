@@ -17,6 +17,10 @@ public class SubmitTweetServiceImpl implements SubmitTweetService {
 
         SubmitTweetResponse submitTweetResponse = getSubmitTweetDAO().submitTweet(request);
 
+        if(!submitTweetResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + submitTweetResponse.getMessage());
+        }
+
         // Response:: User, Status
         checker.checkUserResponse(submitTweetResponse.getUser());
         checker.checkStatusResponse(request.getUser(), submitTweetResponse.getStatus());

@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.client.view.main.feed;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -316,7 +317,7 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
 
             GetFeedTask getFeedTask = new GetFeedTask(presenter, this);
             FeedRequest request = new FeedRequest(user, PAGE_SIZE, lastStatus);
-            getFeedTask.execute(request);
+            getFeedTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
         }
 
         /**

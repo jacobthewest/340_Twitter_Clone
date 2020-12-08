@@ -19,6 +19,10 @@ public class FollowersServiceImpl implements FollowersService {
 
         FollowersResponse followersResponse = getFollowersDAO().getFollowers(request);
 
+        if(!followersResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + followersResponse.getMessage());
+        }
+
         // Response:: List<User> followers
         checker.checkUserListResponse(followersResponse.getFollowers(), request.getLimit());
 

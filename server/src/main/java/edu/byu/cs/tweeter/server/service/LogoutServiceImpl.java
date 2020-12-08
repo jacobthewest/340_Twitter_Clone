@@ -18,6 +18,10 @@ public class LogoutServiceImpl implements LogoutService {
 
         LogoutResponse logoutResponse = getLogoutDAO().logout(request);
 
+        if(!logoutResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + logoutResponse.getMessage());
+        }
+
         // Response:: User, AuthToken
         checker.checkUserResponse(logoutResponse.getUser());
         checker.checkAuthTokenResponse(logoutResponse.getUser(), logoutResponse.getAuthToken());

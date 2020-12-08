@@ -14,17 +14,21 @@ public class RegisterServiceImpl implements RegisterService {
 
         // Request:: User
         checker.checkUserRequest(request.getUser());
-        checker.checkEmptyNullStringRequest(request.getUser().getImageBytesAsString(), "ImageBytesAsString");
         checker.checkEmptyNullStringRequest(request.getUser().getAlias(), "Alias");
         checker.checkEmptyNullStringRequest(request.getUser().getFirstName(), "FirstName");
         checker.checkEmptyNullStringRequest(request.getUser().getLastName(), "LastName");
-        checker.checkEmptyNullStringRequest(request.getUser().getImageUrl(), "ImageUrl");
+        checker.checkEmptyNullStringRequest(request.getUser().getLastName(), "Password");
 
         RegisterResponse registerResponse = getRegisterDAO().register(request);
 
         // Response:: User, AuthToken
+        if(!registerResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + registerResponse.getMessage());
+        }
+
         checker.checkUserResponse(registerResponse.getUser());
         checker.checkAuthTokenResponse(registerResponse.getUser(), registerResponse.getAuthToken());
+        checker.checkEmptyNullStringResponse(request.getUser().getImageUrl(), "ImageUrl");
 
         return registerResponse;
     }

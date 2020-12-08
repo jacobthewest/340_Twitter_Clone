@@ -16,8 +16,11 @@ public class LoginServiceImpl implements LoginService {
         checker.checkEmptyNullStringRequest(request.getUsername(), "Alias");
         checker.checkEmptyNullStringRequest(request.getPassword(), "Password");
 
-        // TODO: Generates dummy data. Replace with a real implementation.
         LoginResponse loginResponse = getLoginDAO().login(request);
+
+        if(!loginResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + loginResponse.getMessage());
+        }
 
         // Response:: User, AuthToken
         checker.checkUserResponse(loginResponse.getUser());

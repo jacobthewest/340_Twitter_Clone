@@ -8,7 +8,6 @@ import androidx.annotation.RequiresApi;
 import java.io.IOException;
 
 import edu.byu.cs.tweeter.client.presenter.RegisterPresenter;
-import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.RegisterRequest;
 import edu.byu.cs.tweeter.shared.service.response.RegisterResponse;
@@ -60,7 +59,7 @@ public class RegisterTask extends AsyncTask<RegisterRequest, Void, RegisterRespo
             registerResponse = presenter.getRegister(registerRequests[0]);
 
             if(registerResponse.isSuccess()) {
-                loadImage(registerResponse.getUser());
+                // loadImage(registerResponse.getUser());
             }
         } catch (Exception ex) {
             exception = ex;
@@ -76,18 +75,8 @@ public class RegisterTask extends AsyncTask<RegisterRequest, Void, RegisterRespo
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void loadImage(User user) throws IOException {
-        // TODO: I changed this to get the user's set image bytes that we DID NOT get from the imageURL from the server.
-        // we will probably have to load that manually from the server, but for Milestone #2, I'm just using the image
-        // locally.
-//        try {
-        byte[] imageBytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
-        user.setImageBytes(imageBytes);
-//                ***Old code below*** Includes the try catch
-//                byte [] bytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
-//                user.setImageBytes(bytes);
-//        } catch (IOException e) {
-//            Log.e(this.getClass().getName(), e.toString(), e);
-//        }
+//        byte[] imageBytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
+//        user.setImageBytes(imageBytes);
     }
 
     /**

@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.client.view.main;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
             public void onClick(View v) {
                 LogoutRequest logoutRequest = getLogoutRequest();
                 LogoutTask logoutTask = new LogoutTask(getLogoutPresenter(), getLogoutObserver());
-                logoutTask.execute(logoutRequest);
+                logoutTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, logoutRequest);
             }
         });
 
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
                 }
                 UpdateFollowRequest updateFollowRequest = new UpdateFollowRequest(user, followUser, followTheFollowUser);
                 UpdateFollowTask updateFollowTask = new UpdateFollowTask(getUpdateFollowPresenter(), getUpdateFollowObserver());
-                updateFollowTask.execute(updateFollowRequest);
+                updateFollowTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, updateFollowRequest);
             }
         });
     }
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
         GetFollowingTask getFollowingTask = new GetFollowingTask(followingPresenter, this);
         int PAGE_SIZE = 1000; // We just want to make sure to get ALL followees.
         FollowingRequest request = new FollowingRequest(followUser, PAGE_SIZE, null);
-        getFollowingTask.execute(request);
+        getFollowingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
     }
 
     private void setPresenters() {
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     public void setCount() {
         CountRequest countRequest = new CountRequest(this.user);
         CountTask countTask = new CountTask(getCountPresenter(), getCountObserver());
-        countTask.execute(countRequest);
+        countTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, countRequest);
     }
 
     protected void showDialog() {

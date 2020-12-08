@@ -31,7 +31,6 @@ public class CountIntegrationTest {
         validRequest = new CountRequest(user);
         invalidRequest = new CountRequest(invalidUser);
 
-        // Setup a mock CountDAO that will return known responses
         correctResponse = new CountResponse(user, FOLLOWING_COUNT, FOLLOWERS_COUNT);
 
         countServiceProxy = new CountServiceProxy();

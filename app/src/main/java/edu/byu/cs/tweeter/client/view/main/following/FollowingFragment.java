@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.client.view.main.following;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -260,7 +261,7 @@ public class FollowingFragment extends Fragment implements FollowingPresenter.Vi
 
             GetFollowingTask getFollowingTask = new GetFollowingTask(presenter, this);
             FollowingRequest request = new FollowingRequest(followUser, PAGE_SIZE, lastFollowee);
-            getFollowingTask.execute(request);
+            getFollowingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
         }
 
         /**

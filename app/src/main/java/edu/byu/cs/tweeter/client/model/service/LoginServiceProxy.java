@@ -23,7 +23,7 @@ public class LoginServiceProxy implements LoginService {
         LoginResponse loginResponse = serverFacade.login(request, URL_PATH);
 
         if(loginResponse.isSuccess()) {
-            loadImage(loginResponse.getUser());
+            // loadImage(loginResponse.getUser());
         }
 
         return loginResponse;

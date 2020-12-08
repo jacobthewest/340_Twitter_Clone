@@ -18,6 +18,10 @@ public class StoryServiceImpl implements StoryService {
 
         StoryResponse storyResponse = getStoryDAO().getStory(request);
 
+        if(!storyResponse.getSuccess()) {
+            throw new RuntimeException("[InternalServerError] " + storyResponse.getMessage());
+        }
+
         // Response:: List<Status>
         checker.checkStatusListResponse(storyResponse.getStatuses(), request.getLimit());
 

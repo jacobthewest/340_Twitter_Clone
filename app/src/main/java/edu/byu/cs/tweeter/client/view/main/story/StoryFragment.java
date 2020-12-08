@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.client.view.main.story;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -330,7 +331,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
 
             GetStoryTask getStoryTask = new GetStoryTask(presenter, this);
             StoryRequest request = new StoryRequest(followUser, PAGE_SIZE, lastStatus);
-            getStoryTask.execute(request);
+            getStoryTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
         }
 
         /**

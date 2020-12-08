@@ -57,7 +57,7 @@ public class RetrieveUserTask extends AsyncTask<RetrieveUserRequest, Void, Retri
             retrieveUserResponse = presenter.retrieveUser(retrieveUserRequests[0]);
 
             if(retrieveUserResponse.isSuccess()) {
-                loadImage(retrieveUserResponse.getUser());
+                // loadImage(retrieveUserResponse.getUser());
             }
         } catch (Exception ex) {
             exception = ex;
