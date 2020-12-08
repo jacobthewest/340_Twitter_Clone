@@ -31,7 +31,7 @@ public class FeedServiceProxy implements FeedService {
         FeedResponse response = getServerFacade().getFeed(request, URL_PATH);
 
         if(response.isSuccess()) {
-            loadImages(response);
+            // loadImages(response);
         }
 
         return response;

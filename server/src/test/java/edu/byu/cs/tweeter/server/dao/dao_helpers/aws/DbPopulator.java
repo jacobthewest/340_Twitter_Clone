@@ -90,6 +90,9 @@ public class DbPopulator {
      */
     public void putImageDataForTest() {
         // TODO: Implement with imageUrl. See the S3 class.
+        List<User> family = getFamilyForPutUsersData();
+        for(User member: family) {
+        }
     }
 
     public static Object put(String followeeHandle, String followeeName, String followerHandle, String followerName) throws Exception {
@@ -149,64 +152,65 @@ public class DbPopulator {
 
     public static List<User> getFamilyForPutUsersData() {
         List<User> returnMe = new ArrayList<>();
+        String baseUrl = "https://340tweeter.s3-us-west-2.amazonaws.com/%40";
 
-        User dad = new User("Brett", "West", "imageUrl", "password");
+        User dad = new User("Brett", "West", baseUrl + "Dad", "password");
         dad.setAlias("@Dad");
         returnMe.add(dad);
 
-        User mom = new User("Holly", "West", "imageUrl", "password");
+        User mom = new User("Holly", "West", baseUrl + "Mom", "password");
         mom.setAlias("@Mom");
         returnMe.add(mom);
 
-        User jacob = new User("Jacob", "West", "imageUrl", "password");
+        User jacob = new User("Jacob", "West", baseUrl + "Jacob", "password");
         jacob.setAlias("@Jacob");
         returnMe.add(jacob);
 
-        User jenny = new User("Jenny", "West", "imageUrl", "password");
+        User jenny = new User("Jenny", "West", baseUrl + "Jenny", "password");
         jenny.setAlias("@Jenny");
         returnMe.add(jenny);
 
-        User allison = new User("Allison", "Monney", "imageUrl", "password");
+        User allison = new User("Allison", "Monney", baseUrl + "Allison", "password");
         allison.setAlias("@Allison");
         returnMe.add(allison);
 
-        User trevor = new User("Trevor", "Monney", "imageUrl", "password");
+        User trevor = new User("Trevor", "Monney", baseUrl + "Trevor", "password");
         trevor.setAlias("@Trevor");
         returnMe.add(trevor);
 
-        User kevin = new User("Kevin", "West", "imageUrl", "password");
+        User kevin = new User("Kevin", "West", baseUrl + "Kevin", "password");
         kevin.setAlias("@Kevin");
         returnMe.add(kevin);
 
-        User Rachel = new User("Rachel", "West", "imageUrl", "password");
+        User Rachel = new User("Rachel", "West", baseUrl + "Rachel", "password");
         Rachel.setAlias("@Rachel");
         returnMe.add(Rachel);
 
-        User Melissa = new User("Melissa", "West", "imageUrl", "password");
+        User Melissa = new User("Melissa", "West", baseUrl + "Melissa", "password");
         Melissa.setAlias("@Melissa");
         returnMe.add(Melissa);
 
-        User Kyle = new User("Kyle", "West", "imageUrl", "password");
+        User Kyle = new User("Kyle", "West", baseUrl + "Kyle", "password");
         Kyle.setAlias("@Kyle");
         returnMe.add(Kyle);
 
-        User Katelyn = new User("Katelyn", "West", "imageUrl", "password");
+        User Katelyn = new User("Katelyn", "West", baseUrl + "Katelyn", "password");
         Katelyn.setAlias("@Katelyn");
         returnMe.add(Katelyn);
 
-        User Rebecca = new User("Rebecca", "West", "imageUrl", "password");
+        User Rebecca = new User("Rebecca", "West", baseUrl + "Rebecca", "password");
         Rebecca.setAlias("@Rebecca");
         returnMe.add(Rebecca);
 
-        User Sarah = new User("Sarah", "West", "imageUrl", "password");
+        User Sarah = new User("Sarah", "West", baseUrl + "Sarah", "password");
         Sarah.setAlias("@Sarah");
         returnMe.add(Sarah);
 
-        User Tyler = new User("Tyler", "West", "imageUrl", "password");
+        User Tyler = new User("Tyler", "West", baseUrl + "Tyler", "password");
         Tyler.setAlias("@Tyler");
         returnMe.add(Tyler);
 
-        User permanentTestUser = new User("Permanent Test", "User", "imageUrl", "password");
+        User permanentTestUser = new User("Permanent Test", "User",baseUrl + "PermanentTestUser", "password");
         permanentTestUser.setAlias("@PermanentTestUser");
         returnMe.add(permanentTestUser);
 

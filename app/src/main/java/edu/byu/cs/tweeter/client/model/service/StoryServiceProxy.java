@@ -31,7 +31,7 @@ public class StoryServiceProxy implements StoryService {
         StoryResponse response = getServerFacade().getStory(request, URL_PATH);
 
         if(response.isSuccess()) {
-            loadImages(response);
+            // loadImages(response);
         }
 
         return response;

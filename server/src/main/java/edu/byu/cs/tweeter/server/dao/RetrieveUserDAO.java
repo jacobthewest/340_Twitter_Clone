@@ -1,5 +1,6 @@
 package edu.byu.cs.tweeter.server.dao;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.RetrieveUserRequest;
@@ -52,6 +53,10 @@ public class RetrieveUserDAO {
         if (retrievedUser == null) {
             return new RetrieveUserResponse("No user found by the alias: " + request.getUsername());
         }
+
+        byte[] imageBytes = S3.getImage(retrievedUser.getAlias());
+        retrievedUser.setImageBytes(imageBytes);
+
         return new RetrieveUserResponse(retrievedUser);
     }
 

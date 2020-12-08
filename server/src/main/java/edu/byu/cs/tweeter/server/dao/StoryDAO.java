@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryStatus;
 import edu.byu.cs.tweeter.server.util.ListOfStatuses;
 import edu.byu.cs.tweeter.shared.domain.Status;
+import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.StoryRequest;
 import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 
@@ -17,6 +19,13 @@ public class StoryDAO {
 
         if (story == null) {
             return new StoryResponse("Error retrieving the story.");
+        }
+
+        // Load the pages for the users in the feed.
+        for(Status s: story) {
+            User u = s.getUser();
+            byte[] imageBytes = S3.getImage(u.getAlias());
+            u.setImageBytes(imageBytes);
         }
 
         // How do we tell if we need more pages?

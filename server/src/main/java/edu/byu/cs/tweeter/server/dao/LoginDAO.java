@@ -1,6 +1,7 @@
 package edu.byu.cs.tweeter.server.dao;
 
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.ManagePassword;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetAuthToken;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutAuth;
@@ -78,6 +79,9 @@ public class LoginDAO {
         // Retrieve the added AuthToken
         AuthToken authToken = GetAuthToken.getAuthToken(request.getUsername());
         User loggedInUser = GetUser.getUser(request.getUsername());
+
+        byte[] imageBytes = S3.getImage(loggedInUser.getAlias());
+        loggedInUser.setImageBytes(imageBytes);
 
         return new LoginResponse(loggedInUser, authToken);
     }

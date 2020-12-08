@@ -31,7 +31,7 @@ public class FollowersServiceProxy implements FollowersService {
         FollowersResponse response = getServerFacade().getFollowers(request, URL_PATH);
 
         if(response.isSuccess()) {
-            loadImages(response);
+            // loadImages(response);
         }
 
         return response;

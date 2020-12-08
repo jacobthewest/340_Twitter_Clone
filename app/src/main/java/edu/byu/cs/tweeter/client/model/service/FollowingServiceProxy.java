@@ -31,7 +31,7 @@ public class FollowingServiceProxy implements FollowingService {
         FollowingResponse response = getServerFacade().getFollowees(request, URL_PATH);
 
         if(response.isSuccess()) {
-            loadImages(response);
+            // loadImages(response);
         }
 
         return response;
