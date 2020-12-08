@@ -1,6 +1,8 @@
 package edu.byu.cs.tweeter.server.dao;
 
-import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetStatus;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutStatus;
+import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.service.request.SubmitTweetRequest;
 import edu.byu.cs.tweeter.shared.service.response.SubmitTweetResponse;
 
@@ -10,16 +12,18 @@ public class SubmitTweetDAO {
         String userAlias = request.getUser().getAlias();
         String statusAlias = request.getStatus().getUser().getAlias();
 
-        // START
-        // Code that actually submits the tweet to the database
-        // END
+        if(!userAlias.equals(statusAlias)) {
+            return new SubmitTweetResponse("User alias and status alias don't match.");
+        }
 
-        User user = request.getUser();
-        user.setImageBytes(null);
-        User statusUser = request.getStatus().getUser();
-        statusUser.setImageBytes(null);
-        request.getStatus().setUser(statusUser);
+        Object o = PutStatus.putStatus(request.getStatus());
+        if(o == null) {
+            return new SubmitTweetResponse("Error submitting the tweet");
 
-        return new SubmitTweetResponse(user, request.getStatus());
+        }
+
+        Status status = GetStatus.getStatus(userAlias, request.getStatus().getTimePosted(), true);
+
+        return new SubmitTweetResponse(request.getUser(), status);
     }
 }
