@@ -1,5 +1,9 @@
 package edu.byu.cs.tweeter.server.dao;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.ManagePassword;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetAuthToken;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutAuth;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.LoginRequest;
@@ -47,20 +51,42 @@ public class LoginDAO {
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
     public LoginResponse login(LoginRequest request) {
-        // TODO: logs in a hard-coded user. Replace with a real implementation.
 
-        if(!isRecognizedUser(request.getUsername())) {
-            return new LoginResponse("User does not exist in the database.");
+        // Check if AuthToken associated with proposed username already exists in the database
+        if(isAuthTokenAlreadyPresentInDatabase(request.getUsername())) {
+            return new LoginResponse("AuthToken by that alias already exists in the database");
         }
 
-        //  START
-        //  Code to log the user in
-        //  END
+        // Check if user already exists in the database
+        if(!isUserAlreadyPresentInDatabase(request.getUsername())) {
+            return new LoginResponse("User does not exists in the database");
+        }
 
-        User loggedInUser = new User("Test", "User", "https://i.imgur.com/VZQQiQ1.jpg", "password");
-        AuthToken authToken = new AuthToken(request.getUsername());
+        // Hash the password.
+        String hashedPassword = ManagePassword.hashPassword(request.getPassword());
+
+        // Compare the password given to the password in the database
+        User retrievedUser = GetUser.getUser(request.getUsername());
+        boolean passwordMatch = ManagePassword.checkPasswordsMatch(request.getPassword(), retrievedUser.getPassword());
+        if(!passwordMatch) {
+            return new LoginResponse("Incorrect password.");
+        }
+
+        // Add a new authToken in the database.
+        PutAuth.putAuth(request.getUsername());
+
+        // Retrieve the added AuthToken
+        AuthToken authToken = GetAuthToken.getAuthToken(request.getUsername());
+        User loggedInUser = GetUser.getUser(request.getUsername());
 
         return new LoginResponse(loggedInUser, authToken);
+    }
+
+    public boolean isAuthTokenAlreadyPresentInDatabase(String alias) {
+        if(GetAuthToken.getAuthToken(alias) == null) {
+            return false;
+        }
+        return true;
     }
 
     private boolean isRecognizedUser(String alias) {
@@ -74,5 +100,12 @@ public class LoginDAO {
                 alias.equals(BillBelichick.getAlias()) || alias.equals(TestUser.getAlias()) || alias.equals(userBarney.getAlias()) ||
                 alias.equals(DaffyDuck.getAlias()) || alias.equals(Zoe.getAlias())) { return true;}
         return false;
+    }
+
+    public boolean isUserAlreadyPresentInDatabase(String alias) {
+        if(GetUser.getUser(alias) == null) {
+            return false;
+        }
+        return true;
     }
 }

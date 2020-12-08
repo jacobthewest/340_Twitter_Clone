@@ -73,7 +73,7 @@ public class FollowingDaoTest {
 
 
 //    @Test
-//    public void initFamilyInAws() {
+//    public void initFamilyInAws() throws Exception {
 //        DbPopulator.putFollowsDataForTest();
 //    }
 }

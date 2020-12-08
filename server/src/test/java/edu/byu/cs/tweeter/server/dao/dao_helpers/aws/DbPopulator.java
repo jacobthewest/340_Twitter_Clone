@@ -30,15 +30,21 @@ public class DbPopulator {
     public static void putUserDataForTest() {
         List<User> family = getFamilyForPutUsersData();
         for(User person: family) {
+            person.setPassword(ManagePassword.hashPassword(person.getPassword()));
             PutUser.putUser(person);
         }
     }
+
+//    @Test
+//    public void testPutUserData() {
+//        putUserDataForTest();
+//    }
 
     /**
      * Parent function.
      * @throws Exception
      */
-    public void putFollowsDataForTest() throws Exception {
+    public static void putFollowsDataForTest() throws Exception {
         List<List<String>> family = getFamilyForPutFollowsData();
 
         for (List<String> outerList: family) {
@@ -86,7 +92,7 @@ public class DbPopulator {
         // TODO: Implement with imageUrl. See the S3 class.
     }
 
-    public Object put(String followeeHandle, String followeeName, String followerHandle, String followerName) throws Exception {
+    public static Object put(String followeeHandle, String followeeName, String followerHandle, String followerName) throws Exception {
 
         final Map<String, Object> infoMap = new HashMap<String, Object>();
         infoMap.put(FOLLOWER_NAME, followerName);
@@ -96,7 +102,7 @@ public class DbPopulator {
         return outcome.getPutItemResult();
     }
 
-    public Object putToDatabase(String followeeHandle, String followerHandle, Map<String, Object> infoMap) {
+    public static Object putToDatabase(String followeeHandle, String followerHandle, Map<String, Object> infoMap) {
         try {
             AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
                     .withRegion("us-west-2")
@@ -118,7 +124,7 @@ public class DbPopulator {
         }
     }
 
-    public List<List<String>> getFamilyForPutFollowsData() {
+    public static List<List<String>> getFamilyForPutFollowsData() {
 
         List<List<String>> family = new ArrayList<>();
 
