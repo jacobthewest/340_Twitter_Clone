@@ -15,7 +15,7 @@ public class DbPopulatorTest {
         List<User> family = DbPopulator.getFamilyForPutUsersData();
 
         for(User member: family) {
-            s3Test.testUploadImage(member.getAlias());
+            s3Test.uploadImage(member.getAlias());
         }
     }
 }

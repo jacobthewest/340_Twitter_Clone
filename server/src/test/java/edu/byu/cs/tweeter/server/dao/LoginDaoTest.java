@@ -33,7 +33,7 @@ public class LoginDaoTest {
     public void testValidLogin() {
         // Username and Password
         request = new LoginRequest(PERMANENT_TEST_USER, "password");
-        response = loginDAO.login(request);
+        response = loginDAO.login(request); // TODO: For some reason the user in the db had its hashed password overwritten
         Assertions.assertTrue(response.getSuccess());
         Assertions.assertEquals(response.getUser().getAlias(), request.getUsername());
         Assertions.assertTrue(response.getAuthToken().getIsActive());

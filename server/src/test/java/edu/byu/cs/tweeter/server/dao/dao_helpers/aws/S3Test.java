@@ -28,13 +28,13 @@ public class S3Test {
     public static final String filePath = "C:\\Users\\jacob\\Documents\\Fall2020\\340\\Milestones\\M4\\Project\\server\\catch.png";
 
     @Test
-    public void testUploadImage(String alias) {
+    public void testUploadImage() {
         byte[] imageBytes = null;
         try {
             // file to byte[], File -> Path
             File file = new File(filePath);
             imageBytes = Files.readAllBytes(file.toPath());
-            String result = S3.uploadImage(imageBytes, alias);
+            String result = S3.uploadImage(imageBytes, ALIAS);
             Assertions.assertTrue(!result.toUpperCase().contains("ERROR"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +44,7 @@ public class S3Test {
 
     @Test
     public void testRetrieveImage() {
-        testUploadImage(ALIAS); // Make sure we are retrieving an image that exists.
+        uploadImage(ALIAS); // Make sure we are retrieving an image that exists.
         String key = ALIAS + "Image";
 
         AmazonS3 s3Client = AmazonS3ClientBuilder
@@ -70,6 +70,20 @@ public class S3Test {
 
         } catch (IOException e) {
             e.getMessage();
+            Assertions.assertFalse(true);
+        }
+    }
+
+    public void uploadImage(String alias) {
+        byte[] imageBytes = null;
+        try {
+            // file to byte[], File -> Path
+            File file = new File(filePath);
+            imageBytes = Files.readAllBytes(file.toPath());
+            String result = S3.uploadImage(imageBytes, alias);
+            Assertions.assertTrue(!result.toUpperCase().contains("ERROR"));
+        } catch (IOException e) {
+            e.printStackTrace();
             Assertions.assertFalse(true);
         }
     }

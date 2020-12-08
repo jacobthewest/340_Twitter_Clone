@@ -14,13 +14,17 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.util.IOUtils;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
 
 public class S3 {
 
     public static final String BUCKET_NAME = "340tweeter";
     public static final String S3_URL = "https://340tweeter.s3-us-west-2.amazonaws.com/";
+    public static final String filePath = "C:\\Users\\jacob\\Documents\\Fall2020\\340\\Milestones\\M4\\Project\\server\\catch.png";
+
 
     public static String uploadImage(byte[] imageBytes, String alias) {
         try {
@@ -99,5 +103,22 @@ public class S3 {
         // delete image
         DeleteObjectRequest request = new DeleteObjectRequest(BUCKET_NAME, key);
         s3Client.deleteObject(request);
+    }
+
+    public byte[] uploadImage(String alias) {
+        byte[] imageBytes = null;
+        try {
+            // file to byte[], File -> Path
+            File file = new File(filePath);
+            imageBytes = Files.readAllBytes(file.toPath());
+            String result = S3.uploadImage(imageBytes, alias);
+            if(result.toUpperCase().contains("ERROR")) {
+               return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return imageBytes;
     }
 }

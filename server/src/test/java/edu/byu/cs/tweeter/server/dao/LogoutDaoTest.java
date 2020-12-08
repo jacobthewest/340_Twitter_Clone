@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.ManagePassword;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.delete.DeleteAuthToken;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutAuth;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutUser;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
@@ -22,6 +24,7 @@ public class LogoutDaoTest {
     public AuthToken validAuthToken;
     public static final String PERMANENT_TEST_USER = "@PermanentTestUser";
     public static final String FIXED_ID = "abc123";
+    public static final String baseUrl = "https://340tweeter.s3-us-west-2.amazonaws.com/%40";
 
     @BeforeEach
     public void setup() {
@@ -30,8 +33,9 @@ public class LogoutDaoTest {
 
     @Test
     public void testValidLogout() {
-        validUser = new User("Permanent Test", "User", "ImageUrl", "password");
+        validUser = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         validUser.setAlias(PERMANENT_TEST_USER);
+        validUser.setPassword(ManagePassword.hashPassword(validUser.getPassword()));
         validAuthToken = new AuthToken(PERMANENT_TEST_USER);
         validAuthToken.setId(FIXED_ID);
         validAuthToken.setIsActive(true);
@@ -49,6 +53,9 @@ public class LogoutDaoTest {
         Assertions.assertFalse(validResponse.getAuthToken().getIsActive());
         Assertions.assertEquals(validAuthToken.getId(), validResponse.getAuthToken().getId());
         Assertions.assertEquals(validAuthToken.getUsername(), validResponse.getAuthToken().getUsername());
+
+        String result = DeleteAuthToken.deleteAuthToken(PERMANENT_TEST_USER);
+        Assertions.assertTrue(!result.toUpperCase().contains("ERROR"));
     }
 
     @Test

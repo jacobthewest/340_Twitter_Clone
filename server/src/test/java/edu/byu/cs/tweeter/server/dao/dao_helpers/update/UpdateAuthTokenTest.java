@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.delete.DeleteAuthToken;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutAuth;
 
 public class UpdateAuthTokenTest {
@@ -26,6 +27,9 @@ public class UpdateAuthTokenTest {
         Object result = UpdateAuthToken.deactivateAuthToken(PERMANENT_TEST_USER);
         String resultAsString = result.toString();
         Assertions.assertTrue(resultAsString.contains("isActive={BOOL: false}"));
+
+        String deleteResult = DeleteAuthToken.deleteAuthToken(PERMANENT_TEST_USER);
+        Assertions.assertTrue(!deleteResult.toUpperCase().contains("ERROR"));
     }
 
     @Test

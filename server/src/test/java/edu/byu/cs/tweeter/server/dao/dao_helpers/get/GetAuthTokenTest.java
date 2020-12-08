@@ -3,6 +3,7 @@ package edu.byu.cs.tweeter.server.dao.dao_helpers.get;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.delete.DeleteAuthToken;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutAuth;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 
@@ -19,5 +20,8 @@ public class GetAuthTokenTest {
         AuthToken authTokenResponse = GetAuthToken.getAuthTokenByUsernameAndId(PERMANENT_TEST_USER, FIXED_ID);
         Assertions.assertEquals(authTokenResponse.getId(), FIXED_ID);
         Assertions.assertEquals(authTokenResponse.getUsername(), PERMANENT_TEST_USER);
+
+        String result = DeleteAuthToken.deleteAuthToken(PERMANENT_TEST_USER);
+        Assertions.assertTrue(!result.toUpperCase().contains("ERROR"));
     }
 }

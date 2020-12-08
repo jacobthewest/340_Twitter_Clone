@@ -12,6 +12,7 @@ import edu.byu.cs.tweeter.shared.domain.User;
 
 public class GetStatusTest {
     public static final String PERMANENT_TEST_USER = "@PermanentTestUser";
+    public static final String baseUrl = "https://340tweeter.s3-us-west-2.amazonaws.com/%40";
 
     @BeforeEach
     public void setup() {
@@ -24,7 +25,7 @@ public class GetStatusTest {
         Object o = PutStatus.putStatus(valid);
         Assertions.assertTrue(!o.toString().toUpperCase().contains("ERROR"));
 
-        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted(), false);
+        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted(), true);
         Assertions.assertEquals(retrievedStatus, valid);
     }
 
@@ -34,7 +35,7 @@ public class GetStatusTest {
      */
     public void testGetStatusInvalidUsername() {
         Status invalid = getNonExistingStatus();
-        Status invalidStatus = GetStatus.getStatus(invalid.getUser().getAlias(), invalid.getTimePosted(), false);
+        Status invalidStatus = GetStatus.getStatus(invalid.getUser().getAlias(), invalid.getTimePosted(), true);
         Assertions.assertNull(invalidStatus);
     }
 
@@ -48,12 +49,12 @@ public class GetStatusTest {
         Assertions.assertTrue(!o.toString().toUpperCase().contains("ERROR"));
 
         Status s = getExistingStatusNonExistingDate();
-        Status invalidStatus = GetStatus.getStatus(s.getUser().getAlias(), s.getTimePosted(), false);
+        Status invalidStatus = GetStatus.getStatus(s.getUser().getAlias(), s.getTimePosted(), true);
         Assertions.assertNull(invalidStatus);
     }
 
     private Status getExistingStatus() {
-        User u = new User("Permanent Test", "User", "imageUrl", "password");
+        User u = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         u.setAlias(PERMANENT_TEST_USER);
 
         String tweetText = "This is a valid tweet www.google.com @Jacob";
@@ -67,7 +68,7 @@ public class GetStatusTest {
     }
 
     private Status getExistingStatusNonExistingDate() {
-        User u = new User("Permanent Test", "User", "imageUrl", "password");
+        User u = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         u.setAlias(PERMANENT_TEST_USER);
 
         String tweetText = "This is a valid tweet www.google.com @Jacob";
@@ -81,7 +82,7 @@ public class GetStatusTest {
     }
 
     private Status getNonExistingStatus() {
-        User u = new User("Permanent Test", "User", "imageUrl", "password");
+        User u = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         u.setAlias(UUID.randomUUID().toString()); // Make sure we never get a real user.
 
         String tweetText = "This is a valid tweet www.google.com @Jacob";

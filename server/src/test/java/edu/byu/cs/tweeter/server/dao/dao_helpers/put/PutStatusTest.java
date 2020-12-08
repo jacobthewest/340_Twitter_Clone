@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.delete.DeleteStatus;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetStatus;
 import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.domain.User;
@@ -25,8 +26,10 @@ public class PutStatusTest {
         Object o = PutStatus.putStatus(valid);
         Assertions.assertTrue(!o.toString().toUpperCase().contains("ERROR"));
 
-        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted(), false);
+        Status retrievedStatus = GetStatus.getStatus(valid.getUser().getAlias(), valid.getTimePosted(), true);
         Assertions.assertEquals(retrievedStatus, valid);
+
+        DeleteStatus.deleteStatus(valid.getUser().getAlias(), valid.getTimePosted());
     }
 
     @Test

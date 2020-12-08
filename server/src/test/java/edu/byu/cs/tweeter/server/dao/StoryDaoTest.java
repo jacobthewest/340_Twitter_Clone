@@ -14,10 +14,11 @@ import edu.byu.cs.tweeter.shared.service.request.StoryRequest;
 import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 
 public class StoryDaoTest {
+    public static final String baseUrl = "https://340tweeter.s3-us-west-2.amazonaws.com/%40";
 
     @Test
     public void testQueryStorySortedValidNoLastStatus() {
-        User user = new User("Permanent Test", "User", "imageUrl", "password");
+        User user = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         user.setAlias("@PermanentTestUser");
         int limit = 10;
 
@@ -40,7 +41,7 @@ public class StoryDaoTest {
     @Test
     public void testQueryStorySortedInvalidNoLastStatus() {
         // The user does not exist in the database
-        User user = new User("Permanent Test", "User", "imageUrl", "password");
+        User user = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         user.setAlias(UUID.randomUUID().toString());
         int limit = 10;
 
@@ -52,7 +53,7 @@ public class StoryDaoTest {
 
     @Test
     public void testQueryStorySortedValidHasLastStatusMiddleTen() {
-        User user = new User("Permanent Test", "User", "imageUrl", "password");
+        User user = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         user.setAlias("@PermanentTestUser");
         int limit = 10;
 
@@ -75,9 +76,9 @@ public class StoryDaoTest {
 
     @Test
     public void testQueryStorySortedInvalidHasLastStatusMiddleTen() {
-        User invalidUser = new User("Permanent Test", "User", "imageUrl", "password");
+        User invalidUser = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         invalidUser.setAlias(UUID.randomUUID().toString());
-        User validUser = new User("Permanent Test", "User", "imageUrl", "password");
+        User validUser = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         validUser.setAlias("@PermanentTestUser");
         int limit = 10;
 
@@ -95,7 +96,7 @@ public class StoryDaoTest {
 
     @Test
     public void testQueryStorySortedValidHasLastStatusLastOne() {
-        User user = new User("Permanent Test", "User", "imageUrl", "password");
+        User user = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         user.setAlias("@PermanentTestUser");
         int limit = 10;
 
@@ -118,9 +119,9 @@ public class StoryDaoTest {
 
     @Test
     public void testQueryStorySortedInvalidHasLastStatusLastOne() {
-        User invalidUser = new User("Permanent Test", "User", "imageUrl", "password");
+        User invalidUser = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         invalidUser.setAlias(UUID.randomUUID().toString());
-        User validUser = new User("Permanent Test", "User", "imageUrl", "password");
+        User validUser = new User("Permanent Test", "User", baseUrl + "PermanentTestUser", "password");
         validUser.setAlias("@PermanentTestUser");
         int limit = 10;
 
