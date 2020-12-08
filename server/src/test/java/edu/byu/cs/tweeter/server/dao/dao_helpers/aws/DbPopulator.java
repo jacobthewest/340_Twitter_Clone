@@ -71,7 +71,7 @@ public class DbPopulator {
 
         // Put Stories
         for(User familyMember: family) {
-            List<Status> story = listOfStatuses.get21StatusesForStoryDaoTest(familyMember);
+            List<Status> story = listOfStatuses.get21StatusesForDaoTests(familyMember);
             for(Status singlePost: story) {
                 PutStatus.putStatus(singlePost);
             }
@@ -140,7 +140,7 @@ public class DbPopulator {
         return family;
     }
 
-    private static List<User> getFamilyForPutUsersData() {
+    public static List<User> getFamilyForPutUsersData() {
         List<User> returnMe = new ArrayList<>();
 
         User dad = new User("Brett", "West", "imageUrl", "password");

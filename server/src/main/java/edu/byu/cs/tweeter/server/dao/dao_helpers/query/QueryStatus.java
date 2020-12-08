@@ -1,17 +1,28 @@
 package edu.byu.cs.tweeter.server.dao.dao_helpers.query;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.ItemCollection;
 import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import edu.byu.cs.tweeter.server.dao.FollowingDAO;
+import edu.byu.cs.tweeter.server.dao.StoryDAO;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.DB;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetStatus;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.utils.Converter;
@@ -21,6 +32,7 @@ import edu.byu.cs.tweeter.shared.service.request.FeedRequest;
 import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.shared.service.request.StoryRequest;
 import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
+import edu.byu.cs.tweeter.shared.service.response.StoryResponse;
 
 public class QueryStatus {
 
@@ -28,7 +40,7 @@ public class QueryStatus {
     public static final String SORT_KEY = "timePosted";  // AKA the range key.
     public static final String TABLE_NAME = "status";
     public static int QUERY_LIMIT = 10;
-    public static String INDEX_NAME = "follows_index";
+    public static String INDEX_NAME = "timePosted-username-index";
 
     public static List<Status> queryStorySorted(StoryRequest request) {
 
@@ -98,74 +110,67 @@ public class QueryStatus {
 
     public static List<Status> queryFeedSorted(FeedRequest request) {
 
-        // Get all of the followees
+        // I will get all of the statuses that match the following aliases.
+        // Then I will sort the statuses by the date. Then I will return the correct statuses.
+
         List<String> followingAliases = getFollowingAliases(request);
         if(followingAliases == null) {
             return null; // An error happened.
+        } else if(followingAliases.size() == 0) {
+            return new ArrayList<>();
         }
 
-        String timePosted = null;
-        if(request.getLastStatus() != null) {
-            String requestTimePosted = request.getLastStatus().getTimePosted();
-            timePosted = Converter.convertTimePostedToSortableTime(requestTimePosted);
-        }
+        // Get the whole status table
+        List<FakeStatus> masterFeedList = new ArrayList<>();
 
-        int limit = request.getLimit();
+        AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard()
+                .withRegion("us-west-2")
+                .build();
 
-        HashMap<String, String> nameMap = new HashMap<String, String>();
-        nameMap.put("#username", PARTITION_KEY);
+        Map<String, AttributeValue> lastKeyEvaluated = null;
+        do {
+            ScanRequest scanRequest = new ScanRequest()
+                    .withTableName("status")
+                    .withLimit(5) // idk why, small and frequent is better than big and slow right eh?
+                    .withExclusiveStartKey(lastKeyEvaluated);
 
-        // Dynamically add to the value map all of the aliases we follow.
-        HashMap<String, Object> valueMap = getFeedValueMap(followingAliases);
-
-        QuerySpec querySpec;
-        // Also dynamically add to keyConditionExpression like this #username = :username_value or ANOTHER_ONE
-        String keyConditionExpression = getFeedConditionExpression(followingAliases);
-
-        if(timePosted == null) {
-            // Need the first ten users.
-            querySpec = new QuerySpec()
-                    .withMaxResultSize(limit)
-                    .withScanIndexForward(false)
-                    .withKeyConditionExpression(keyConditionExpression)
-                    .withNameMap(nameMap)
-                    .withValueMap(valueMap);
-        } else {
-            // Need only the next ten users.
-            String lastStatusAlias = request.getLastStatus().getUser().getAlias();
-            querySpec = new QuerySpec()
-                    .withExclusiveStartKey("username", lastStatusAlias, "timePosted", timePosted)
-                    .withMaxResultSize(limit)
-                    .withScanIndexForward(false)
-                    .withKeyConditionExpression(keyConditionExpression)
-                    .withNameMap(nameMap)
-                    .withValueMap(valueMap);
-        }
-
-        ItemCollection<QueryOutcome> items = null;
-        Iterator<Item> iterator = null;
-        List<Item> responseItems = new ArrayList<>();
-
-        try {
-            Table table = DB.getDatabase(TABLE_NAME);
-            items = table.query(querySpec);
-
-            iterator = items.iterator();
-            while (iterator.hasNext()) {
-                responseItems.add(iterator.next());
+            ScanResult result = client.scan(scanRequest);
+            for (Map<String, AttributeValue> item : result.getItems()){
+                // Add only items that have the aliases we follow
+                if(followingAliases.contains(item.get("username").getS())) {
+                    String timePosted = item.get("timePosted").getS();
+                    String username = item.get("username").getS();
+                    masterFeedList.add(new FakeStatus(username, timePosted));
+                }
             }
-        } catch (Exception e) {
-            System.err.println("Unable to perform the query.");
-            System.err.println(e.getMessage());
-            return null;
+
+            lastKeyEvaluated = result.getLastEvaluatedKey();
+        } while (lastKeyEvaluated != null);
+
+        // Sort the masterFeedList;
+        Collections.sort(masterFeedList, new SortByTimePosted());
+
+        int i = 0;
+        if(request.getLastStatus() != null) {
+            String fakeUsername = request.getLastStatus().getUser().getAlias();
+            String timePosted = request.getLastStatus().getTimePosted();
+            String fakeTimePosted = Converter.convertTimePostedToSortableTime(timePosted);
+            FakeStatus lastFakeStatus = new FakeStatus(fakeUsername, fakeTimePosted);
+            i = masterFeedList.indexOf(lastFakeStatus);
+            i++;
         }
 
         List<Status> returnMe = new ArrayList<>();
-        for(Item item: responseItems) {
-            String tempUsername = (String) item.get("username");
-            String tempTimePosted = (String) item.get("timePosted");
-            Status s = GetStatus.getStatus(tempUsername, tempTimePosted, false);
-            returnMe.add(s);
+        int endIndex = i + request.getLimit();
+        while(i < endIndex) {
+            try {
+                FakeStatus temp = masterFeedList.get(i);
+                Status addMe = GetStatus.getStatus(temp.username, Long.toString(temp.timePosted), false);
+                returnMe.add(addMe);
+                i++;
+            } catch(Exception e) {
+                return returnMe;
+            }
         }
         return returnMe;
     }
@@ -189,7 +194,9 @@ public class QueryStatus {
                 followingAliases.add(u.getAlias());
             }
 
-            lastFollowee = followees.get(followees.size() - 1);
+            if(followees.size() != 0) {
+                lastFollowee = followees.get(followees.size() - 1);
+            }
 
             if(followees.size() != limit) {
                 hasMorePages = false;
@@ -199,26 +206,71 @@ public class QueryStatus {
         return followingAliases;
     }
 
-    private static HashMap<String, Object> getFeedValueMap(List<String> followingAliases) {
-        HashMap<String, Object> valueMap = new HashMap<String, Object>();
-
-        for(int i = 0; i < followingAliases.size(); i++) {
-            valueMap.put(":username_value" + Integer.toString(i), followingAliases.get(i));
+    private static class SortByTimePosted implements Comparator<FakeStatus> {
+        @Override
+        // Sorts dates descending //
+        public int compare(FakeStatus a, FakeStatus b) {
+            return Long.compare(b.timePosted, a.timePosted);
         }
-
-        return valueMap;
     }
 
-    private static String getFeedConditionExpression(List<String> followingAliases) {
-        String keyConditionExpression = "";
+    public static class FakeStatus implements Comparable, Serializable {
 
-        for(int i = 0; i < followingAliases.size(); i++) {
-            if(i == followingAliases.size() - 1) {
-                keyConditionExpression += "#" + PARTITION_KEY + " = :username_value" + Integer.toString(i);
-            } else {
-                keyConditionExpression += "#" + PARTITION_KEY + " = :username_value" + Integer.toString(i) + " or ";
-            }
+        public String username;
+        public Long timePosted;
+
+        public FakeStatus(String username, String timePosted) {
+            this.username = username;
+            this.timePosted = Long.parseLong(timePosted);
         }
-        return keyConditionExpression;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            FakeStatus that = (FakeStatus) o;
+            return username.equals(that.username) &&
+                    timePosted.equals(that.timePosted);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(username, timePosted);
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            return this.toString().compareTo(o.toString());
+        }
+    }
+
+
+
+        private static List<Status> getStatusesFromAlias(String alias) {
+        StoryDAO storyDAO = new StoryDAO();
+        List<Status> all = new ArrayList<>();
+
+        User user = new User();
+        user.setAlias(alias);
+
+        boolean hasMorePages = true;
+        Status lastStatus = null;
+
+        while(hasMorePages) {
+            StoryRequest request = new StoryRequest(user, 25, lastStatus);
+            StoryResponse storyResponse = storyDAO.getStory(request);
+
+            for(Status s: storyResponse.getStatuses()) {
+                all.add(s);
+            }
+
+            if(!storyResponse.getHasMorePages()) {
+                hasMorePages = false;
+            }
+
+            lastStatus = storyResponse.getStatuses().get(storyResponse.getStatuses().size() - 1);
+        }
+
+        return all;
     }
 }

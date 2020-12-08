@@ -334,7 +334,7 @@ public class ListOfStatuses {
         return feed;
     }
 
-    public List<Status> get21StatusesForStoryDaoTest(User definedUser) {
+    public List<Status> get21StatusesForDaoTests(User definedUser) {
         List<Status> feed = new ArrayList<>();
         DateFormat dateFormat = new SimpleDateFormat("MMM d yyyy h:mm aaa");
 

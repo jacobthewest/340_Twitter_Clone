@@ -22,7 +22,7 @@ public class StoryDaoTest {
         int limit = 10;
 
         ListOfStatuses tool = new ListOfStatuses();
-        List<Status> listOfStatuses = tool.get21StatusesForStoryDaoTest(user);
+        List<Status> listOfStatuses = tool.get21StatusesForDaoTests(user);
         List<Status> firstTenStatusesSorted = getFirst10StatusesSorted(listOfStatuses);
 
         
@@ -57,7 +57,7 @@ public class StoryDaoTest {
         int limit = 10;
 
         ListOfStatuses tool = new ListOfStatuses();
-        List<Status> listOfStatuses = tool.get21StatusesForStoryDaoTest(user);
+        List<Status> listOfStatuses = tool.get21StatusesForDaoTests(user);
         List<Status> middleTenStatusesSorted = getMiddle10StatusesSorted(listOfStatuses);
 
         Status lastStatus = listOfStatuses.get(13); // Trust me, it's right.
@@ -82,7 +82,7 @@ public class StoryDaoTest {
         int limit = 10;
 
         ListOfStatuses tool = new ListOfStatuses();
-        List<Status> listOfStatuses = tool.get21StatusesForStoryDaoTest(validUser); // Need valid to know we have a valid lastStatus
+        List<Status> listOfStatuses = tool.get21StatusesForDaoTests(validUser); // Need valid to know we have a valid lastStatus
         Status lastStatus = listOfStatuses.get(13); // Trust me, it's right.
 
         StoryRequest invalidRequest = new StoryRequest(invalidUser, limit, lastStatus);
@@ -100,7 +100,7 @@ public class StoryDaoTest {
         int limit = 10;
 
         ListOfStatuses tool = new ListOfStatuses();
-        List<Status> listOfStatuses = tool.get21StatusesForStoryDaoTest(user);
+        List<Status> listOfStatuses = tool.get21StatusesForDaoTests(user);
         List<Status> lastStatusesSorted = getLastStatusSorted(listOfStatuses);
 
         Status lastStatus = listOfStatuses.get(8); // Trust me, it's right.
@@ -125,7 +125,7 @@ public class StoryDaoTest {
         int limit = 10;
 
         ListOfStatuses tool = new ListOfStatuses();
-        List<Status> listOfStatuses = tool.get21StatusesForStoryDaoTest(validUser); // Need valid to know we have a valid lastStatus
+        List<Status> listOfStatuses = tool.get21StatusesForDaoTests(validUser); // Need valid to know we have a valid lastStatus
         Status lastStatus = listOfStatuses.get(8); // Trust me, it's right.
 
         StoryRequest invalidRequest = new StoryRequest(invalidUser, limit, lastStatus);
