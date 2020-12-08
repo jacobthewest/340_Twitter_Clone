@@ -114,7 +114,8 @@ public class DbPopulator {
 
             /** Adds json information to the object through "info" **/
             PutItemOutcome outcome = table
-                    .putItem(new Item().withPrimaryKey("followee_handle", followeeHandle, "follower_handle", followerHandle).withMap("info", infoMap));
+                    .putItem(new Item().withPrimaryKey("followee_handle", followeeHandle, "follower_handle", followerHandle)
+                            .withMap("info", infoMap));
             return outcome;
         }
         catch (Exception e) {

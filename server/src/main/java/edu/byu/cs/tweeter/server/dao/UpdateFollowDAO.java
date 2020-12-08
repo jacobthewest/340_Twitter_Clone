@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.delete.DeleteFollows;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
+import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutFollows;
 import edu.byu.cs.tweeter.shared.domain.User;
+import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
 import edu.byu.cs.tweeter.shared.service.request.UpdateFollowRequest;
+import edu.byu.cs.tweeter.shared.service.response.FollowingResponse;
 import edu.byu.cs.tweeter.shared.service.response.UpdateFollowResponse;
 
 public class UpdateFollowDAO {
@@ -50,6 +55,51 @@ public class UpdateFollowDAO {
     private final User Zoe = new User("Zoe", "Zabriski", FEMALE_IMAGE_URL, "password");
 
     public UpdateFollowResponse updateFollow(UpdateFollowRequest request) {
+
+        User user = GetUser.getUser(request.getUser().getAlias());
+        User followUser = GetUser.getUser(request.getFollowUser().getAlias());
+
+        if(user == null || followUser == null) {
+            return new UpdateFollowResponse("Either the user or the follow user doesn't exist.");
+        }
+
+        if(request.followTheFollowUser()) {
+            Object o = PutFollows.putFollows(request.getUser(), request.getFollowUser());
+            if(o.toString().toUpperCase().contains("ERROR")) {
+                return new UpdateFollowResponse("Error following the follow user.");
+            }
+        } else {
+            String userAlias = request.getUser().getAlias();
+            String followUserAlias = request.getFollowUser().getAlias();
+            String o = DeleteFollows.deleteFollows(userAlias, followUserAlias);
+            if(o.toUpperCase().contains("ERROR")) {
+                return new UpdateFollowResponse("Error unfollowing the follow user.");
+            }
+        }
+
+        List<User> following = new ArrayList<>();
+        FollowingDAO followingDAO = new FollowingDAO();
+        User lastFollowee = null;
+        boolean hasMorePages = true;
+
+        while(hasMorePages) {
+            FollowingRequest followingRequest = new FollowingRequest(user, 10, lastFollowee);
+            FollowingResponse followingResponse = followingDAO.getFollowees(followingRequest);
+            List<User> followees = followingResponse.getFollowees();
+            for(User u: followees) {
+                following.add(u);
+            }
+
+            lastFollowee = followees.get(followees.size() - 1);
+            if(!followingResponse.getHasMorePages()) {
+                hasMorePages = false;
+            }
+        }
+
+        return new UpdateFollowResponse(user, followUser, following);
+    }
+
+    public UpdateFollowResponse oldUpdateFollow(UpdateFollowRequest request) {
 
         List<User> dummyFollowees = new ArrayList<>(getDummyFollowees());
 
