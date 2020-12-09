@@ -156,6 +156,6 @@ public class TweetFragment extends DialogFragment implements View.OnClickListene
     @Override
     public void handleException(Exception ex) {
         Log.e(LOG_TAG, ex.getMessage(), ex);
-        Toast.makeText(getActivity(), "Failed to register because of exception: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Failed to submit tweet because of exception: " + ex.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

@@ -19,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.IOException;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
@@ -26,6 +27,7 @@ import edu.byu.cs.tweeter.client.presenter.CountPresenter;
 import edu.byu.cs.tweeter.client.presenter.FollowingPresenter;
 import edu.byu.cs.tweeter.client.presenter.LogoutPresenter;
 import edu.byu.cs.tweeter.client.presenter.UpdateFollowPresenter;
+import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
 import edu.byu.cs.tweeter.client.view.HomeActivity;
 import edu.byu.cs.tweeter.client.view.asyncTasks.CountTask;
 import edu.byu.cs.tweeter.client.view.asyncTasks.GetFollowingTask;
@@ -77,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
 
         this.user = (User) getIntent().getSerializableExtra(CURRENT_USER_KEY);
         this.followUser = (User) getIntent().getSerializableExtra(CURRENT_FOLLOW_KEY);
-
         if(user == null) {
             throw new RuntimeException("User not passed to activity");
         }
@@ -91,14 +92,33 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
 
         setButtons();
         setPresenters();
-        accountForOtherUserView();
-        setViews();
+        new MyTask().execute();
         setCount();
         setFollowButton();
+        accountForOtherUserView();
         setOnClickEvents();
     }
 
-    private void setViews() {
+    public class MyTask extends AsyncTask<Void, Void, Void>{
+        byte[] imageBytes;
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                imageBytes = ByteArrayUtils.bytesFromUrl(followUser.getImageUrl());
+            } catch (IOException e) {
+                Log.e(this.getClass().getName(), e.toString(), e);
+            }
+            return null;
+        }
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            followUser.setImageBytes(imageBytes);
+            setViews();
+            super.onPostExecute(aVoid);
+        }
+    }
+
+    public void setViews() {
         TextView userName = findViewById(R.id.userName);
         userName.setText(followUser.getName());
 
@@ -150,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     private void setFollowButton() {
         GetFollowingTask getFollowingTask = new GetFollowingTask(followingPresenter, this);
         int PAGE_SIZE = 1000; // We just want to make sure to get ALL followees.
-        FollowingRequest request = new FollowingRequest(followUser, PAGE_SIZE, null);
+        FollowingRequest request = new FollowingRequest(user, PAGE_SIZE, null);
         getFollowingTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, request);
     }
 
@@ -194,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     }
 
     public void setCount() {
-        CountRequest countRequest = new CountRequest(this.user);
+        CountRequest countRequest = new CountRequest(this.followUser);
         CountTask countTask = new CountTask(getCountPresenter(), getCountObserver());
         countTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, countRequest);
     }
@@ -270,22 +290,19 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     @Override
     public void updateFollowSuccessful(UpdateFollowResponse updateFollowResponse) {
         List<User> responseFollowing = updateFollowResponse.getFollowing();
-
-
         this.following = responseFollowing;
-        User followUserFromResponse = updateFollowResponse.getFollowUser();
-        followButtonHelper(responseFollowing, followUserFromResponse);
-        TextView fol_er_Count = findViewById(R.id.followerCount);
-        if(this.following.contains(updateFollowResponse.getFollowUser())) {
-            followersCount++;
 
+        if(user.equals(followUser)) {
+            User followUserFromResponse = updateFollowResponse.getFollowUser();
+            followButtonHelper(responseFollowing, followUserFromResponse);
+            setCount();
         } else {
-            followersCount--;
+            CountRequest countRequest = new CountRequest(this.followUser);
+            CountTask countTask = new CountTask(getCountPresenter(), getCountObserver());
+            countTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, countRequest);
+            User followUserFromResponse = updateFollowResponse.getFollowUser();
+            followButtonHelper(responseFollowing, followUserFromResponse);
         }
-        fol_er_Count.setText("Following: " + Integer.toString(followersCount));
-//        setCount(); TODO: Run this function when you rip out the fake backend to actually update the count after...
-        // TODO: ...after changing the followers/following. Mr./Mrs. TA Person, please don't dock me for this. I know what it is
-        // supposed to be but I'm just doing this to save time so I'm not spending forever on the serverFacacade.
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryFollows;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.FollowingRequest;
@@ -62,11 +61,11 @@ public class FollowingDAO {
             return new FollowingResponse("Error retrieving the following.");
         }
 
-        // Load the pages for the users in the responseFollowees.
-        for(User u: responseFollowees) {
-            byte[] imageBytes = S3.getImage(u.getAlias());
-            u.setImageBytes(imageBytes);
-        }
+//        // Load the pages for the users in the responseFollowees.
+//        for(User u: responseFollowees) {
+//            byte[] imageBytes = S3.getImage(u.getAlias());
+//            u.setImageBytes(imageBytes);
+//        }
 
         // How do we tell if we need more pages?
         boolean hasMorePages = false;

@@ -133,6 +133,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    user.setImageBytes(null);
                     new AliasClickableSpan(getActivity(), user, userAlias.getText().toString(), authToken).onClick(view);
                 }
             });
@@ -189,6 +190,7 @@ public class StoryFragment extends Fragment implements StoryPresenter.View {
                 for(String mention : mentions) {
                     int startIndex = tweetText.indexOf(mention);
                     int endIndex = startIndex + mention.length();
+                    user.setImageBytes(null);
                     spannable.setSpan(new AliasClickableSpan(getActivity(), user, mention, authToken ), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }

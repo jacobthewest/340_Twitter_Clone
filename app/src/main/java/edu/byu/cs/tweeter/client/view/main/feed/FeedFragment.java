@@ -20,20 +20,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
+import edu.byu.cs.tweeter.client.presenter.FeedPresenter;
+import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
+import edu.byu.cs.tweeter.client.view.asyncTasks.GetFeedTask;
+import edu.byu.cs.tweeter.client.view.util.AliasClickableSpan;
+import edu.byu.cs.tweeter.client.view.util.ImageUtils;
+import edu.byu.cs.tweeter.client.view.util.UrlClickableSpan;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.Status;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.FeedRequest;
 import edu.byu.cs.tweeter.shared.service.response.FeedResponse;
-import edu.byu.cs.tweeter.client.presenter.FeedPresenter;
-import edu.byu.cs.tweeter.client.view.asyncTasks.GetFeedTask;
-import edu.byu.cs.tweeter.client.view.util.*;
 
 /**
  * The fragment that displays on the 'Feed' tab.
@@ -111,6 +115,25 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
         protected TextView postText;
         protected TextView timePosted;
 
+        protected class MyTask extends AsyncTask<Void, Void, Void>{
+            byte[] imageBytes;
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    imageBytes = ByteArrayUtils.bytesFromUrl(user.getImageUrl());
+                } catch (IOException e) {
+                    Log.e(this.getClass().getName(), e.toString(), e);
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                user.setImageBytes(imageBytes);
+                userImage.setImageDrawable(ImageUtils.drawableFromByteArray(user.getImageBytes()));
+                super.onPostExecute(aVoid);
+            }
+        }
+
 
         /**
          * Creates an instance and sets an OnClickListener for the user's row.
@@ -129,6 +152,7 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    user.setImageBytes(null);
                     new AliasClickableSpan(getActivity(), user, userAlias.getText().toString(), authToken).onClick(view);
                 }
             });
@@ -143,13 +167,12 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
             SpannableString tempPostText = formulatePostText(status);
             String tempTimePosted = status.getTimePosted();
             User statusUser = status.getUser();
-
-            userImage.setImageDrawable(ImageUtils.drawableFromByteArray(user.getImageBytes()));
             userAlias.setText(statusUser.getAlias());
             userName.setText(statusUser.getName());
             postText.setText(tempPostText);
             postText.setMovementMethod(LinkMovementMethod.getInstance());
             timePosted.setText(tempTimePosted);
+            new MyTask().execute();
         }
 
         /**
@@ -185,6 +208,7 @@ public class FeedFragment extends Fragment implements FeedPresenter.View {
                 for(String mention : mentions) {
                     int startIndex = tweetText.indexOf(mention);
                     int endIndex = startIndex + mention.length();
+                    user.setImageBytes(null);
                     spannable.setSpan(new AliasClickableSpan(getActivity(), user, mention, authToken ), startIndex, endIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }

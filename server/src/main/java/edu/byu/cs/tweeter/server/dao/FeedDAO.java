@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.query.QueryStatus;
 import edu.byu.cs.tweeter.server.util.ListOfStatuses;
 import edu.byu.cs.tweeter.shared.domain.Status;
-import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.FeedRequest;
 import edu.byu.cs.tweeter.shared.service.response.FeedResponse;
 
@@ -21,12 +19,12 @@ public class FeedDAO {
             return new FeedResponse("Error retrieving the feed.");
         }
 
-        // Load the pages for the users in the feed.
-        for(Status s: feed) {
-            User u = s.getUser();
-            byte[] imageBytes = S3.getImage(u.getAlias());
-            u.setImageBytes(imageBytes);
-        }
+//        // Load the pages for the users in the feed.
+//        for(Status s: feed) {
+//            User u = s.getUser();
+//            byte[] imageBytes = S3.getImage(u.getAlias());
+//            u.setImageBytes(imageBytes);
+//        }
 
         // How do we tell if we need more pages?
         boolean hasMorePages = false;

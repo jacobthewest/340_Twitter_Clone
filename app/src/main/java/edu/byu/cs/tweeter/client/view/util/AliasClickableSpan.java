@@ -52,11 +52,17 @@ public class AliasClickableSpan extends ClickableSpan implements RetrieveUserPre
     public void retrieveUserSuccessful(RetrieveUserResponse retrieveUserResponse) {
         Intent intent = new Intent(this.activity, MainActivity.class);
 
+        this.user.setImageBytes(null);
+        User followUser = retrieveUserResponse.getUser();
+        followUser.setImageBytes(null);
+
         intent.putExtra(MainActivity.CURRENT_USER_KEY, user);
-        intent.putExtra(MainActivity.CURRENT_FOLLOW_KEY, retrieveUserResponse.getUser());
+        intent.putExtra(MainActivity.CURRENT_FOLLOW_KEY, followUser);
         intent.putExtra(MainActivity.AUTH_TOKEN_KEY, this.authToken);
 
         this.activity.startActivity(intent);
+        activity.finish(); // This prevents us from going back, but it makes the app work. See what you can
+        // do with this later on. // TODO: Make intent data stay on the memory stack.
     }
 
     @Override

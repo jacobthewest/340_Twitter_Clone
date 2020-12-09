@@ -18,6 +18,7 @@ import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.LoginPresenter;
 import edu.byu.cs.tweeter.client.view.asyncTasks.LoginTask;
 import edu.byu.cs.tweeter.client.view.main.MainActivity;
+import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.LoginRequest;
 import edu.byu.cs.tweeter.shared.service.response.LoginResponse;
 
@@ -134,9 +135,13 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
     public void loginSuccessful(LoginResponse loginResponse) {
         Intent intent = new Intent(getActivity(), MainActivity.class);
 
-        intent.putExtra(MainActivity.CURRENT_USER_KEY, loginResponse.getUser());
-        intent.putExtra(MainActivity.CURRENT_FOLLOW_KEY, loginResponse.getUser());
+        User u = loginResponse.getUser();
+        u.setImageBytes(null);
+
+        intent.putExtra(MainActivity.CURRENT_USER_KEY, u);
+        intent.putExtra(MainActivity.CURRENT_FOLLOW_KEY, u);
         intent.putExtra(MainActivity.AUTH_TOKEN_KEY, loginResponse.getAuthToken());
+
 
         loginToast.cancel();
         startActivity(intent);
@@ -162,6 +167,6 @@ public class LoginFragment extends Fragment implements LoginPresenter.View, Logi
     @Override
     public void handleException(Exception ex) {
         Log.e(LOG_TAG, ex.getMessage(), ex);
-        Toast.makeText(getActivity(), "Failed to register because of exception: " + ex.getMessage(), Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Failed to login because of exception: " + ex.getMessage(), Toast.LENGTH_LONG).show();
     }
 }

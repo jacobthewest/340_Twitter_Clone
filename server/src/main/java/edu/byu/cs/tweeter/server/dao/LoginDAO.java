@@ -1,7 +1,6 @@
 package edu.byu.cs.tweeter.server.dao;
 
 import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.ManagePassword;
-import edu.byu.cs.tweeter.server.dao.dao_helpers.aws.S3;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetAuthToken;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetUser;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.put.PutAuth;
@@ -53,10 +52,10 @@ public class LoginDAO {
 
     public LoginResponse login(LoginRequest request) {
 
-        // Check if AuthToken associated with proposed username already exists in the database
-        if(isAuthTokenAlreadyPresentInDatabase(request.getUsername())) {
-            return new LoginResponse("AuthToken by that alias already exists in the database");
-        }
+//        // Check if AuthToken associated with proposed username already exists in the database
+//        if(isAuthTokenAlreadyPresentInDatabase(request.getUsername())) {
+//            return new LoginResponse("AuthToken by that alias already exists in the database");
+//        }
 
         // Check if user already exists in the database
         if(!isUserAlreadyPresentInDatabase(request.getUsername())) {
@@ -80,8 +79,8 @@ public class LoginDAO {
         AuthToken authToken = GetAuthToken.getAuthToken(request.getUsername());
         User loggedInUser = GetUser.getUser(request.getUsername());
 
-        byte[] imageBytes = S3.getImage(loggedInUser.getAlias());
-        loggedInUser.setImageBytes(imageBytes);
+//        byte[] imageBytes = S3.getImage(loggedInUser.getAlias());
+//        loggedInUser.setImageBytes(imageBytes);
 
         return new LoginResponse(loggedInUser, authToken);
     }

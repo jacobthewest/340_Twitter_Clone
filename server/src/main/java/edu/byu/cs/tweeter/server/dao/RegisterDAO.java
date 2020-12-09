@@ -64,12 +64,12 @@ public class RegisterDAO {
         AuthToken createdAuthToken = GetAuthToken.getAuthToken(alias);
         User createdUser = GetUser.getUser(alias);
 
-        // Lastly, set the image bytes
-        byte[] returnedBytes = S3.getImage(createdUser.getAlias());
-        if(returnedBytes == null) {
-            return new RegisterResponse("Failed to get Image bytes from S3.");
-        }
-        createdUser.setImageBytes(returnedBytes);
+//        // Lastly, set the image bytes
+//        byte[] returnedBytes = S3.getImage(createdUser.getAlias());
+//        if(returnedBytes == null) {
+//            return new RegisterResponse("Failed to get Image bytes from S3.");
+//        }
+//        createdUser.setImageBytes(returnedBytes);
 
         return new RegisterResponse(createdUser, createdAuthToken);
     }

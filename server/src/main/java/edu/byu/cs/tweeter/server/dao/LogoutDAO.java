@@ -1,7 +1,7 @@
 package edu.byu.cs.tweeter.server.dao;
 
+import edu.byu.cs.tweeter.server.dao.dao_helpers.delete.DeleteAuthToken;
 import edu.byu.cs.tweeter.server.dao.dao_helpers.get.GetAuthToken;
-import edu.byu.cs.tweeter.server.dao.dao_helpers.update.UpdateAuthToken;
 import edu.byu.cs.tweeter.shared.domain.AuthToken;
 import edu.byu.cs.tweeter.shared.domain.User;
 import edu.byu.cs.tweeter.shared.service.request.LogoutRequest;
@@ -17,13 +17,13 @@ public class LogoutDAO {
             return new LogoutResponse("AuthToken and User's alias do not match");
         }
 
-        // Deactivate the authToken
+        // Delete the authToken
         String alias = request.getUser().getAlias();
         String authTokenId = request.getAuthToken().getId();
 
-        Object o = UpdateAuthToken.deactivateAuthToken(request.getUser().getAlias());
-        if(o.toString().toUpperCase().contains("ERROR")) {
-            return new LogoutResponse("There was an error deactivating the AuthToken");
+        String o = DeleteAuthToken.deleteAuthToken(request.getUser().getAlias());
+        if(o.toUpperCase().contains("ERROR")) {
+            return new LogoutResponse("There was an error deleting the AuthToken");
         }
 
         AuthToken updatedAuthToken = GetAuthToken.getAuthTokenByUsernameAndId(alias, authTokenId);

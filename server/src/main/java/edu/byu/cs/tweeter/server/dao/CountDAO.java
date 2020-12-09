@@ -53,9 +53,11 @@ public class CountDAO {
 
         String requestAlias = request.getUser().getAlias();
         int followersCount = QueryFollows.getFollowersCount(requestAlias);
-        int followingCount = QueryFollows.getFollowersCount(requestAlias);
+        int followingCount = QueryFollows.getFollowingCount(requestAlias);
 
-        return new CountResponse(request.getUser(), followingCount, followersCount);
+        User user = request.getUser();
+        user.setImageBytes(null);
+        return new CountResponse(user, followingCount, followersCount);
     }
 
     public CountResponse oldGetCount(CountRequest request) {

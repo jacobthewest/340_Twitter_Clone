@@ -17,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.byu.cs.tweeter.R;
 import edu.byu.cs.tweeter.client.presenter.FollowersPresenter;
+import edu.byu.cs.tweeter.client.util.ByteArrayUtils;
 import edu.byu.cs.tweeter.client.view.asyncTasks.GetFollowersTask;
 import edu.byu.cs.tweeter.client.view.util.AliasClickableSpan;
 import edu.byu.cs.tweeter.client.view.util.ImageUtils;
@@ -105,6 +107,32 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
         protected final TextView followerAlias;
         protected final TextView follower_username;
 
+        protected class MyTask extends AsyncTask<Void, Void, Void>{
+            byte[] imageBytes;
+            User u;
+
+            public MyTask(User user) {
+                u = user;
+            }
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    imageBytes = ByteArrayUtils.bytesFromUrl(u.getImageUrl());
+                } catch (IOException e) {
+                    Log.e(this.getClass().getName(), e.toString(), e);
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                followerImage.setImageDrawable(ImageUtils.drawableFromByteArray(imageBytes));
+                super.onPostExecute(aVoid);
+            }
+
+        }
+
         /**
          * Creates an instance and sets an OnClickListener for the user's row.
          *
@@ -120,6 +148,7 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    user.setImageBytes(null);
                     new AliasClickableSpan(getActivity(), user, followerAlias.getText().toString(), authToken).onClick(view);
                 }
             });
@@ -131,7 +160,7 @@ public class FollowersFragment extends Fragment implements FollowersPresenter.Vi
          * @param user the user.
          */
         void bindUser(User user) {
-            followerImage.setImageDrawable(ImageUtils.drawableFromByteArray(user.getImageBytes()));
+            new MyTask(user).execute();
             followerAlias.setText(user.getAlias());
             follower_username.setText(user.getName());
         }
