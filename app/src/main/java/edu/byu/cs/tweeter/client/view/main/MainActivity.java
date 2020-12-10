@@ -318,14 +318,20 @@ public class MainActivity extends AppCompatActivity implements LogoutPresenter.V
     }
 
     private void followButtonHelper(List<User> followingParam, User followUserParam) {
-        if (followingParam.contains(followUserParam)) { // If the followUser view is someone that the user follows, then display "Following" in the follow/unfollow button text
-            followButton.setText("Following");
-            followButton.setBackgroundColor(getResources().getColor(R.color.colorAccent)); // Pink background
-            followButton.setTextColor(getResources().getColor(R.color.white));
-        } else { // The followUser is NOT someone that the user follows, so display "follow" in the follow/unfollow button text
+        if(followingParam == null && followUserParam == null) {
             followButton.setText("Follow");
             followButton.setBackgroundColor(getResources().getColor(R.color.white));
             followButton.setTextColor(getResources().getColor(R.color.black));
+        } else {
+            if (followingParam.contains(followUserParam)) { // If the followUser view is someone that the user follows, then display "Following" in the follow/unfollow button text
+                followButton.setText("Following");
+                followButton.setBackgroundColor(getResources().getColor(R.color.colorAccent)); // Pink background
+                followButton.setTextColor(getResources().getColor(R.color.white));
+            } else { // The followUser is NOT someone that the user follows, so display "follow" in the follow/unfollow button text
+                followButton.setText("Follow");
+                followButton.setBackgroundColor(getResources().getColor(R.color.white));
+                followButton.setTextColor(getResources().getColor(R.color.black));
+            }
         }
     }
 

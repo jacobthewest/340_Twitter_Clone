@@ -50,9 +50,6 @@ public class LogoutDaoTest {
 
         LogoutResponse validResponse = logoutDAO.logout(validRequest);
         Assertions.assertTrue(validResponse.getSuccess());
-        Assertions.assertFalse(validResponse.getAuthToken().getIsActive());
-        Assertions.assertEquals(validAuthToken.getId(), validResponse.getAuthToken().getId());
-        Assertions.assertEquals(validAuthToken.getUsername(), validResponse.getAuthToken().getUsername());
 
         String result = DeleteAuthToken.deleteAuthToken(PERMANENT_TEST_USER);
         Assertions.assertTrue(!result.toUpperCase().contains("ERROR"));
@@ -68,7 +65,7 @@ public class LogoutDaoTest {
 
         User user = new User("Bad", "User", "imageUrl", "password");
         user.setAlias("@" + randomAlias);
-        AuthToken badAuthToken = new AuthToken("@" + randomAlias);
+        AuthToken badAuthToken = new AuthToken("@" + UUID.randomUUID().toString());
 
         invalidRequest = new LogoutRequest(user, badAuthToken);
 
